@@ -1,0 +1,139 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Inventario; // Asegúrate de importar el modelo Inventario
+
+class InventarioController extends Controller
+{
+    /**
+     * Muestra una lista del recurso.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $inventarios = Inventario::all();
+        return view('inventarios.index', compact('inventarios'));
+    }
+
+    /**
+     * Muestra el formulario para crear un nuevo recurso.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('inventarios.create');
+    }
+
+    /**
+     * Almacena un recurso recién creado en la base de datos.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+
+        $lugarNumero = $request->input('lugar') . ' ' . $request->input('numero');
+
+
+        $validatedData = $request->validate([
+            'fecha' => 'required|date', // Fecha es requerida y debe ser una fecha válida
+            'lugar' => 'required|string|max:255',
+            'numero_lugar' => 'required|integer', // Lugar es requerido y debe ser una cadena de texto no mayor a 255 caracteres
+            'fila' => 'required|integer', // Fila es requerida y debe ser un número entero
+            'numero' => 'required|integer', // Número es requerido y debe ser un número entero
+            'codigo' => 'required|string|max:255', // Código es requerido y debe ser una cadena de texto no mayor a 255 caracteres
+            'valor' => 'nullable|numeric',
+            'cantidad' => 'required|integer', // Cantidad es requerida y debe ser un número entero
+            'orden' => 'nullable|integer', // Orden es requerido y debe ser un número entero
+        ]);
+
+         // Concatenar Lugar y Número
+    $lugar = $request->input('lugar') . ' ' . $request->input('numero_lugar');
+
+    // Almacenar en la base de datos
+    Inventario::create([
+        'fecha' => $validatedData['fecha'],
+        'lugar' =>$validatedData['lugar'],
+        'numero_lugar' => $validatedData['numero_lugar'],
+        'fila' => $validatedData['fila'],
+        'numero' => $validatedData['numero'],
+        'codigo' => $validatedData['codigo'],
+        'valor' => $validatedData['valor'],
+        'cantidad' => $validatedData['cantidad'],
+        'orden' => $validatedData['orden'],
+    ]);
+
+        return redirect()->route('inventarios.index');
+    }
+
+   
+
+    /**
+     * Muestra un recurso específico.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $inventario = Inventario::findOrFail($id);
+        return view('inventarios.show', compact('inventario'));
+    }
+
+    /**
+     * Muestra el formulario para editar un recurso específico.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $inventario = Inventario::findOrFail($id);
+        return view('inventarios.edit', compact('inventario'));
+    }
+
+    /**
+     * Actualiza un recurso específico en la base de datos.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'fecha' => 'required|date',
+            'lugar' => 'required|string|max:255',
+            'fila' => 'required|integer',
+            'numero' => 'required|integer',
+            'codigo' => 'required|string|max:255',
+            'valor' => 'nullable|numeric',
+            'cantidad' => 'required|integer',
+            'orden' => 'nullable|integer',
+        ]);
+
+        Inventario::whereId($id)->update($validatedData);
+        return redirect()->route('inventarios.index');
+    }
+
+    /**
+     * Elimina un recurso específico de la base de datos.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $inventario = Inventario::findOrFail($id);
+        $inventario->delete();
+        return redirect()->route('inventarios.index');
+    }
+
+   
+}
