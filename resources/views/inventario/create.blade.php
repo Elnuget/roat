@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Crear Inventario')
+@section('title', 'Crear Articulo')
 
 @section('content_header')
     @if (session('error'))
@@ -17,7 +17,7 @@
     <br>
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Crear Inventario</h3>
+            <h3 class="card-title">Crear Articulo</h3>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip"
@@ -29,7 +29,7 @@
         </div>
         <div class="card-body">
             <div class="col-md-6">
-                <form role="form" action="{{ route('inventarios.store') }}" method="POST">
+                <form role="form" action="{{ route('inventario.store') }}" method="POST">
                     @csrf
 
                     <div class="form-group row">
@@ -70,7 +70,7 @@
                     <div class="form-goup row">
                         <div class="col-4">
                             <label>Valor</label>
-                            <input name="valor" id="valor" required type="number" class="form-control">
+                            <input name="valor" id="valor"  type="number" class="form-control">
                         </div>
                         <div class="col-4">
                             <label>Cantidad</label>
@@ -79,7 +79,7 @@
                         </div>
                         <div class="col-4">
                             <label>Orden</label>
-                            <input name="orden" required type="text" class="form-control">
+                            <input name="orden"  type="text" class="form-control">
                         </div>
                     </div>
 
@@ -93,7 +93,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
 
-                                    <h4 class="modal-title">Crear Inventario</h4>
+                                    <h4 class="modal-title">Crear Articulo</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span></button>
                                 </div>
@@ -118,7 +118,7 @@
     </div>
     <!-- /.card-body -->
     <div class="card-footer">
-        Crear inventario
+        Crear Articulo
     </div>
     <!-- /.card-footer-->
     </div>

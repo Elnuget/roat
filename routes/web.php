@@ -103,10 +103,22 @@ Route::post('AjustesDeInventario/Agregar', [AjustesDeInventarioController::class
 Route::post('AjustesDeInventario/Finalizar', [AjustesDeInventarioController::class, 'store'])->name('ajustesdeinventario.store');
 
 //Inventario
-Route::get('Inventario', [InventarioController::class, 'index'])->name('inventarios.index');
-Route::get('Inventario/Crear', [InventarioController::class, 'create'])->name('inventarios.create'); 
-Route::get('Inventario/{id}', [InventarioController::class, 'edit'])->name('inventarios.edit');
-Route::delete('Inventario/eliminar/{id}', [InventarioController::class, 'destroy'])->name('inventarios.destroy');
-Route::get('Inventario/{id}/ver', [InventarioController::class, 'show'])->name('inventarios.show');
-Route::put('Inventario/{articulo}', [InventarioController::class, 'update'])->name('inventarios.update');
-Route::post('Inventario', [InventarioController::class, 'store'])->name('inventarios.store');
+Route::get('Inventario', [InventarioController::class, 'index'])->name('inventario.index');
+Route::get('Inventario/Crear', [InventarioController::class, 'create'])->name('inventario.create'); 
+Route::get('Inventario/{id}', [InventarioController::class, 'edit'])->name('inventario.edit');
+Route::delete('Inventario/eliminar/{id}', [InventarioController::class, 'destroy'])->name('inventario.destroy');
+Route::get('Inventario/{id}/ver', [InventarioController::class, 'show'])->name('inventario.show');
+Route::put('Inventario/{articulo}', [InventarioController::class, 'update'])->name('inventario.update');
+Route::post('Inventario', [InventarioController::class, 'store'])->name('inventario.store');
+
+
+// Venta nuevo
+
+Route::get('Venta', [InventarioController::class, 'index'])->name('venta.index');
+Route::get('Venta/Crear', [InventarioController::class, 'create'])->name('venta.create'); 
+Route::get('Venta/{id}', [InventarioController::class, 'edit'])->name('venta.edit');
+Route::delete('Venta/eliminar/{id}', [InventarioController::class, 'destroy'])->name('invenventatarios.destroy');
+Route::get('Venta/{id}/ver', [InventarioController::class, 'show'])->name('venta.show');
+Route::put('Venta/{articulo}', [InventarioController::class, 'update'])->name('venta.update');
+Route::post('Venta', [InventarioController::class, 'store'])->name('venta.store');
+

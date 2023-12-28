@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Editar Inventario')
+@section('title', 'Editar Articulo')
 
 @section('content_header')
     @if (session('error'))
@@ -17,7 +17,7 @@
     <br>
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Editar Inventario</h3>
+            <h3 class="card-title">Editar Articulo</h3>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip"
@@ -29,7 +29,7 @@
         </div>
         <div class="card-body">
             <div class="col-md-6">
-                <form role="form" action="{{ route('inventarios.update', $inventario) }}" method="POST">
+                <form role="form" action="{{ route('inventario.update', $inventario) }}" method="POST">
                     @csrf
                     @method('put')
 
@@ -72,7 +72,7 @@
                     <div class="form-group row">
                         <div class="col-4">
                             <label>Valor</label>
-                            <input name="valor" id="valor" required type="number" class="form-control" value="{{ $inventario->valor }}">
+                            <input name="valor" id="valor"  type="number" class="form-control" value="{{ $inventario->valor }}">
                         </div>
                         <div class="col-4">
                             <label>Cantidad</label>
@@ -80,14 +80,14 @@
                         </div>
                         <div class="col-4">
                             <label>Orden</label>
-                            <input name="orden" required type="text" class="form-control" value="{{ $inventario->orden }}">
+                            <input name="orden"  type="text" class="form-control" value="{{ $inventario->orden }}">
                         </div>
                     </div>
 
                     <br>
 
                     <button type="button" class="btn btn-primary pull-left" data-toggle="modal" data-target="#modal">Editar
-                        Inventario</button>
+                        Articulo</button>
                     <div class="modal fade" id="modal">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -118,7 +118,7 @@
     </div>
     <!-- /.card-body -->
     <div class="card-footer">
-        Editar inventario
+        Editar Articulo
     </div>
     <!-- /.card-footer-->
     </div>

@@ -15,8 +15,11 @@ class InventarioController extends Controller
      */
     public function index(Request $request)
     {
-        $inventarios = Inventario::all();
-        return view('inventarios.index', compact('inventarios'));
+
+        $lugares = Inventario::select('lugar', 'numero_lugar')->distinct()->get();
+        
+        $inventario = Inventario::all();
+        return view('inventario.index', compact('inventario', 'lugares'));
     }
 
     /**
@@ -26,7 +29,7 @@ class InventarioController extends Controller
      */
     public function create()
     {
-        return view('inventarios.create');
+        return view('inventario.create');
     }
 
     /**
@@ -53,8 +56,7 @@ class InventarioController extends Controller
             'orden' => 'nullable|integer', // Orden es requerido y debe ser un número entero
         ]);
 
-         // Concatenar Lugar y Número
-    $lugar = $request->input('lugar') . ' ' . $request->input('numero_lugar');
+      
 
     // Almacenar en la base de datos
     Inventario::create([
@@ -69,7 +71,7 @@ class InventarioController extends Controller
         'orden' => $validatedData['orden'],
     ]);
 
-        return redirect()->route('inventarios.index');
+        return redirect()->route('inventario.index');
     }
 
    
@@ -83,7 +85,7 @@ class InventarioController extends Controller
     public function show($id)
     {
         $inventario = Inventario::findOrFail($id);
-        return view('inventarios.show', compact('inventario'));
+        return view('inventario.show', compact('inventario'));
     }
 
     /**
@@ -95,7 +97,7 @@ class InventarioController extends Controller
     public function edit($id)
     {
         $inventario = Inventario::findOrFail($id);
-        return view('inventarios.edit', compact('inventario'));
+        return view('inventario.edit', compact('inventario'));
     }
 
     /**
@@ -119,7 +121,7 @@ class InventarioController extends Controller
         ]);
 
         Inventario::whereId($id)->update($validatedData);
-        return redirect()->route('inventarios.index');
+        return redirect()->route('inventario.index');
     }
 
     /**
@@ -132,7 +134,7 @@ class InventarioController extends Controller
     {
         $inventario = Inventario::findOrFail($id);
         $inventario->delete();
-        return redirect()->route('inventarios.index');
+        return redirect()->route('inventario.index');
     }
 
    

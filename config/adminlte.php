@@ -228,7 +228,7 @@ return [
         [
             'text'    => 'Inventario',
             'icon'    => 'fas fa-file-invoice',
-            'route'  => 'inventarios.index',
+            'route'  => 'inventario.index',
             'active' => ['Inventario/*']
         ],
        /*  [
