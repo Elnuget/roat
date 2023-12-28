@@ -6,6 +6,7 @@ use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\ComunasController;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\mediosdepagoController;
+use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\ProveedoresController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\RecepcionesController;
@@ -122,3 +123,11 @@ Route::get('Venta/{id}/ver', [InventarioController::class, 'show'])->name('venta
 Route::put('Venta/{articulo}', [InventarioController::class, 'update'])->name('venta.update');
 Route::post('Venta', [InventarioController::class, 'store'])->name('venta.store');
 
+// Pacientes
+Route::get('Pacientes', [PacienteController::class, 'index'])->name('pacientes.index');
+Route::get('Pacientes/Crear', [PacienteController::class, 'create'])->name('pacientes.create');
+Route::post('Pacientes', [PacienteController::class, 'store'])->name('pacientes.store');
+Route::get('Pacientes/{id}', [PacienteController::class, 'show'])->name('pacientes.show');
+Route::get('Pacientes/{id}/editar', [PacienteController::class, 'edit'])->name('pacientes.edit');
+Route::put('Pacientes/{id}', [PacienteController::class, 'update'])->name('pacientes.update');
+Route::delete('Pacientes/{id}', [PacienteController::class, 'destroy'])->name('pacientes.destroy');

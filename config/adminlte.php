@@ -295,6 +295,12 @@ return [
                 ],
             ],
         ],
+        [
+            'text'    => 'Pacientes',
+            'icon'    => 'fas fa-user-injured', // Puedes cambiar el ícono según prefieras
+            'route'   => 'pacientes.index',
+            'active'  => ['pacientes/*'], // Asegúrate de que esto coincida con tus rutas nombradas en Laravel
+        ],
 
 
 
