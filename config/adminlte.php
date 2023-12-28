@@ -290,6 +290,14 @@ return [
             ],
         ],*/
         [
+            'text'    => 'Dashboard', // Título del enlace en el menú
+            'icon'    => 'fas fa-tachometer-alt', // Icono para el Dashboard. Cambia según tus preferencias
+            'route'   => 'dashboard', // La ruta debe coincidir con una ruta nombrada en tus rutas de Laravel
+            'active'  => ['dashboard', 'dashboard/*'], // Patrón para definir cuándo este ítem estará activo
+        ],
+        
+        
+        [
             'text'    => 'Pacientes',
             'icon'    => 'fas fa-user-injured', // Puedes cambiar el ícono según prefieras
             'route'   => 'pacientes.index',
