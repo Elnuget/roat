@@ -7,6 +7,7 @@ use App\Http\Controllers\ComunasController;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\mediosdepagoController;
 use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\PagoController;
 use App\Http\Controllers\ProveedoresController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\RecepcionesController;
@@ -131,3 +132,12 @@ Route::get('Pacientes/{id}', [PacienteController::class, 'show'])->name('pacient
 Route::get('Pacientes/{id}/editar', [PacienteController::class, 'edit'])->name('pacientes.edit');
 Route::put('Pacientes/{id}', [PacienteController::class, 'update'])->name('pacientes.update');
 Route::delete('Pacientes/{id}', [PacienteController::class, 'destroy'])->name('pacientes.destroy');
+
+// Pagos
+Route::get('Pagos', [PagoController::class, 'index'])->name('pagos.index');
+Route::get('Pagos/Crear', [PagoController::class, 'create'])->name('pagos.create');
+Route::post('Pagos', [PagoController::class, 'store'])->name('pagos.store');
+Route::get('Pagos/{id}', [PagoController::class, 'show'])->name('pagos.show');
+Route::get('Pagos/{id}/editar', [PagoController::class, 'edit'])->name('pagos.edit');
+Route::put('Pagos/{id}', [PagoController::class, 'update'])->name('pagos.update');
+Route::delete('Pagos/{id}', [PagoController::class, 'destroy'])->name('pagos.destroy');

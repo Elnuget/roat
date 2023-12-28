@@ -271,7 +271,7 @@ return [
             'route'  => 'proveedores.index',
             'active' => ['Proveedores/*']
         ], */
-       /* [
+      [
             'text'    => 'Configuracion',
             'icon'    => 'fas fa-cog',
             'active' => ['Configuracion/*'],
@@ -289,7 +289,7 @@ return [
                     'active' => ['Configuración/MediosDePago/*']
                 ],
             ],
-        ],*/
+        ],
         [
             'text'    => 'Dashboard', // Título del enlace en el menú
             'icon'    => 'fas fa-tachometer-alt', // Icono para el Dashboard. Cambia según tus preferencias
@@ -309,6 +309,12 @@ return [
             'icon'    => 'fas fa-file-invoice',
             'route'  => 'inventario.index',
             'active' => ['Inventario/*']
+        ],
+        [
+            'text'    => 'Pago',
+            'icon'    => 'fas fa-file-invoice',
+            'route'  => 'pagos.index',
+            'active' => ['pagos/*']
         ],
 
 

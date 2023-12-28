@@ -4,7 +4,7 @@
 
 @section('content_header')
     <h1>Inventario</h1>
-    <p>Administración de inventario</p>
+    <p>Administración de Articulo</p>
     @if (session('error'))
         <div class="alert {{ session('tipo') }} alert-dismissible fade show" role="alert">
             <strong>{{ session('error') }}</strong> {{ session('mensaje') }}
