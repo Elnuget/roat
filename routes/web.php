@@ -9,6 +9,7 @@ use App\Http\Controllers\ProveedoresController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\RecepcionesController;
 use App\Http\Controllers\VentasController;
+use App\Http\Controllers\PacienteController; 
 use App\Http\Controllers\DetalleVentasController;
 use Illuminate\Support\Facades\Route;
 
@@ -91,3 +92,12 @@ Route::get('AjustesDeInventario/Agregar', [AjustesDeInventarioController::class,
 Route::get('AjustesDeInventario/{id}', [AjustesDeInventarioController::class, 'view'])->name('ajustesdeinventario.view');
 Route::post('AjustesDeInventario/Agregar', [AjustesDeInventarioController::class, 'addArticulo'])->name('ajustesdeinventario.addarticulo');
 Route::post('AjustesDeInventario/Finalizar', [AjustesDeInventarioController::class, 'store'])->name('ajustesdeinventario.store');
+
+// Pacientes
+Route::get('Pacientes', [PacienteController::class, 'index'])->name('pacientes.index');
+Route::get('Pacientes/Crear', [PacienteController::class, 'create'])->name('pacientes.create');
+Route::post('Pacientes', [PacienteController::class, 'store'])->name('pacientes.store');
+Route::get('Pacientes/{id}', [PacienteController::class, 'show'])->name('pacientes.show');
+Route::get('Pacientes/{id}/editar', [PacienteController::class, 'edit'])->name('pacientes.edit');
+Route::put('Pacientes/{id}', [PacienteController::class, 'update'])->name('pacientes.update');
+Route::delete('Pacientes/{id}', [PacienteController::class, 'destroy'])->name('pacientes.destroy');

@@ -16,7 +16,7 @@ return [
 
     'title' => 'Login',
     'title_prefix' => '',
-    'title_postfix' => '| SIVIG',
+    'title_postfix' => '| ESCLEROPTICA',
 
     /*
     |--------------------------------------------------------------------------
@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'logo' => '<b>SIVIG</b>',
+    'logo' => '<b>ESCLEROPTICA</b>',
     // 'logo_img' => 'img/logo-perfil.jpg',
     'logo_img_class' => 'logo-xs',
     'logo_img_xl' => null,
@@ -225,7 +225,7 @@ return [
     */
 
     'menu' =>         [
-        [
+     /*   [
             'text'    => 'Ventas',
             'icon'    => 'fas fa-file-invoice',
             'route'  => 'ventas.index',
@@ -288,9 +288,14 @@ return [
                     'active' => ['Configuracion/MediosDePago/*']
                 ],
             ],
+        ],*/
+        [
+            'text'    => 'Pacientes',
+            'icon'    => 'fas fa-user-injured', // Puedes cambiar el ícono según prefieras
+            'route'   => 'pacientes.index',
+            'active'  => ['pacientes/*'], // Asegúrate de que esto coincida con tus rutas nombradas en Laravel
         ],
-
-
+        
 
     ],
     /*
