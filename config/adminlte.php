@@ -225,12 +225,7 @@ return [
     */
 
     'menu' =>         [
-        [
-            'text'    => 'Inventario',
-            'icon'    => 'fas fa-file-invoice',
-            'route'  => 'inventario.index',
-            'active' => ['Inventario/*']
-        ],
+        
        /*  [
             'text'    => 'Ventas',
             'icon'    => 'fas fa-file-invoice',
@@ -276,7 +271,7 @@ return [
             'route'  => 'proveedores.index',
             'active' => ['Proveedores/*']
         ], */
-        [
+       /* [
             'text'    => 'Configuracion',
             'icon'    => 'fas fa-cog',
             'active' => ['Configuracion/*'],
@@ -294,7 +289,7 @@ return [
                     'active' => ['Configuración/MediosDePago/*']
                 ],
             ],
-        ],
+        ],*/
         [
             'text'    => 'Dashboard', // Título del enlace en el menú
             'icon'    => 'fas fa-tachometer-alt', // Icono para el Dashboard. Cambia según tus preferencias
@@ -309,7 +304,12 @@ return [
             'route'   => 'pacientes.index',
             'active'  => ['pacientes/*'], // Asegúrate de que esto coincida con tus rutas nombradas en Laravel
         ],
-
+        [
+            'text'    => 'Inventario',
+            'icon'    => 'fas fa-file-invoice',
+            'route'  => 'inventario.index',
+            'active' => ['Inventario/*']
+        ],
 
 
     ],

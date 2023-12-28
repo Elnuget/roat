@@ -73,7 +73,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Cancelar</button>
-                                            <form id="eliminarForm" method="post" action="">
+                                            <form id="eliminarForm" method="post" action="{{ route('pacientes.destroy', $paciente->id) }}">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">Eliminar</button>
