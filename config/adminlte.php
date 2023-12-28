@@ -16,7 +16,7 @@ return [
 
     'title' => 'Login',
     'title_prefix' => '',
-    'title_postfix' => '| SIVIG',
+    'title_postfix' => '| ESCLEROPTICA',
 
     /*
     |--------------------------------------------------------------------------

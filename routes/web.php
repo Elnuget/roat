@@ -10,7 +10,7 @@ use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\ProveedoresController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\RecepcionesController;
-use App\Http\Controllers\VentasController;
+use App\Http\Controllers\VentasController; 
 use App\Http\Controllers\DetalleVentasController;
 use App\Models\Inventario;
 use Illuminate\Support\Facades\Route;
