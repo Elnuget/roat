@@ -15,7 +15,7 @@ class mediosdepagoController extends Controller
     public function index()
     {
         $medio = mediosdepago::all();
-        return view('administracion.mediosdepago.index', compact('medio'));
+        return view('configuracion.mediosdepago.index', compact('medio'));
     }
 
     /**
@@ -25,7 +25,7 @@ class mediosdepagoController extends Controller
      */
     public function create()
     {
-        return view('administracion.mediosdepago.crear');
+        return view('configuracion.mediosdepago.crear');
     }
 
     /**
@@ -65,19 +65,19 @@ class mediosdepagoController extends Controller
      */
     public function show($id)
     {
-        $medio = mediosdepago::find($id);
-        return view('administracion.mediosdepago.editar', compact('medio'));
+        $medio = mediosdepago::findOrFail($id);
+        return view('configuracion.mediosdepago.show', compact('medio'));
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\mediosdepago  $mediosdepago
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(mediosdepago $mediosdepago)
+    public function editar($id)
     {
-        //
+        $medio = mediosdepago::findOrFail($id);
+        return view('configuracion.mediosdepago.editar', compact('medio'));
     }
 
     /**
@@ -101,18 +101,20 @@ class mediosdepagoController extends Controller
             ]);
         } catch (\Exception $e) {
             $medio = $mediosdepago;
-            return view('administracion.mediosdepago.editar', compact('medio'));
+            return view('configuracion.mediosdepago.editar', compact('medio'));
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
+     /**
+     * Elimina un recurso específico de la base de datos.
      *
-     * @param  \App\Models\mediosdepago  $mediosdepago
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(mediosdepago $mediosdepago)
+    public function destroy($id)
     {
-        //
+        $inventario = mediosdepago::findOrFail($id);
+        $inventario->delete();
+        return redirect()->route('configuracion.mediosdepago.index');
     }
 }

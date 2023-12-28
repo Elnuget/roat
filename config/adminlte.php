@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'logo' => '<b>ESCLEROPTICA</b>',
+    'logo' => '<b>Alpha</b>',
     // 'logo_img' => 'img/logo-perfil.jpg',
     'logo_img_class' => 'logo-xs',
     'logo_img_xl' => null,
@@ -225,7 +225,13 @@ return [
     */
 
     'menu' =>         [
-     /*   [
+        [
+            'text'    => 'Inventario',
+            'icon'    => 'fas fa-file-invoice',
+            'route'  => 'inventario.index',
+            'active' => ['Inventario/*']
+        ],
+       /*  [
             'text'    => 'Ventas',
             'icon'    => 'fas fa-file-invoice',
             'route'  => 'ventas.index',
@@ -269,7 +275,7 @@ return [
             'icon'    => 'fas fa-warehouse',
             'route'  => 'proveedores.index',
             'active' => ['Proveedores/*']
-        ],
+        ], */
         [
             'text'    => 'Configuracion',
             'icon'    => 'fas fa-cog',
@@ -285,10 +291,10 @@ return [
                     'text'    => 'Medios de pago',
                     'icon'    => 'fas fa-cog',
                     'route'  => 'configuracion.mediosdepago.index',
-                    'active' => ['Configuracion/MediosDePago/*']
+                    'active' => ['Configuración/MediosDePago/*']
                 ],
             ],
-        ],*/
+        ],
         [
             'text'    => 'Dashboard', // Título del enlace en el menú
             'icon'    => 'fas fa-tachometer-alt', // Icono para el Dashboard. Cambia según tus preferencias
@@ -303,7 +309,8 @@ return [
             'route'   => 'pacientes.index',
             'active'  => ['pacientes/*'], // Asegúrate de que esto coincida con tus rutas nombradas en Laravel
         ],
-        
+
+
 
     ],
     /*

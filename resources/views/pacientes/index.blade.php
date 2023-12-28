@@ -146,7 +146,6 @@
                     "extend": 'pdfHtml5',
                     "text": 'PDF',
                     "filename": 'Pacientes.pdf',
-                    "title": 'PACIENTES {{ $paciente->cod_interno }}',
                     "pageSize": 'LETTER',
                     "exportOptions": {
                         "columns": [0, 1, 2, 3]

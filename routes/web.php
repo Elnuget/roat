@@ -4,13 +4,15 @@ use App\Http\Controllers\AjustesDeInventarioController;
 use App\Http\Controllers\ArticulosController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\ComunasController;
+use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\mediosdepagoController;
+use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\ProveedoresController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\RecepcionesController;
-use App\Http\Controllers\VentasController;
-use App\Http\Controllers\PacienteController; 
+use App\Http\Controllers\VentasController; 
 use App\Http\Controllers\DetalleVentasController;
+use App\Models\Inventario;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,12 +43,20 @@ Route::put('Configuracion/Usuarios/{usuario}', [UsuariosController::class, 'upda
 
 //medios de pago
 
-Route::get('Configuracion/MediosDePago', [mediosdepagoController::class, 'index'])->name('configuracion.mediosdepago.index');
+/* Route::get('Configuracion/MediosDePago', [mediosdepagoController::class, 'index'])->name('configuracion.mediosdepago.index');
 Route::get('Configuracion/MediosDePago/Crear', [mediosdepagoController::class, 'create'])->name('configuracion.mediosdepago.create');
 Route::post('Configuracion/MediosDePago', [mediosdepagoController::class, 'store'])->name('configuracion.mediosdepago.store');
 Route::get('Configuracion/MediosDePago/{id}', [mediosdepagoController::class, 'show'])->name('configuracion.mediosdepago.editar');
-Route::put('Configuracion/MediosDePago/{id}', [mediosdepagoController::class, 'update'])->name('configuracion.mediosdepago.update');
+Route::put('Configuracion/MediosDePago/{id}', [mediosdepagoController::class, 'update'])->name('configuracion.mediosdepago.update'); */
 
+
+Route::get('Configuración/MediosDePago', [mediosdepagoController::class, 'index'])->name('configuracion.mediosdepago.index');
+Route::get('Configuración/MediosDePago/Crear', [mediosdepagoController::class, 'create'])->name('configuracion.mediosdepago.create'); 
+Route::get('Configuración/MediosDePago/{id}', [mediosdepagoController::class, 'editar'])->name('configuracion.mediosdepago.editar');
+Route::delete('Configuración/MediosDePago/eliminar/{id}', [mediosdepagoController::class, 'destroy'])->name('configuracion.mediosdepago.destroy');
+Route::get('Configuración/MediosDePago/{id}/ver', [mediosdepagoController::class, 'show'])->name('configuracion.mediosdepago.show');
+Route::put('Configuración/MediosDePago/{id}', [mediosdepagoController::class, 'update'])->name('configuracion.mediosdepago.update');
+Route::post('Configuración/MediosDePago', [mediosdepagoController::class, 'store'])->name('configuracion.mediosdepago.store');
 // clientes
 
 Route::get('Clientes', [ClientesController::class, 'index'])->name('clientes.index');
@@ -92,6 +102,26 @@ Route::get('AjustesDeInventario/Agregar', [AjustesDeInventarioController::class,
 Route::get('AjustesDeInventario/{id}', [AjustesDeInventarioController::class, 'view'])->name('ajustesdeinventario.view');
 Route::post('AjustesDeInventario/Agregar', [AjustesDeInventarioController::class, 'addArticulo'])->name('ajustesdeinventario.addarticulo');
 Route::post('AjustesDeInventario/Finalizar', [AjustesDeInventarioController::class, 'store'])->name('ajustesdeinventario.store');
+
+//Inventario
+Route::get('Inventario', [InventarioController::class, 'index'])->name('inventario.index');
+Route::get('Inventario/Crear', [InventarioController::class, 'create'])->name('inventario.create'); 
+Route::get('Inventario/{id}', [InventarioController::class, 'edit'])->name('inventario.edit');
+Route::delete('Inventario/eliminar/{id}', [InventarioController::class, 'destroy'])->name('inventario.destroy');
+Route::get('Inventario/{id}/ver', [InventarioController::class, 'show'])->name('inventario.show');
+Route::put('Inventario/{articulo}', [InventarioController::class, 'update'])->name('inventario.update');
+Route::post('Inventario', [InventarioController::class, 'store'])->name('inventario.store');
+
+
+// Venta nuevo
+
+Route::get('Venta', [InventarioController::class, 'index'])->name('venta.index');
+Route::get('Venta/Crear', [InventarioController::class, 'create'])->name('venta.create'); 
+Route::get('Venta/{id}', [InventarioController::class, 'edit'])->name('venta.edit');
+Route::delete('Venta/eliminar/{id}', [InventarioController::class, 'destroy'])->name('invenventatarios.destroy');
+Route::get('Venta/{id}/ver', [InventarioController::class, 'show'])->name('venta.show');
+Route::put('Venta/{articulo}', [InventarioController::class, 'update'])->name('venta.update');
+Route::post('Venta', [InventarioController::class, 'store'])->name('venta.store');
 
 // Pacientes
 Route::get('Pacientes', [PacienteController::class, 'index'])->name('pacientes.index');
