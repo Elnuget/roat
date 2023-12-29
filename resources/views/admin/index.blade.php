@@ -79,7 +79,7 @@
         var whatsappInput = document.getElementById('whatsappMessage');
 
         // Establecer un mensaje predeterminado
-        whatsappInput.value = "🎉👓 ¡Feliz Cumpleaños desde Escleróptica! En este día tan especial, queremos enviarte un cálido saludo y nuestros mejores deseos. Esperamos que tu día esté lleno de alegría y momentos memorables. Recuerda que estamos aquí para cuidar de tu visión y acompañarte en cada paso de tu camino hacia una salud visual óptima. ¡Que tengas un maravilloso cumpleaños!";
+        whatsappInput.value = "¡Feliz Cumpleaños desde Escleróptica! En este día tan especial, queremos enviarte un cálido saludo y nuestros mejores deseos. Esperamos que tu día esté lleno de alegría y momentos memorables. Recuerda que estamos aquí para cuidar de tu visión y acompañarte en cada paso de tu camino hacia una salud visual óptima. ¡Que tengas un maravilloso cumpleaños!";
 
         // Función para actualizar el enlace de WhatsApp
         function updateWhatsAppLink() {
