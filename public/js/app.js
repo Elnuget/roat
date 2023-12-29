@@ -4019,8 +4019,6 @@ module.exports = {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/alpine.js");
-window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-__webpack_require__(/*! select2 */ "./node_modules/select2/dist/js/select2.js");
 
 /***/ }),
 
@@ -21493,7 +21491,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 },
 /******/ __webpack_require__ => { // webpackRuntimeModules
 /******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-/******/ __webpack_require__.O(0, ["css/app","/js/vendor"], () => (__webpack_exec__("./resources/js/app.js"), __webpack_exec__("./resources/css/app.css")));
+/******/ __webpack_require__.O(0, ["css/app"], () => (__webpack_exec__("./resources/js/app.js"), __webpack_exec__("./resources/css/app.css")));
 /******/ var __webpack_exports__ = __webpack_require__.O();
 /******/ }
 ]);

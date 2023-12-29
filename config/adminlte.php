@@ -225,6 +225,19 @@ return [
     */
 
     'menu' =>         [
+        [
+            'text'    => 'Pedidos',
+            'icon'    => 'fas fa-shopping-cart', // Puedes cambiar el icono según tus preferencias
+            'route'   => 'pedidos.index',
+            'active'  => ['Pedidos/*']
+        ],
+        
+        [
+            'text'    => 'Ventas',
+            'icon'    => 'fas fa-file-invoice',
+            'route'  => 'ventas.index',
+            'active' => ['Ventas/*']
+        ],
         
         [
             'text'    => 'Dashboard', // Título del enlace en el menú

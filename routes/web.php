@@ -4,7 +4,7 @@ use App\Http\Controllers\AjustesDeInventarioController;
 use App\Http\Controllers\ArticulosController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\ComunasController;
-
+use App\Http\Controllers\PedidosController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\mediosdepagoController;
@@ -145,3 +145,11 @@ Route::get('Pagos/{id}', [PagoController::class, 'show'])->name('pagos.show');
 Route::get('Pagos/{id}/editar', [PagoController::class, 'edit'])->name('pagos.edit');
 Route::put('Pagos/{id}', [PagoController::class, 'update'])->name('pagos.update');
 Route::delete('Pagos/{id}', [PagoController::class, 'destroy'])->name('pagos.destroy');
+// Pedidos
+Route::get('Pedidos', [PedidosController::class, 'index'])->name('pedidos.index');
+Route::get('Pedidos/Crear', [PedidosController::class, 'create'])->name('pedidos.create');
+Route::post('Pedidos', [PedidosController::class, 'store'])->name('pedidos.store');
+Route::get('Pedidos/{id}', [PedidosController::class, 'show'])->name('pedidos.show');
+Route::get('Pedidos/{id}/editar', [PedidosController::class, 'edit'])->name('pedidos.edit');
+Route::put('Pedidos/{id}', [PedidosController::class, 'update'])->name('pedidos.update');
+Route::delete('Pedidos/{id}', [PedidosController::class, 'destroy'])->name('pedidos.destroy');
