@@ -32,10 +32,10 @@
                                     <div class="col-md-4">
                                         <label for="lugar">Lugar:</label>
                                         <select class="form-control" id="lugar" name="lugar">
-                                            
+
                                             <option value="">Seleccionar Lugar</option>
                                             @foreach ($lugares as $lugar)
-                                            <option value="{{ $lugar->lugar }}">
+                                                <option value="{{ $lugar->lugar }}">
                                                     {{ $lugar->lugar . ' ' . $lugar->numero_lugar }} </option>
                                             @endforeach
                                         </select>
@@ -68,9 +68,9 @@
                         @foreach ($inventario as $i)
                             <tr>
                                 <td>{{ $i->id }}</td>
-                                <td >{{ $i->fecha }}</td>
+                                <td>{{ $i->fecha }}</td>
                                 <td>{{ $i->lugar . ' ' . $i->numero_lugar }}</td>
-                                <td>{{' Fila' . ' '. $i->fila }}</td>
+                                <td>{{ ' Fila' . ' ' . $i->fila }}</td>
                                 <td>{{ $i->numero }}</td>
                                 <td>{{ $i->codigo }}</td>
                                 <td>{{ $i->valor }}</td>
@@ -154,15 +154,55 @@
             // Inicializar DataTable
             table = $('#example').DataTable({
                 "columnDefs": [{
-                    "targets": [4],
-                    "visible": true,
-                    "searchable": true
-                },
-                { "targets": [0], "visible": false },
-                { "targets": [1], "visible": false },
-                { "targets": [2], "visible": false },
-            ],
-            "order": [[3, 'asc'], [4, 'asc']],
+                        "targets": [4],
+                        "visible": true,
+                        "searchable": true
+                    },
+                    {
+                        "targets": [0],
+                        "visible": false
+                    },
+                    {
+                        "targets": [1],
+                        "visible": false
+                    },
+                    {
+                        "targets": [2],
+                        "visible": false
+                    },
+                ],
+                "order": [
+                    [3, 'asc'],
+                    [4, 'asc']
+                ],
+                "dom": 'Bfrtip',
+                "buttons": [
+                    'excelHtml5',
+                    'csvHtml5',
+                    {
+                        "extend": 'print',
+                        "text": 'Imprimir',
+                        "autoPrint": true,
+                        "exportOptions": {
+                            "columns": [1, 2, 3, 4, 5, 6, 7, 8]
+                        },
+                        "customize": function(win) {
+                            $(win.document.body).css('font-size', '16pt');
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    },
+                    {
+                        "extend": 'pdfHtml5',
+                        "text": 'PDF',
+                        "filename": 'Pagos.pdf',
+                        "pageSize": 'LETTER',
+                        "exportOptions": {
+                            "columns": [1, 2, 3, 4, 5, 6, 7, 8]
+                        }
+                    }
+                ],
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
                 }

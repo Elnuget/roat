@@ -20,7 +20,7 @@ class CreatePagosTable extends Migration
             $table->unsignedBigInteger('mediodepago_id');
             $table->foreign('mediodepago_id')->references('id')->on('mediosdepagos');
             $table->integer('saldo');
-            $table->integer('anticipo');
+            $table->integer('pago');
             $table->timestamps();
         });
     }

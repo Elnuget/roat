@@ -13,7 +13,7 @@ class Pago extends Model
         'paciente_id',
         'mediodepago_id',
         'saldo',
-        'anticipo'
+        'pago'
     ];
 
     public function paciente()

@@ -45,7 +45,7 @@ class PagoController extends Controller
             'paciente_id' => 'required|exists:pacientes,id',
             'mediodepago_id' => 'required|exists:mediosdepagos,id',
             'saldo' => 'required|numeric',
-            'anticipo' => 'numeric',
+            'pago' => 'numeric',
         ]);
 
         // Crear un nuevo pago
@@ -93,7 +93,7 @@ class PagoController extends Controller
             'paciente_id' => 'required|exists:pacientes,id',
             'mediodepago_id' => 'required|exists:mediosdepagos,id',
             'saldo' => 'required|numeric',
-            'anticipo' => 'numeric',
+            'pago' => 'numeric',
         ]);
 
         Pago::whereId($id)->update($validatedData);
@@ -112,6 +112,6 @@ class PagoController extends Controller
         $pago = Pago::findOrFail($id);
         $pago->delete();
 
-        return redirect('/Pago')->with('success', 'Pago eliminado correctamente');
+        return redirect('/Pagos')->with('success', 'Pago eliminado correctamente');
     }
 }

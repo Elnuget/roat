@@ -58,8 +58,8 @@
       </div>
       
       <div class="form-group">
-          <label>Anticipo</label>
-          <input name="anticipo" required type="text" class="form-control">
+          <label>Pago</label>
+          <input name="pago" required type="text" class="form-control">
       </div>
        
 
