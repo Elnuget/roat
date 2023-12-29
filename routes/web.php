@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\mediosdepagoController;
 use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\PagoController;
 use App\Http\Controllers\ProveedoresController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\RecepcionesController;
@@ -136,3 +137,11 @@ Route::delete('Pacientes/{id}', [PacienteController::class, 'destroy'])->name('p
 
 // Admin
 Route::middleware(['auth:sanctum', 'verified'])->get('/admin', [AdminController::class, 'index'])->name('admin.index');
+// Pagos
+Route::get('Pagos', [PagoController::class, 'index'])->name('pagos.index');
+Route::get('Pagos/Crear', [PagoController::class, 'create'])->name('pagos.create');
+Route::post('Pagos', [PagoController::class, 'store'])->name('pagos.store');
+Route::get('Pagos/{id}', [PagoController::class, 'show'])->name('pagos.show');
+Route::get('Pagos/{id}/editar', [PagoController::class, 'edit'])->name('pagos.edit');
+Route::put('Pagos/{id}', [PagoController::class, 'update'])->name('pagos.update');
+Route::delete('Pagos/{id}', [PagoController::class, 'destroy'])->name('pagos.destroy');

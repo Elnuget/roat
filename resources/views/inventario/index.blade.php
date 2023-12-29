@@ -32,10 +32,10 @@
                                     <div class="col-md-4">
                                         <label for="lugar">Lugar:</label>
                                         <select class="form-control" id="lugar" name="lugar">
-                                            
+
                                             <option value="">Seleccionar Lugar</option>
                                             @foreach ($lugares as $lugar)
-                                            <option value="{{ $lugar->lugar }}">
+                                                <option value="{{ $lugar->lugar }}">
                                                     {{ $lugar->lugar . ' ' . $lugar->numero_lugar }} </option>
                                             @endforeach
                                         </select>
@@ -68,9 +68,9 @@
                         @foreach ($inventario as $i)
                             <tr>
                                 <td>{{ $i->id }}</td>
-                                <td >{{ $i->fecha }}</td>
+                                <td>{{ $i->fecha }}</td>
                                 <td>{{ $i->lugar . ' ' . $i->numero_lugar }}</td>
-                                <td>{{' Fila' . ' '. $i->fila }}</td>
+                                <td>{{ ' Fila' . ' ' . $i->fila }}</td>
                                 <td>{{ $i->numero }}</td>
                                 <td>{{ $i->codigo }}</td>
                                 <td>{{ $i->valor }}</td>
@@ -78,10 +78,23 @@
                                 <td>{{ $i->orden }}</td>
                                 <td>
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-success dropdown-toggle"
+                                        <a href="{{ route('inventario.edit', $i->id) }}"
+                                            class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar">
+                                            <i class="fa fa-lg fa-fw fa-pen"></i>
+                                        </a>
+    
+    
+    
+    
+                                        <a class="btn btn-xs btn-default text-danger mx-1 shadow" href="#"
+                                            data-toggle="modal" data-target="#confirmarEliminarModal"
+                                            data-id="{{ $i->id }}" data-url="{{ route('inventario.destroy', $i->id) }}">
+                                            <i class="fa fa-lg fa-fw fa-trash"></i>
+                                        </a>
+                                       {{--  <button type="button" class="btn btn-success dropdown-toggle"
                                             data-toggle="dropdown">Acciones</button>
-
-                                        <div class="dropdown-menu" role="menu">
+ --}}
+                                       {{--  <div class="dropdown-menu" role="menu">
                                             <a class="dropdown-item"
                                                 href="{{ route('inventario.edit', $i->id) }}">Editar</a>
                                             <a class="dropdown-item"
@@ -89,7 +102,7 @@
                                             <a class="dropdown-item" href="#" data-toggle="modal"
                                                 data-target="#confirmarEliminarModal" data-id="{{ $i->id }}"
                                                 data-url="{{ route('inventario.destroy', $i->id) }}">Eliminar</a>
-                                        </div>
+                                        </div> --}}
                                         <!-- Confirmar Eliminar Modal -->
                                         <div class="modal fade" id="confirmarEliminarModal" tabindex="-1" role="dialog"
                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -154,15 +167,55 @@
             // Inicializar DataTable
             table = $('#example').DataTable({
                 "columnDefs": [{
-                    "targets": [4],
-                    "visible": true,
-                    "searchable": true
-                },
-                { "targets": [0], "visible": false },
-                { "targets": [1], "visible": false },
-                { "targets": [2], "visible": false },
-            ],
-            "order": [[3, 'asc'], [4, 'asc']],
+                        "targets": [4],
+                        "visible": true,
+                        "searchable": true
+                    },
+                    {
+                        "targets": [0],
+                        "visible": false
+                    },
+                    {
+                        "targets": [1],
+                        "visible": false
+                    },
+                    {
+                        "targets": [2],
+                        "visible": false
+                    },
+                ],
+                "order": [
+                    [3, 'asc'],
+                    [4, 'asc']
+                ],
+                "dom": 'Bfrtip',
+                "buttons": [
+                    'excelHtml5',
+                    'csvHtml5',
+                    {
+                        "extend": 'print',
+                        "text": 'Imprimir',
+                        "autoPrint": true,
+                        "exportOptions": {
+                            "columns": [1, 2, 3, 4, 5, 6, 7, 8]
+                        },
+                        "customize": function(win) {
+                            $(win.document.body).css('font-size', '16pt');
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    },
+                    {
+                        "extend": 'pdfHtml5',
+                        "text": 'PDF',
+                        "filename": 'Pagos.pdf',
+                        "pageSize": 'LETTER',
+                        "exportOptions": {
+                            "columns": [1, 2, 3, 4, 5, 6, 7, 8]
+                        }
+                    }
+                ],
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
                 }

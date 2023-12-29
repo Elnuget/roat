@@ -15,7 +15,7 @@ mix.js('resources/js/app.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         require('postcss-import'),
         require('tailwindcss'),
-    ]);
+    ]).extract(['jquery', 'select2']);;
 
 if (mix.inProduction()) {
     mix.version();
