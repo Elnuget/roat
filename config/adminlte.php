@@ -291,6 +291,13 @@ return [
             ],
         ],*/
         [
+            'text'    => 'Admin', // Título del enlace en el menú
+            'icon'    => 'fas fa-user-cog', // Icono para la sección de administración. Cambia según tus preferencias
+            'route'   => 'admin.index', // La ruta debe coincidir con una ruta nombrada en tus rutas de Laravel
+            'active'  => ['admin', 'admin/*'], // Patrón para definir cuándo este ítem estará activo
+        ],
+        
+        [
             'text'    => 'Dashboard', // Título del enlace en el menú
             'icon'    => 'fas fa-tachometer-alt', // Icono para el Dashboard. Cambia según tus preferencias
             'route'   => 'dashboard', // La ruta debe coincidir con una ruta nombrada en tus rutas de Laravel

@@ -4,6 +4,8 @@ use App\Http\Controllers\AjustesDeInventarioController;
 use App\Http\Controllers\ArticulosController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\ComunasController;
+
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\mediosdepagoController;
 use App\Http\Controllers\PacienteController;
@@ -131,3 +133,6 @@ Route::get('Pacientes/{id}', [PacienteController::class, 'show'])->name('pacient
 Route::get('Pacientes/{id}/editar', [PacienteController::class, 'edit'])->name('pacientes.edit');
 Route::put('Pacientes/{id}', [PacienteController::class, 'update'])->name('pacientes.update');
 Route::delete('Pacientes/{id}', [PacienteController::class, 'destroy'])->name('pacientes.destroy');
+
+// Admin
+Route::middleware(['auth:sanctum', 'verified'])->get('/admin', [AdminController::class, 'index'])->name('admin.index');
