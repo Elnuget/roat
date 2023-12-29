@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Paciente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,14 +16,18 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $hoy = Carbon::now();
+        // Establecer la zona horaria a la de Quito, Ecuador
+        $hoy = Carbon::now('America/Guayaquil');
 
+        // Obtener pacientes que cumplen años hoy
         $pacientes = Paciente::whereMonth('fecha_nacimiento', '=', $hoy->month)
-                             ->whereDay('fecha_nacimiento', '=', $hoy->day)
-                             ->get();
+            ->whereDay('fecha_nacimiento', '=', $hoy->day)
+            ->get();
 
+        // Retornar la vista con los pacientes
         return view('admin.index', compact('pacientes'));
     }
+
     /**
      * Show the form for creating a new resource.
      *

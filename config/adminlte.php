@@ -226,70 +226,13 @@ return [
 
     'menu' =>         [
         
-       /*  [
-            'text'    => 'Ventas',
-            'icon'    => 'fas fa-file-invoice',
-            'route'  => 'ventas.index',
-            'active' => ['Ventas/*']
-        ],
         [
-            'text'    => 'Articulos',
-            'icon'    => 'fas fa-boxes',
-            'active' => ['Articulos/*'],
-            'submenu' =>
-            [
-                [
-                    'text'    => 'Articulos',
-                    'icon'    => 'fas fa-boxes',
-                    'route'  => 'articulos.index',
-                    'active' => ['Articulos/*']
-                ],
-                [
-                    'text'    => 'Recepciones',
-                    'icon'    => 'fas fa-truck-loading',
-                    'route'  => 'recepciones.index',
-                    'active' => ['Recepciones/*']
-                ],
-                [
-                    'text'    => 'Ajustes de inventario',
-                    'icon'    => 'fas fa-barcode',
-                    'route'  => 'ajustesdeinventario.index',
-                    'active' => ['AjustesDeInventario/*']
-                ],
-
-            ]
+            'text'    => 'Dashboard', // Título del enlace en el menú
+            'icon'    => 'fas fa-tachometer-alt', // Icono para el Dashboard. Cambia según tus preferencias
+            'route'   => 'dashboard', // La ruta debe coincidir con una ruta nombrada en tus rutas de Laravel
+            'active'  => ['dashboard', 'dashboard/*'], // Patrón para definir cuándo este ítem estará activo
         ],
-        [
-            'text'    => 'Clientes',
-            'icon'    => 'fas fa-user-friends',
-            'route'  => 'clientes.index',
-            'active' => ['Clientes/*']
-        ],
-        [
-            'text'    => 'Proveedores',
-            'icon'    => 'fas fa-warehouse',
-            'route'  => 'proveedores.index',
-            'active' => ['Proveedores/*']
-        ], */
-      [
-            'text'    => 'Configuracion',
-            'icon'    => 'fas fa-cog',
-            'active' => ['Configuracion/*'],
-            'submenu' => [
-                [
-                    'text'    => 'Usuarios',
-                    'icon'    => 'fas fa-cog',
-                    'route'  => 'configuracion.usuarios.index',
-                    'active' => ['Configuracion/Usuarios/*']
-                ],
-                [
-                    'text'    => 'Medios de pago',
-                    'icon'    => 'fas fa-cog',
-                    'route'  => 'configuracion.mediosdepago.index',
-                    'active' => ['Configuración/MediosDePago/*']
-                ],
-            ],
-        ],
+      
         [
             'text'    => 'Admin', // Título del enlace en el menú
             'icon'    => 'fas fa-user-cog', // Icono para la sección de administración. Cambia según tus preferencias
@@ -297,12 +240,7 @@ return [
             'active'  => ['admin', 'admin/*'], // Patrón para definir cuándo este ítem estará activo
         ],
         
-        [
-            'text'    => 'Dashboard', // Título del enlace en el menú
-            'icon'    => 'fas fa-tachometer-alt', // Icono para el Dashboard. Cambia según tus preferencias
-            'route'   => 'dashboard', // La ruta debe coincidir con una ruta nombrada en tus rutas de Laravel
-            'active'  => ['dashboard', 'dashboard/*'], // Patrón para definir cuándo este ítem estará activo
-        ],
+        
         
         
         [
@@ -323,7 +261,25 @@ return [
             'route'  => 'pagos.index',
             'active' => ['pagos/*']
         ],
-
+        [
+            'text'    => 'Configuracion',
+            'icon'    => 'fas fa-cog',
+            'active' => ['Configuracion/*'],
+            'submenu' => [
+                [
+                    'text'    => 'Usuarios',
+                    'icon'    => 'fas fa-cog',
+                    'route'  => 'configuracion.usuarios.index',
+                    'active' => ['Configuracion/Usuarios/*']
+                ],
+                [
+                    'text'    => 'Medios de pago',
+                    'icon'    => 'fas fa-cog',
+                    'route'  => 'configuracion.mediosdepago.index',
+                    'active' => ['Configuración/MediosDePago/*']
+                ],
+            ],
+        ],
 
     ],
     /*

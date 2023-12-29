@@ -27,7 +27,7 @@
                                 <div class="form-row">
                                     <div class="col-md-4">
                                         <label for="filtroFecha">Seleccionar Fecha:</label>
-                                        <input type="month" class="form-control" id="filtroFecha" />
+                                        <input type="month" class="form-control" id="filtroFecha" value="{{ now()->format('Y-m') }}" />
                                     </div>
                                     <div class="col-md-4">
                                         <label for="lugar">Lugar:</label>
@@ -223,6 +223,16 @@
             table.on('init', function() {
                 $('.dataTables_filter label input').attr('placeholder', 'Buscar por código');
             });
+            // Aplicar el filtrado inicial por fecha actual
+        function aplicarFiltroInicial() {
+            var filtroFecha = $('#filtroFecha').val();
+            table.columns(1).search(filtroFecha).draw(); // Filtrar por la columna de fecha
+        }
+        // Aplicar el filtro cuando DataTable se inicializa
+        table.on('init', function() {
+            aplicarFiltroInicial();
+        });
+
             // Evento click del botón de filtrar
             $('#btnFiltrar').on('click', function() {
                 var filtroFecha = $('#filtroFecha').val();
@@ -253,7 +263,5 @@
 
 
 @section('footer')
-    <div class="float-right d-none d-sm-block">
-        <b>Version</b> @version('compact')
-    </div>
+    
 @stop
