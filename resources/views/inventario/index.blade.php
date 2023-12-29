@@ -78,10 +78,23 @@
                                 <td>{{ $i->orden }}</td>
                                 <td>
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-success dropdown-toggle"
+                                        <a href="{{ route('inventario.edit', $i->id) }}"
+                                            class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar">
+                                            <i class="fa fa-lg fa-fw fa-pen"></i>
+                                        </a>
+    
+    
+    
+    
+                                        <a class="btn btn-xs btn-default text-danger mx-1 shadow" href="#"
+                                            data-toggle="modal" data-target="#confirmarEliminarModal"
+                                            data-id="{{ $i->id }}" data-url="{{ route('inventario.destroy', $i->id) }}">
+                                            <i class="fa fa-lg fa-fw fa-trash"></i>
+                                        </a>
+                                       {{--  <button type="button" class="btn btn-success dropdown-toggle"
                                             data-toggle="dropdown">Acciones</button>
-
-                                        <div class="dropdown-menu" role="menu">
+ --}}
+                                       {{--  <div class="dropdown-menu" role="menu">
                                             <a class="dropdown-item"
                                                 href="{{ route('inventario.edit', $i->id) }}">Editar</a>
                                             <a class="dropdown-item"
@@ -89,7 +102,7 @@
                                             <a class="dropdown-item" href="#" data-toggle="modal"
                                                 data-target="#confirmarEliminarModal" data-id="{{ $i->id }}"
                                                 data-url="{{ route('inventario.destroy', $i->id) }}">Eliminar</a>
-                                        </div>
+                                        </div> --}}
                                         <!-- Confirmar Eliminar Modal -->
                                         <div class="modal fade" id="confirmarEliminarModal" tabindex="-1" role="dialog"
                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
