@@ -45,13 +45,13 @@ class mediosdepagoController extends Controller
             $medio->save();
             return redirect()->route('configuracion.mediosdepago.index')->with([
                 'error' => 'Exito',
-                'mensaje' => 'Medio de pago creado con exito',
+                'mensaje' => 'Medio de pago creado exitosamente',
                 'tipo' => 'alert-success'
             ]);
         } catch (\Exception $e) {
             return redirect()->route('configuracion.mediosdepago.index')->with([
                 'error' => 'Error',
-                'mensaje' => 'Medio de pago no pudo ser creado',
+                'mensaje' => 'Medio de pago no se ha creado',
                 'tipo' => 'alert-danger'
             ]);
         }

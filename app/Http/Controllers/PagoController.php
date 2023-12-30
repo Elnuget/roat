@@ -51,7 +51,20 @@ class PagoController extends Controller
         // Crear un nuevo pago
         Pago::create($validatedData);
 
-        return redirect('/Pagos')->with('success', 'Pago creado correctamente');
+       
+        try {
+            return redirect('/Pagos')->with([
+                'error' => 'Exito',
+                'mensaje' => 'Pago creado exitosamente',
+                'tipo' => 'alert-success'
+            ]);
+        } catch (\Exception $e) {
+            return redirect('/Pagos')->with([
+                'error' => 'Error',
+                'mensaje' => 'Pago no se ha creado',
+                'tipo' => 'alert-danger'
+            ]);
+        }
     }
 
     /**
@@ -78,6 +91,8 @@ class PagoController extends Controller
         $mediosdepago = mediosdepago::all();
         $pago = Pago::findOrFail($id);
         return view('pagos.edit', compact('pago','pacientes','mediosdepago')); // Retornar vista para editar el pago
+    
+        
     }
 
     /**
@@ -98,7 +113,21 @@ class PagoController extends Controller
 
         Pago::whereId($id)->update($validatedData);
 
-        return redirect('/Pagos')->with('success', 'Pago actualizado correctamente');
+        
+        
+        try {
+            return redirect('/Pagos')->with([
+                'error' => 'Exito',
+                'mensaje' => 'Pago actualizado exitosamente',
+                'tipo' => 'alert-success'
+            ]);
+        } catch (\Exception $e) {
+            return redirect('/Pagos')->with([
+                'error' => 'Error',
+                'mensaje' => 'Pago no se ha actualizado',
+                'tipo' => 'alert-danger'
+            ]);
+        }
     }
 
     /**
@@ -112,6 +141,19 @@ class PagoController extends Controller
         $pago = Pago::findOrFail($id);
         $pago->delete();
 
-        return redirect('/Pagos')->with('success', 'Pago eliminado correctamente');
+        
+        try {
+            return redirect('/Pagos')->with([
+                'error' => 'Exito',
+                'mensaje' => 'Pago eliminado exitosamente',
+                'tipo' => 'alert-success'
+            ]);
+        } catch (\Exception $e) {
+            return redirect('/Pagos')->with([
+                'error' => 'Error',
+                'mensaje' => 'Pago no se ha eliminado',
+                'tipo' => 'alert-danger'
+            ]);
+        }
     }
 }

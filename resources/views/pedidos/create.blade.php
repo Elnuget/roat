@@ -145,7 +145,7 @@
 </div>
 <!-- /.card-body -->
 <div class="card-footer">
-    Añadir Pago
+    Añadir Pedido
 </div>
 <!-- /.card-footer-->
 </div>

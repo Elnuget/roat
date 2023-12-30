@@ -7,7 +7,7 @@
 <p>Administracion de Pacientes</p>
 @if (session('error'))
 <div class="alert {{ session('tipo') }} alert-dismissible fade show" role="alert">
-    <strong>{{ session('error') }}</strong> {{ session('mensaje') }}
+    <strong> {{ session('mensaje') }}</strong>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -27,8 +27,6 @@
                         <td>Nombre</td>
                         <td>Fecha de Nacimiento</td>
                         <td>Teléfono</td>
-
-
                         <td>Acciones</td>
                     </tr>
                 </thead>

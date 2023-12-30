@@ -71,7 +71,19 @@ class InventarioController extends Controller
         'orden' => $validatedData['orden'],
     ]);
 
-        return redirect()->route('inventario.index');
+        try {
+            return redirect()->route('inventario.index')->with([
+                'error' => 'Exito',
+                'mensaje' => 'Artículo creado exitosamente',
+                'tipo' => 'alert-success'
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->route('inventario.index')->with([
+                'error' => 'Error',
+                'mensaje' => 'Artículo no se ha creado',
+                'tipo' => 'alert-danger'
+            ]);
+        }
     }
 
    
@@ -121,7 +133,20 @@ class InventarioController extends Controller
         ]);
 
         Inventario::whereId($id)->update($validatedData);
-        return redirect()->route('inventario.index');
+
+        try {
+            return redirect()->route('inventario.index')->with([
+                'error' => 'Exito',
+                'mensaje' => 'Artículo actualizado exitosamente',
+                'tipo' => 'alert-success'
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->route('inventario.index')->with([
+                'error' => 'Error',
+                'mensaje' => 'Artículo no se ha actualizado',
+                'tipo' => 'alert-danger'
+            ]);
+        }
     }
 
     /**
@@ -134,7 +159,21 @@ class InventarioController extends Controller
     {
         $inventario = Inventario::findOrFail($id);
         $inventario->delete();
-        return redirect()->route('inventario.index');
+        
+
+        try {
+            return redirect()->route('inventario.index')->with([
+                'error' => 'Exito',
+                'mensaje' => 'Artículo eliminado exitosamente',
+                'tipo' => 'alert-success'
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->route('inventario.index')->with([
+                'error' => 'Error',
+                'mensaje' => 'Artículo no se ha eliminado',
+                'tipo' => 'alert-danger'
+            ]);
+        }
     }
 
    

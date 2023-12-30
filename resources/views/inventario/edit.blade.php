@@ -88,6 +88,9 @@
 
                     <button type="button" class="btn btn-primary pull-left" data-toggle="modal" data-target="#modal">Editar
                         Articulo</button>
+                        <a href="{{ route('inventario.index') }}" class="btn btn-secondary ">
+                            Cancelar
+                        </a>
                     <div class="modal fade" id="modal">
                         <div class="modal-dialog">
                             <div class="modal-content">

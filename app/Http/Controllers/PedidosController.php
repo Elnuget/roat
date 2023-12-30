@@ -80,7 +80,20 @@ class PedidosController extends Controller
             $inventarioItemD->save();
         }
 
-        return redirect()->route('pedidos.index')->with('success', 'Pedido creado con éxito.');
+       
+        try {
+            return redirect('/Pedidos')->with([
+                'error' => 'Exito',
+                'mensaje' => 'Pedido creado exitosamente',
+                'tipo' => 'alert-success'
+            ]);
+        } catch (\Exception $e) {
+            return redirect('/Pedidos')->with([
+                'error' => 'Error',
+                'mensaje' => 'Pedido no se ha creado',
+                'tipo' => 'alert-danger'
+            ]);
+        }
     }
 
     /**
@@ -94,7 +107,7 @@ class PedidosController extends Controller
         // Incluye las relaciones con 'aInventario' y 'dInventario'
         $pedido = Pedido::with(['aInventario', 'dInventario'])->findOrFail($id);
 
-        return view('pedidos.show', compact('Pedido'));
+        return view('pedidos.show', compact('pedido'));
     }
 
     /**
@@ -109,7 +122,7 @@ class PedidosController extends Controller
         $pacientes = Paciente::all(); // Obtener todos los pacientes
         $inventarioItems = Inventario::all(); // Obtener todos los items del inventario
 
-        return view('pedidos.edit', compact('Pedido', 'pacientes', 'inventarioItems'));
+        return view('pedidos.edit', compact('pedido', 'pacientes', 'inventarioItems'));
     }
 
     /**
@@ -142,7 +155,20 @@ class PedidosController extends Controller
         $pedido->fill($validatedData);
         $pedido->save();
 
-        return redirect()->route('Pedidos.index')->with('success', 'Pedido actualizado con éxito.');
+        
+        try {
+            return redirect('/Pedidos')->with([
+                'error' => 'Exito',
+                'mensaje' => 'Pedido actualizado exitosamente',
+                'tipo' => 'alert-success'
+            ]);
+        } catch (\Exception $e) {
+            return redirect('/Pedidos')->with([
+                'error' => 'Error',
+                'mensaje' => 'Pedido no se ha actualizado',
+                'tipo' => 'alert-danger'
+            ]);
+        }
     }
 
     /**
@@ -156,6 +182,20 @@ class PedidosController extends Controller
         $pedido = Pedido::findOrFail($id);
         $pedido->delete();
 
-        return redirect()->route('Pedidos.index')->with('success', 'Pedido eliminado con éxito.');
+   
+
+        try {
+            return redirect('/Pedidos')->with([
+                'error' => 'Exito',
+                'mensaje' => 'Pedido eliminado exitosamente',
+                'tipo' => 'alert-success'
+            ]);
+        } catch (\Exception $e) {
+            return redirect('/Pedidos')->with([
+                'error' => 'Error',
+                'mensaje' => 'Pedido no se ha eliminado',
+                'tipo' => 'alert-danger'
+            ]);
+        }
     }
 }

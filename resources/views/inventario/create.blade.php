@@ -5,7 +5,7 @@
 @section('content_header')
     @if (session('error'))
         <div class="alert {{ session('tipo') }} alert-dismissible fade show" role="alert">
-            <strong>{{ session('error') }}</strong> {{ session('mensaje') }}
+            <strong> {{ session('mensaje') }}</strong>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -88,6 +88,9 @@
 
                     <button type="button" class="btn btn-primary pull-left" data-toggle="modal" data-target="#modal">Crear
                         Articulo</button>
+                        <a href="{{ route('inventario.index') }}" class="btn btn-secondary ">
+                            Cancelar
+                        </a>
                     <div class="modal fade" id="modal">
                         <div class="modal-dialog">
                             <div class="modal-content">

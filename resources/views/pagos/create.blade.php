@@ -66,6 +66,9 @@
         <br>
 
         <button type="button" class="btn btn-primary pull-left" data-toggle="modal" data-target="#modal">Añadir Pago</button>
+        <a href="{{ route('pagos.index') }}" class="btn btn-secondary ">
+          Cancelar
+      </a>
         <div class="modal fade" id="modal">
           <div class="modal-dialog">
             <div class="modal-content">

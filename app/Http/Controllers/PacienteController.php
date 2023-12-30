@@ -46,7 +46,21 @@ class PacienteController extends Controller
         // Crear un nuevo paciente
         Paciente::create($validatedData);
 
-        return redirect('/Pacientes')->with('success', 'Paciente creado correctamente');
+       
+
+        try {
+            return redirect('/Pacientes')->with([
+                'error' => 'Exito',
+                'mensaje' => 'Paciente creado exitosamente',
+                'tipo' => 'alert-success'
+            ]);
+        } catch (\Exception $e) {
+            return redirect('/Pacientes')->with([
+                'error' => 'Error',
+                'mensaje' => 'Paciente no se ha creado',
+                'tipo' => 'alert-danger'
+            ]);
+        }
     }
 
     /**
@@ -90,7 +104,21 @@ class PacienteController extends Controller
 
         Paciente::whereId($id)->update($validatedData);
 
-        return redirect('/Pacientes')->with('success', 'Paciente actualizado correctamente');
+        
+
+        try {
+            return redirect('/Pacientes')->with([
+                'error' => 'Exito',
+                'mensaje' => 'Paciente actualizado exitosamente',
+                'tipo' => 'alert-success'
+            ]);
+        } catch (\Exception $e) {
+            return redirect('/Pacientes')->with([
+                'error' => 'Error',
+                'mensaje' => 'Paciente no se ha actualizado',
+                'tipo' => 'alert-danger'
+            ]);
+        }
     }
 
     /**
@@ -104,6 +132,19 @@ class PacienteController extends Controller
         $paciente = Paciente::findOrFail($id);
         $paciente->delete();
 
-        return redirect('/Pacientes')->with('success', 'Paciente eliminado correctamente');
+        
+        try {
+            return redirect('/Pacientes')->with([
+                'error' => 'Exito',
+                'mensaje' => 'Paciente eliminado exitosamente',
+                'tipo' => 'alert-success'
+            ]);
+        } catch (\Exception $e) {
+            return redirect('/Pacientes')->with([
+                'error' => 'Error',
+                'mensaje' => 'Paciente no se ha eliminado',
+                'tipo' => 'alert-danger'
+            ]);
+        }
     }
 }
