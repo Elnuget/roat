@@ -60,7 +60,7 @@ class PedidosController extends Controller
             'total' => 'required|numeric',
             'saldo' => 'required|numeric' // Corregir la capitalización de 'Saldo'
         ]);
-
+        try {
         $pedido = new Pedido($validatedData);
         $pedido->save();
 
@@ -68,6 +68,7 @@ class PedidosController extends Controller
         $inventarioItemA = Inventario::find($validatedData['a_inventario_id']);
         if ($inventarioItemA) {
             $inventarioItemA->orden = $validatedData['numero_orden'];
+            $inventarioItemA->cantidad -= 1;
             $inventarioItemA->valor = $validatedData['a_precio'];
             $inventarioItemA->save();
         }
@@ -76,12 +77,13 @@ class PedidosController extends Controller
         if ($inventarioItemD) {
             // Actualizar con el número de orden y el precio del artículo D
             $inventarioItemD->orden = $validatedData['numero_orden'];
+            $inventarioItemD->cantidad -= 1;
             $inventarioItemD->valor = $validatedData['d_precio'];
             $inventarioItemD->save();
         }
 
        
-        try {
+      
             return redirect('/Pedidos')->with([
                 'error' => 'Exito',
                 'mensaje' => 'Pedido creado exitosamente',
@@ -150,13 +152,13 @@ class PedidosController extends Controller
             'total' => 'required|numeric',
             'saldo' => 'required|numeric' // Corregir la capitalización de 'Saldo'
         ]);
-
+        try {
         $pedido = Pedido::findOrFail($id);
         $pedido->fill($validatedData);
         $pedido->save();
 
         
-        try {
+
             return redirect('/Pedidos')->with([
                 'error' => 'Exito',
                 'mensaje' => 'Pedido actualizado exitosamente',
@@ -179,12 +181,13 @@ class PedidosController extends Controller
      */
     public function destroy($id)
     {
+        try {
         $pedido = Pedido::findOrFail($id);
         $pedido->delete();
 
    
 
-        try {
+     
             return redirect('/Pedidos')->with([
                 'error' => 'Exito',
                 'mensaje' => 'Pedido eliminado exitosamente',
@@ -193,7 +196,7 @@ class PedidosController extends Controller
         } catch (\Exception $e) {
             return redirect('/Pedidos')->with([
                 'error' => 'Error',
-                'mensaje' => 'Pedido no se ha eliminado',
+                'mensaje' => 'No se puede eliminar el pedido porque tiene registros de pagos asociados. Por favor, elimine los pagos antes de intentar eliminar el pedido.',
                 'tipo' => 'alert-danger'
             ]);
         }

@@ -14,6 +14,7 @@ use App\Http\Controllers\ProveedoresController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\RecepcionesController;
 use App\Http\Controllers\VentasController; 
+use App\Http\Controllers\PagonuevosController; 
 use App\Http\Controllers\DetalleVentasController;
 use App\Models\Inventario;
 use Illuminate\Support\Facades\Route;
@@ -153,3 +154,12 @@ Route::get('Pedidos/{id}', [PedidosController::class, 'show'])->name('pedidos.sh
 Route::get('Pedidos/{id}/editar', [PedidosController::class, 'edit'])->name('pedidos.edit');
 Route::put('Pedidos/{id}', [PedidosController::class, 'update'])->name('pedidos.update');
 Route::delete('Pedidos/{id}', [PedidosController::class, 'destroy'])->name('pedidos.destroy');
+
+// Pagosnuevos
+Route::get('Pagonuevos', [PagonuevosController::class, 'index'])->name('pagonuevos.index');
+Route::get('Pagonuevos/Crear', [PagonuevosController::class, 'create'])->name('pagonuevos.create');
+Route::post('Pagonuevos', [PagonuevosController::class, 'store'])->name('pagonuevos.store');
+Route::get('Pagonuevos/{id}', [PagonuevosController::class, 'show'])->name('pagonuevos.show');
+Route::get('Pagonuevos/{id}/editar', [PagonuevosController::class, 'edit'])->name('pagonuevos.edit');
+Route::put('Pagonuevos/{id}', [PagonuevosController::class, 'update'])->name('pagonuevos.update');
+Route::delete('Pagonuevos/{id}', [PagonuevosController::class, 'destroy'])->name('pagonuevos.destroy');

@@ -223,72 +223,71 @@ return [
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Menu-Configuration
     |
     */
+  
 
-    'menu' =>         [
+    'menu' => [
+
+
+
         [
-            'text'    => 'Pedidos',
-            'icon'    => 'fas fa-shopping-cart', // Puedes cambiar el icono según tus preferencias
-            'route'   => 'pedidos.index',
-            'active'  => ['Pedidos/*']
+            'text' => 'Dashboard', // Título del enlace en el menú
+            'icon' => 'fas fa-tachometer-alt', // Icono para el Dashboard. Cambia según tus preferencias
+            'route' => 'dashboard', // La ruta debe coincidir con una ruta nombrada en tus rutas de Laravel
+            'active' => ['dashboard', 'dashboard/*'], // Patrón para definir cuándo este ítem estará activo
         ],
-        
+
         [
-            'text'    => 'Ventas',
-            'icon'    => 'fas fa-file-invoice',
-            'route'  => 'ventas.index',
-            'active' => ['Ventas/*']
+            'text' => 'Admin', // Título del enlace en el menú
+            'icon' => 'fas fa-user-cog', // Icono para la sección de administración. Cambia según tus preferencias
+            'route' => 'admin.index', // La ruta debe coincidir con una ruta nombrada en tus rutas de Laravel
+            'active' => ['admin', 'admin/*'], // Patrón para definir cuándo este ítem estará activo
         ],
-        
+
         [
-            'text'    => 'Dashboard', // Título del enlace en el menú
-            'icon'    => 'fas fa-tachometer-alt', // Icono para el Dashboard. Cambia según tus preferencias
-            'route'   => 'dashboard', // La ruta debe coincidir con una ruta nombrada en tus rutas de Laravel
-            'active'  => ['dashboard', 'dashboard/*'], // Patrón para definir cuándo este ítem estará activo
+            'text' => 'Pedidos',
+            'icon' => 'fas fa-shopping-cart', // Puedes cambiar el icono según tus preferencias
+            'route' => 'pedidos.index',
+            'active' => ['Pedidos/*']
         ],
-      
+
+
+
         [
-            'text'    => 'Admin', // Título del enlace en el menú
-            'icon'    => 'fas fa-user-cog', // Icono para la sección de administración. Cambia según tus preferencias
-            'route'   => 'admin.index', // La ruta debe coincidir con una ruta nombrada en tus rutas de Laravel
-            'active'  => ['admin', 'admin/*'], // Patrón para definir cuándo este ítem estará activo
-        ],
-        
-        
-        
-        
-        [
-            'text'    => 'Pacientes',
-            'icon'    => 'fas fa-user-injured', // Puedes cambiar el ícono según prefieras
-            'route'   => 'pacientes.index',
-            'active'  => ['pacientes/*'], // Asegúrate de que esto coincida con tus rutas nombradas en Laravel
+            'text' => 'Pacientes',
+            'icon' => 'fas fa-user-injured', // Puedes cambiar el ícono según prefieras
+            'route' => 'pacientes.index',
+            'active' => ['pacientes/*'], // Asegúrate de que esto coincida con tus rutas nombradas en Laravel
         ],
         [
-            'text'    => 'Inventario',
-            'icon'    => 'fas fa-file-invoice',
-            'route'  => 'inventario.index',
+            'text' => 'Inventario',
+            'icon' => 'fas fa-file-invoice',
+            'route' => 'inventario.index',
             'active' => ['Inventario/*']
         ],
+
         [
-            'text'    => 'Pago',
-            'icon'    => 'fas fa-file-invoice',
-            'route'  => 'pagos.index',
-            'active' => ['pagos/*']
+            'text' => 'Pago',
+            'icon' => 'fas fa-credit-card', // Ícono cambiado aquí
+            'route' => 'pagonuevos.index',
+            'active' => ['pagonuevos/*']
         ],
+
+
         [
-            'text'    => 'Configuracion',
-            'icon'    => 'fas fa-cog',
+            'text' => 'Configuracion',
+            'icon' => 'fas fa-cog',
             'active' => ['Configuracion/*'],
             'submenu' => [
                 [
-                    'text'    => 'Usuarios',
-                    'icon'    => 'fas fa-cog',
-                    'route'  => 'configuracion.usuarios.index',
+                    'text' => 'Usuarios',
+                    'icon' => 'fas fa-cog',
+                    'route' => 'configuracion.usuarios.index',
                     'active' => ['Configuracion/Usuarios/*']
                 ],
                 [
-                    'text'    => 'Medios de pago',
-                    'icon'    => 'fas fa-cog',
-                    'route'  => 'configuracion.mediosdepago.index',
+                    'text' => 'Medios de pago',
+                    'icon' => 'fas fa-cog',
+                    'route' => 'configuracion.mediosdepago.index',
                     'active' => ['Configuración/MediosDePago/*']
                 ],
             ],

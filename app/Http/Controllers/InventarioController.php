@@ -56,7 +56,7 @@ class InventarioController extends Controller
             'orden' => 'nullable|integer', // Orden es requerido y debe ser un número entero
         ]);
 
-      
+        try {
 
     // Almacenar en la base de datos
     Inventario::create([
@@ -71,7 +71,7 @@ class InventarioController extends Controller
         'orden' => $validatedData['orden'],
     ]);
 
-        try {
+        
             return redirect()->route('inventario.index')->with([
                 'error' => 'Exito',
                 'mensaje' => 'Artículo creado exitosamente',
@@ -131,10 +131,10 @@ class InventarioController extends Controller
             'cantidad' => 'required|integer',
             'orden' => 'nullable|integer',
         ]);
-
+        try {
         Inventario::whereId($id)->update($validatedData);
 
-        try {
+      
             return redirect()->route('inventario.index')->with([
                 'error' => 'Exito',
                 'mensaje' => 'Artículo actualizado exitosamente',
@@ -157,11 +157,12 @@ class InventarioController extends Controller
      */
     public function destroy($id)
     {
+        try {
         $inventario = Inventario::findOrFail($id);
         $inventario->delete();
         
 
-        try {
+     
             return redirect()->route('inventario.index')->with([
                 'error' => 'Exito',
                 'mensaje' => 'Artículo eliminado exitosamente',
@@ -170,7 +171,7 @@ class InventarioController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('inventario.index')->with([
                 'error' => 'Error',
-                'mensaje' => 'Artículo no se ha eliminado',
+                'mensaje' => 'No se puede eliminar el artículo del inventario porque está asociado a pedidos existentes. Por favor, elimine los pedidos que contienen este artículo antes de intentar eliminarlo.',
                 'tipo' => 'alert-danger'
             ]);
         }

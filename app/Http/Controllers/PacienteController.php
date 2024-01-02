@@ -42,13 +42,13 @@ class PacienteController extends Controller
             'telefono' => 'required',
             'fecha_nacimiento' => 'required|date',
         ]);
-
+        try {
         // Crear un nuevo paciente
         Paciente::create($validatedData);
 
        
 
-        try {
+     
             return redirect('/Pacientes')->with([
                 'error' => 'Exito',
                 'mensaje' => 'Paciente creado exitosamente',
@@ -101,12 +101,12 @@ class PacienteController extends Controller
             'telefono' => 'required',
             'fecha_nacimiento' => 'required|date',
         ]);
-
+        try {
         Paciente::whereId($id)->update($validatedData);
 
         
 
-        try {
+       
             return redirect('/Pacientes')->with([
                 'error' => 'Exito',
                 'mensaje' => 'Paciente actualizado exitosamente',
@@ -129,11 +129,12 @@ class PacienteController extends Controller
      */
     public function destroy($id)
     {
+        try {
         $paciente = Paciente::findOrFail($id);
         $paciente->delete();
 
         
-        try {
+       
             return redirect('/Pacientes')->with([
                 'error' => 'Exito',
                 'mensaje' => 'Paciente eliminado exitosamente',
@@ -142,7 +143,7 @@ class PacienteController extends Controller
         } catch (\Exception $e) {
             return redirect('/Pacientes')->with([
                 'error' => 'Error',
-                'mensaje' => 'Paciente no se ha eliminado',
+                'mensaje' => 'No se puede eliminar el paciente porque está asociado a pedidos existentes. Por favor, elimine los pedidos que contienen a este paciente antes de intentar eliminarlo.',
                 'tipo' => 'alert-danger'
             ]);
         }

@@ -2,6 +2,7 @@
 
 @section('title', 'Inventario')
 
+
 @section('content_header')
     <h1>Inventario</h1>
     <p>Administracion de Articulos</p>
@@ -66,7 +67,7 @@
                     </thead>
                     <tbody>
                         @foreach ($inventario as $i)
-                            <tr>
+                        <tr @if($i->cantidad == 0) style="background-color: #FF0000;" @endif>
                                 <td>{{ $i->id }}</td>
                                 <td>{{ $i->fecha }}</td>
                                 <td>{{ $i->lugar . ' ' . $i->numero_lugar }}</td>
@@ -91,19 +92,7 @@
                                             data-id="{{ $i->id }}" data-url="{{ route('inventario.destroy', $i->id) }}">
                                             <i class="fa fa-lg fa-fw fa-trash"></i>
                                         </a>
-                                       {{--  <button type="button" class="btn btn-success dropdown-toggle"
-                                            data-toggle="dropdown">Acciones</button>
- --}}
-                                       {{--  <div class="dropdown-menu" role="menu">
-                                            <a class="dropdown-item"
-                                                href="{{ route('inventario.edit', $i->id) }}">Editar</a>
-                                            <a class="dropdown-item"
-                                                href="{{ route('inventario.show', $i->id) }}">Historial</a>
-                                            <a class="dropdown-item" href="#" data-toggle="modal"
-                                                data-target="#confirmarEliminarModal" data-id="{{ $i->id }}"
-                                                data-url="{{ route('inventario.destroy', $i->id) }}">Eliminar</a>
-                                        </div> --}}
-                                        <!-- Confirmar Eliminar Modal -->
+                                    
                                         <div class="modal fade" id="confirmarEliminarModal" tabindex="-1" role="dialog"
                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
@@ -150,6 +139,10 @@
 @stop
 
 @section('js')
+
+    @include('atajos')
+
+
     <script>
         $(document).ready(function() {
             var table;
@@ -257,6 +250,7 @@
                 table.search('').columns().search('').draw();
             });
         });
+
     </script>
 @stop
 

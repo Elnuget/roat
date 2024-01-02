@@ -113,8 +113,24 @@ class mediosdepagoController extends Controller
      */
     public function destroy($id)
     {
+        try {
         $inventario = mediosdepago::findOrFail($id);
         $inventario->delete();
         return redirect()->route('configuracion.mediosdepago.index');
+
+        
+          
+            return redirect()->route('configuracion.mediosdepago.index')->with([
+                'error' => 'Exito',
+                'mensaje' => 'Medio de pago eliminado con exito',
+                'tipo' => 'alert-primary'
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->route('configuracion.mediosdepago.index')->with([
+                'error' => 'Error',
+                'mensaje' => 'No se puede eliminar el medio de pago porque está asociado a pagos. Por favor, elimine los pagos que contienen a este medio de pago antes de intentar eliminarlo.',
+                'tipo' => 'alert-danger'
+            ]);
+        }
     }
 }

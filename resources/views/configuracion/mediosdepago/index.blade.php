@@ -2,12 +2,14 @@
 
 @section('title', 'Medios de pago')
 
+
+
 @section('content_header')
     <h1>Configuracion</h1>
     <p>Administracion de medios de pago</p>
     @if (session('error'))
         <div class="alert {{ session('tipo') }} alert-dismissible fade show" role="alert">
-            <strong>{{ session('error') }}</strong> {{ session('mensaje') }}
+            <strong>{{ session('mensaje') }}</strong>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -97,6 +99,7 @@
 
 @stop
 @section('js')
+@include('atajos')
     <script>
         $(document).ready(function() {
             // Configurar el modal antes de mostrarse

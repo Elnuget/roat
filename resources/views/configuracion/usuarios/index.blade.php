@@ -2,6 +2,8 @@
 
 @section('title', 'Usuarios')
 
+
+
 @section('content_header')
     <h1>Usuarios</h1>
     <p>Administracion de usuarios</p>
@@ -66,6 +68,7 @@
 @stop
 
 @section('js')
+@include('atajos')
     <script> $(document).ready(function() {
         $('#example').DataTable({
             "language": {

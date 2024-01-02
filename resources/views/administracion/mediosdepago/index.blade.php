@@ -2,6 +2,8 @@
 
 @section('title', 'Medios de pago')
 
+
+
 @section('content_header')
     <h1>Configuracion</h1>
     <p>Administracion de medios de pago</p>
@@ -28,9 +30,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($medio as $m)
+                    @foreach ($medio as $index => $m)
                         <tr>
-                            <td>{{ $m->id }}</td>
+                            <td>{{ $index+1 }}</td>
                             <td>{{ $m->medio_de_pago }}</td>
 
                             <td>
@@ -58,6 +60,7 @@
 @stop
 
 @section('js')
+@include('atajos')
     <script>
         $(document).ready(function() {
             $('#example').DataTable({

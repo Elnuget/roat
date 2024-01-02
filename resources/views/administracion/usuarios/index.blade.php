@@ -2,6 +2,8 @@
 
 @section('title', 'Usuarios')
 
+
+
 @section('content_header')
     <h1>Usuarios</h1>
     <p>Administracion de usuarios</p>
@@ -31,9 +33,9 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($usuarios as $u)
+                @foreach ($usuarios as $index => $u)
                 <tr>
-                        <td>{{$u->id}}</td>
+                        <td>{{$index +1 }}</td>
                         <td>{{$u->name}}</td>
                         <td>{{$u->user}}</td>
                         <td>{{$u->email}}</td>
@@ -66,6 +68,7 @@
 @stop
 
 @section('js')
+@include('atajos')
     <script> $(document).ready(function() {
         $('#example').DataTable({
             "language": {

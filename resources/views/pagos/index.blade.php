@@ -120,7 +120,7 @@
 @stop
 
 @section('js')
-
+@include('atajos')
 
     <script>
         $(document).ready(function() {

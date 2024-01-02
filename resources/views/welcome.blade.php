@@ -10,12 +10,25 @@
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Atajos del Sistema</h3>
-            <!-- Línea para imprimir la fecha y hora actual -->
-            
+           
         </div>
         <div class="card-body">
-            <!-- Contenido de los atajos del sistema aquí -->
-            <p>Aquí puedes añadir información sobre los atajos del sistema que desees destacar.</p>
+            <p>Información sobre los atajos del sistema que desees destacar.</p>
+
+           
+            <ul class="list-group">
+                <li class="list-group-item"><strong>Dashboard/Inicio::</strong> (Tecla de Inicio)</li>
+                <li class="list-group-item"><strong>Anterior:</strong> (Tecla ALT + Tecla de flecha dirección <-)</li>
+                <li class="list-group-item"><strong>Siguiente:</strong> (Tecla ALT + Tecla de flecha dirección ->)</li>
+                <li class="list-group-item"><strong>Dashboard/Inicio:</strong> (Tecla número 1)</li>
+                <li class="list-group-item"><strong>Admin:</strong> (Tecla número  2)</li>
+                <li class="list-group-item"><strong>Pedidos:</strong> (Tecla número  3)</li>
+                <li class="list-group-item"><strong>Pacientes:</strong> (Tecla número  4)</li>
+                <li class="list-group-item"><strong>Inventario:</strong> (Tecla número  5)</li>
+                <li class="list-group-item"><strong>Pago:</strong> (Tecla número  6)</li>
+                <li class="list-group-item"><strong>Usuarios:</strong> (Tecla número  7)</li>
+                <li class="list-group-item"><strong>Medio de pago:</strong> (Tecla número  8)</li>
+            </ul>
         </div>
     </div>
 @stop
@@ -25,5 +38,5 @@
 @stop
 
 @section('js')
-
+    @include('atajos')
 @stop

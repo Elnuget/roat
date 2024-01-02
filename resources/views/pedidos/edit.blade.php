@@ -36,7 +36,7 @@
 
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Editar Pago</h3>
+            <h3 class="card-title">Editar Pedido</h3>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip"
@@ -48,127 +48,163 @@
         </div>
 
         <div class="card-body">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <form action="{{ route('pedidos.update', $pedido->id) }}" method="POST">
                     @csrf
                     @method('PUT') {{-- Agregado para indicar que es una solicitud de actualización --}}
 
-                    <div class="mb-3">
-                        <label for="fecha" class="form-label">Fecha</label>
-                        <input type="date" class="form-control" id="fecha" name="fecha"
-                            value="{{ $pedido->fecha }}" required>
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <label for="fecha" class="form-label">Fecha</label>
+                            <input type="date" class="form-control" id="fecha" name="fecha"
+                                value="{{ $pedido->fecha }}" required>
+                        </div>
+
                     </div>
 
+                    <div class="form-group row">
+                        <div class="col-6">
+                            <label for="numero_orden" class="form-label">Orden</label>
+                            <input type="number" class="form-control" id="numero_orden" name="numero_orden"
+                                value="{{ $pedido->numero_orden }}" required>
+                        </div>
 
 
-                    <div class="mb-3">
-                        <label for="numero_orden" class="form-label">Número de Orden</label>
-                        <input type="number" class="form-control" id="numero_orden" name="numero_orden"
-                            value="{{ $pedido->numero_orden }}" required>
+
+                        <div class="col-6">
+                            <label for="fact" class="form-label">Factura</label>
+                            <input type="text" class="form-control" id="fact" name="fact"
+                                value="{{ $pedido->fact }}" required>
+                        </div>
                     </div>
+                    <div class="form-group row">
+                        <div class="col-6">
 
 
+                            <label for="paciente_id" class="form-label">Paciente</label>
+                            <select class="form-control" id="paciente_id" name="paciente_id" required>
+                                <option value="">Seleccione un Paciente</option>
+                                @foreach ($pacientes as $paciente)
+                                    <option value="{{ $paciente->id }}"
+                                        {{ $pedido->paciente_id == $paciente->id ? 'selected' : '' }}>
+                                        {{ $paciente->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
 
-                    <div class="mb-3">
-                        <label for="fact" class="form-label">Fact</label>
-                        <input type="text" class="form-control" id="fact" name="fact" value="{{ $pedido->fact }}"
-                            required>
+
+                        <div class="col-6">
+                            <label for="examen_visual" class="form-label">Examen Visual</label>
+                            <input type="number" class="form-control" id="examen_visual" name="examen_visual"
+                                value="{{ $pedido->examen_visual }}" required>
+                        </div>
+
                     </div>
+                    <div class="form-group row">
+                        <div class="col-6">
+                            <label for="a_inventario_id" class="form-label">Armazón</label>
+                            <select class="form-control" id="a_inventario_id" name="a_inventario_id">
+                                <option value="">Seleccione un Item del Inventario</option>
+                                @foreach ($inventarioItems as $item)
+                                    <option value="{{ $item->id }}"
+                                        {{ $pedido->a_inventario_id == $item->id ? 'selected' : '' }}>
+                                        {{ $item->codigo }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
 
 
 
-                    <div class="mb-3">
-                        <label for="paciente_id" class="form-label">Paciente</label>
-                        <select class="form-control" id="paciente_id" name="paciente_id" required>
-                            <option value="">Seleccione un Paciente</option>
-                            @foreach ($pacientes as $paciente)
-                                <option value="{{ $paciente->id }}"
-                                    {{ $pedido->paciente_id == $paciente->id ? 'selected' : '' }}>{{ $paciente->nombre }}
-                                </option>
-                            @endforeach
-                        </select>
+                        <div class="col-6">
+                            <label for="a_precio" class="form-label">Precio Armazón</label>
+                            <input type="number" class="form-control" id="a_precio" name="a_precio"
+                                value="{{ $pedido->a_precio }}">
+                        </div>
                     </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label for="l_medida" class="form-label">Lunas Medidas</label>
+                            <input type="text" class="form-control" id="l_medida" name="l_medida"
+                                value="{{ $pedido->l_medida }}">
+                        </div>
 
+                        <div class="col-4">
+                            <label for="l_detalle" class="form-label">Lunas Detalle</label>
+                            <input type="text" class="form-control" id="l_detalle" name="l_detalle"
+                                value="{{ $pedido->l_detalle }}">
+                        </div>
 
-
-                    <div class="mb-3">
-                        <label for="examen_visual" class="form-label">Examen Visual</label>
-                        <input type="number" class="form-control" id="examen_visual" name="examen_visual"
-                            value="{{ $pedido->examen_visual }}" required>
+                        <div class="col-4">
+                            <label for="l_precio" class="form-label">Precio Lunas</label>
+                            <input type="number" class="form-control" id="l_precio" name="l_precio"
+                                value="{{ $pedido->l_precio }}">
+                        </div>
                     </div>
+                    <div class="form-group row">
 
-                    <div class="mb-3">
-                        <label for="a_inventario_id" class="form-label">Item A del Inventario</label>
-                        <select class="form-control" id="a_inventario_id" name="a_inventario_id">
-                            <option value="">Seleccione un Item del Inventario</option>
-                            @foreach ($inventarioItems as $item)
-                                <option value="{{ $item->id }}"
-                                    {{ $pedido->a_inventario_id == $item->id ? 'selected' : '' }}>{{ $item->codigo }}
-                                </option>
-                            @endforeach
-                        </select>
+
+                        <div class="col-6">
+                            <label for="d_inventario_id" class="form-label">Accesorio</label>
+                            <select class="form-control" id="d_inventario_id" name="d_inventario_id">
+                                <option value="">Seleccione un Item del Inventario</option>
+                                @foreach ($inventarioItems as $item)
+                                    <!-- Utiliza la misma lista de items del inventario -->
+                                    <option value="{{ $item->id }}"
+                                        {{ $pedido->d_inventario_id == $item->id ? 'selected' : '' }}>
+                                        {{ $item->codigo }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-6">
+                            <label for="d_precio" class="form-label">Precio Accesorio</label>
+                            <input type="number" class="form-control" id="d_precio" name="d_precio"
+                                value="{{ $pedido->d_precio }}">
+                        </div>
+
                     </div>
+                        <div class="form-group row">
 
+                            <div class="col-12">
+                                <label for="total" class="form-label">Total</label>
+                                <input type="number" class="form-control" id="total" name="total"
+                                    value="{{ $pedido->total }}" required>
+                            </div>
+                        </div>
 
+                        <div class="form-group row">
+                            <div class="col-12" style="display: none;">
+                                <label for="saldo" class="form-label">Saldo</label>
+                                <input type="number" class="form-control" id="saldo" name="saldo"
+                                    value="{{ $pedido->saldo }}" required>
+                            </div>
 
-                    <div class="mb-3">
-                        <label for="a_precio" class="form-label">Precio A</label>
-                        <input type="number" class="form-control" id="a_precio" name="a_precio"
-                            value="{{ $pedido->a_precio }}">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="l_medida" class="form-label">Medida L</label>
-                        <input type="text" class="form-control" id="l_medida" name="l_medida"
-                            value="{{ $pedido->l_medida }}">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="l_detalle" class="form-label">Detalle L</label>
-                        <input type="text" class="form-control" id="l_detalle" name="l_detalle"
-                            value="{{ $pedido->l_detalle }}">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="l_precio" class="form-label">Precio L</label>
-                        <input type="number" class="form-control" id="l_precio" name="l_precio"
-                            value="{{ $pedido->l_precio }}">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="d_inventario_id" class="form-label">Item D del Inventario</label>
-                        <select class="form-control" id="d_inventario_id" name="d_inventario_id">
-                            <option value="">Seleccione un Item del Inventario</option>
-                            @foreach ($inventarioItems as $item)
-                                <!-- Utiliza la misma lista de items del inventario -->
-                                <option value="{{ $item->id }}"
-                                    {{ $pedido->d_inventario_id == $item->id ? 'selected' : '' }}>{{ $item->codigo }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="d_precio" class="form-label">Precio D</label>
-                        <input type="number" class="form-control" id="d_precio" name="d_precio"
-                            value="{{ $pedido->d_precio }}">
-                    </div>
-
-
-                    <div class="mb-3">
-                        <label for="total" class="form-label">Total</label>
-                        <input type="number" class="form-control" id="total" name="total"
-                            value="{{ $pedido->total }}" required>
-                    </div>
-
-                    <div class="mb-3" style="display: none;">
-                        <label for="saldo" class="form-label">Saldo</label>
-                        <input type="number" class="form-control" id="saldo" name="saldo"
-                            value="{{ $pedido->saldo }}" required>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                    <a href="{{ route('pedidos.index') }}" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                        <button type="button" class="btn btn-primary pull-left" data-toggle="modal" data-target="#modal">Editar pedido</button>
+                        <a href="{{ route('pedidos.index') }}" class="btn btn-secondary">Cancelar</a>
+                        <div class="modal fade" id="modal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+    
+                                        <h4 class="modal-title">Editar pedido</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>¿Estás seguro que quiere editar el pedido?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default pull-left"
+                                            data-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-primary">Editar pedido</button>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
                 </form>
             </div>
         </div>
@@ -201,6 +237,12 @@
         document.getElementById('a_precio').addEventListener('input', calculateTotal);
         document.getElementById('d_precio').addEventListener('input', calculateTotal);
         document.getElementById('l_precio').addEventListener('input', calculateTotal);
+        // Agrega un 'event listener' al documento para escuchar eventos de teclado
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Home") { // Verifica si la tecla presionada es 'F1'
+                window.location.href = '/dashboard'; // Redirecciona a '/dashboard'
+            }
+        });
     </script>
 
 @stop
