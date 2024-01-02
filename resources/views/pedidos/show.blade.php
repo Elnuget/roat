@@ -154,5 +154,12 @@
                 },
             });
         });
+        // Agrega un 'event listener' al documento para escuchar eventos de teclado
+document.addEventListener('keydown', function(event) {
+    if (event.key === "Home") { // Verifica si la tecla presionada es 'F1'
+        window.location.href = '/dashboard'; // Redirecciona a '/dashboard'
+    }
+});
+
     </script>
     @stop

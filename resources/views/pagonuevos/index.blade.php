@@ -38,9 +38,9 @@
                     <tr>
                         <td>{{ $index + 1 }}</td>
                         <td>{{ $pago->pedido->numero_orden }}</td>
-                        
+
                         <td>{{ $pago->mediodepago->medio_de_pago }}</td>
-                        
+
                         <td>{{ $pago->pago }}</td>
 
                         <td>{{ $pago->pedido->saldo }}</td>
@@ -175,5 +175,13 @@
             pagosTable.column(1).search(pacienteId).draw();
         });
     });
+
+    
+// Agrega un 'event listener' al documento para escuchar eventos de teclado
+document.addEventListener('keydown', function(event) {
+    if (event.key === "Home") { // Verifica si la tecla presionada es 'F1'
+        window.location.href = '/dashboard'; // Redirecciona a '/dashboard'
+    }
+});
 </script>
 @stop
