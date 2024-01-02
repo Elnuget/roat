@@ -54,12 +54,12 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="numero_orden" class="form-label">Número de Orden</label>
+                    <label for="numero_orden" class="form-label">Orden</label>
                     <input type="number" class="form-control" id="numero_orden" name="numero_orden" required>
                 </div>
 
                 <div class="mb-3">
-                    <label for="fact" class="form-label">Fact</label>
+                    <label for="fact" class="form-label">Factura</label>
                     <input type="text" class="form-control" id="fact" name="fact" required>
                 </div>
 
@@ -80,7 +80,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="a_inventario_id" class="form-label">Item A del Inventario</label>
+                    <label for="a_inventario_id" class="form-label">Armazón</label>
                     <select class="form-control" id="a_inventario_id" name="a_inventario_id">
                         <option value="">Seleccione un Item del Inventario</option>
                         @foreach($inventarioItems as $item)
@@ -92,27 +92,27 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="a_precio" class="form-label">Precio A</label>
+                    <label for="a_precio" class="form-label">Precio Armazón</label>
                     <input type="number" class="form-control" id="a_precio" name="a_precio">
                 </div>
 
                 <div class="mb-3">
-                    <label for="l_medida" class="form-label">Medida L</label>
+                    <label for="l_medida" class="form-label">Lunas Medidas</label>
                     <input type="text" class="form-control" id="l_medida" name="l_medida">
                 </div>
 
                 <div class="mb-3">
-                    <label for="l_detalle" class="form-label">Detalle L</label>
+                    <label for="l_detalle" class="form-label">Lunas Detalle</label>
                     <input type="text" class="form-control" id="l_detalle" name="l_detalle">
                 </div>
 
                 <div class="mb-3">
-                    <label for="l_precio" class="form-label">Precio L</label>
+                    <label for="l_precio" class="form-label">Precio Lunas</label>
                     <input type="number" class="form-control" id="l_precio" name="l_precio">
                 </div>
 
                 <div class="mb-3">
-                    <label for="d_inventario_id" class="form-label">Item D del Inventario</label>
+                    <label for="d_inventario_id" class="form-label">Accesorio</label>
                     <select class="form-control" id="d_inventario_id" name="d_inventario_id">
                         <option value="">Seleccione un Item del Inventario</option>
                         @foreach($inventarioItems as $item) <!-- Utiliza la misma lista de items del inventario -->
@@ -122,7 +122,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="d_precio" class="form-label">Precio D</label>
+                    <label for="d_precio" class="form-label">Precio Accesorio</label>
                     <input type="number" class="form-control" id="d_precio" name="d_precio">
                 </div>
 

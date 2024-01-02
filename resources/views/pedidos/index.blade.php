@@ -21,17 +21,17 @@
                         <thead>
                             <tr>
                                 <th>Fecha</th>
-                                <th>Número de Orden</th>
-                                <th>Fact</th>
+                                <th>Orden</th>
+                                <th>Factura</th>
                                 <th>Nombre del Paciente</th>
                                 <th>Examen Visual</th>
-                                <th>Nombre del Item A</th>
-                                <th>Precio A</th>
-                                <th>Medida L</th>
-                                <th>Detalle L</th>
-                                <th>Precio L</th>
-                                <th>Nombre del Item D</th>
-                                <th>Precio D</th>
+                                <th>Armazón</th>
+                                <th>Precio Armazón</th>
+                                <th>Lunas Medidas</th>
+                                <th>Lunas Detalle</th>
+                                <th>Precio Lunas</th>
+                                <th>Accesorio</th>
+                                <th>Precio Accesorio</th>
                                 <th>Total</th>
                                 <th>Saldo</th>
                                 <th>Acciones</th>
@@ -69,7 +69,7 @@
                                             <a class="btn btn-xs btn-default text-danger mx-1 shadow" href="#"
                                                 data-toggle="modal" data-target="#confirmarEliminarModal"
                                                 data-id="{{ $pedido->id }}"
-                                                data-url="{{ route('pagos.destroy', $pedido->id) }}">
+                                                data-url="{{ route('pedidos.destroy', $pedido->id) }}">
                                                 <i class="fa fa-lg fa-fw fa-trash"></i>
                                             </a>
                                         </div>

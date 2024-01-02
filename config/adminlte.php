@@ -225,19 +225,8 @@ return [
     */
 
     'menu' =>         [
-        [
-            'text'    => 'Pedidos',
-            'icon'    => 'fas fa-shopping-cart', // Puedes cambiar el icono según tus preferencias
-            'route'   => 'pedidos.index',
-            'active'  => ['Pedidos/*']
-        ],
         
-        [
-            'text'    => 'Ventas',
-            'icon'    => 'fas fa-file-invoice',
-            'route'  => 'ventas.index',
-            'active' => ['Ventas/*']
-        ],
+        
         
         [
             'text'    => 'Dashboard', // Título del enlace en el menú
@@ -253,6 +242,12 @@ return [
             'active'  => ['admin', 'admin/*'], // Patrón para definir cuándo este ítem estará activo
         ],
         
+        [
+            'text'    => 'Pedidos',
+            'icon'    => 'fas fa-shopping-cart', // Puedes cambiar el icono según tus preferencias
+            'route'   => 'pedidos.index',
+            'active'  => ['Pedidos/*']
+        ],
         
         
         
@@ -268,12 +263,15 @@ return [
             'route'  => 'inventario.index',
             'active' => ['Inventario/*']
         ],
+       
         [
             'text'    => 'Pago',
-            'icon'    => 'fas fa-file-invoice',
-            'route'  => 'pagos.index',
-            'active' => ['pagos/*']
+            'icon'    => 'fas fa-credit-card', // Ícono cambiado aquí
+            'route'  => 'pagonuevos.index',
+            'active' => ['pagonuevos/*']
         ],
+        
+        
         [
             'text'    => 'Configuracion',
             'icon'    => 'fas fa-cog',
