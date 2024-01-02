@@ -135,7 +135,7 @@
 
                 // Inicializar DataTable
                 var pedidosTable = $('#pedidosTable').DataTable({
-                    "scrollX": true,
+                    
                     "order": [ // Corrección aquí: Cambiar "order: a "order":
                         [0, "asc"]
                     ],
