@@ -19,13 +19,68 @@
                 <hr>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="paciente_id">Paciente ID <span class="text-danger">*</span></label>
+                        <label for="nombres">Nombres <span class="text-danger">*</span></label>
                         <input 
                             type="text" 
-                            name="paciente_id" 
-                            id="paciente_id" 
+                            name="nombres" 
+                            id="nombres" 
                             class="form-control" 
-                            value="{{ $historialClinico->paciente_id }}" 
+                            value="{{ $historialClinico->nombres }}" 
+                            required
+                        >
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="apellidos">Apellidos <span class="text-danger">*</span></label>
+                        <input 
+                            type="text" 
+                            name="apellidos" 
+                            id="apellidos" 
+                            class="form-control" 
+                            value="{{ $historialClinico->apellidos }}" 
+                            required
+                        >
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="edad">Edad <span class="text-danger">*</span></label>
+                        <input 
+                            type="number" 
+                            name="edad" 
+                            id="edad" 
+                            class="form-control" 
+                            value="{{ $historialClinico->edad }}" 
+                            required
+                        >
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="fecha_nacimiento">Fecha de Nacimiento <span class="text-danger">*</span></label>
+                        <input 
+                            type="date" 
+                            name="fecha_nacimiento" 
+                            id="fecha_nacimiento" 
+                            class="form-control" 
+                            value="{{ $historialClinico->fecha_nacimiento }}" 
+                            required
+                        >
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="celular">Celular <span class="text-danger">*</span></label>
+                        <input 
+                            type="text" 
+                            name="celular" 
+                            id="celular" 
+                            class="form-control" 
+                            value="{{ $historialClinico->celular }}" 
+                            required
+                        >
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="ocupacion">Ocupación <span class="text-danger">*</span></label>
+                        <input 
+                            type="text" 
+                            name="ocupacion" 
+                            id="ocupacion" 
+                            class="form-control" 
+                            value="{{ $historialClinico->ocupacion }}" 
                             required
                         >
                     </div>
@@ -259,10 +314,10 @@
                     <label for="tiempo_uso">Tiempo de Uso</label>
                     <input 
                         type="text" 
-                            name="tiempo_uso" 
-                            id="tiempo_uso" 
-                            class="form-control"
-                            value="{{ $historialClinico->tiempo_uso }}"
+                        name="tiempo_uso" 
+                        id="tiempo_uso" 
+                        class="form-control"
+                        value="{{ $historialClinico->tiempo_uso }}"
                     >
                 </div>
             </div>

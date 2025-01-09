@@ -146,7 +146,7 @@ return [
     */
 
     'sidebar_mini' => 'lg',
-    'sidebar_collapse' => false,
+    'sidebar_collapse' => true,
     'sidebar_collapse_auto_size' => false,
     'sidebar_collapse_remember' => false,
     'sidebar_collapse_remember_no_transition' => true,
@@ -252,12 +252,7 @@ return [
 
 
 
-        [
-            'text' => 'Pacientes',
-            'icon' => 'fas fa-user-injured', // Puedes cambiar el ícono según prefieras
-            'route' => 'pacientes.index',
-            'active' => ['pacientes/*'], // Asegúrate de que esto coincida con tus rutas nombradas en Laravel
-        ],
+      
         [
             'text' => 'Inventario',
             'icon' => 'fas fa-file-invoice',

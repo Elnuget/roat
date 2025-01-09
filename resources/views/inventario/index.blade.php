@@ -83,40 +83,7 @@
                                             class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar">
                                             <i class="fa fa-lg fa-fw fa-pen"></i>
                                         </a>
-                                        @if(!$i->filtered)
-                                        <a class="btn btn-xs btn-default text-danger mx-1 shadow" href="#"
-                                            data-toggle="modal" data-target="#confirmarEliminarModal"
-                                            data-id="{{ $i->id }}" data-url="{{ route('inventario.destroy', $i->id) }}">
-                                            <i class="fa fa-lg fa-fw fa-trash"></i>
-                                        </a>
-                                        @endif
-                                        <div class="modal fade" id="confirmarEliminarModal" tabindex="-1" role="dialog"
-                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Confirmar Eliminación
-                                                        </h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        ¿Estás seguro de que deseas eliminar este elemento?
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">Cancelar</button>
-                                                        <form id="eliminarForm" method="post" action="">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger">Eliminar</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <!-- Removed delete button -->
                                     </div>
                                 </td>
                             </tr>

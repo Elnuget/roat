@@ -24,7 +24,9 @@
                         <th>Fecha</th>
                         <th>Orden</th>
                         <th>Factura</th>
-                        <th>Nombre del Paciente</th>
+                        <th>Cliente</th>
+                        <th>Celular</th>
+                        <th>Correo Electrónico</th>
                         <th>Total</th>
                         <th>Saldo</th>
                         <th>Acciones</th>
@@ -36,7 +38,9 @@
                         <td>{{ $pedido->fecha }}</td>
                         <td>{{ $pedido->numero_orden }}</td>
                         <td>{{ $pedido->fact }}</td>
-                        <td>{{ $pedido->paciente->nombre }}</td>
+                        <td>{{ $pedido->cliente }}</td>
+                        <td>{{ $pedido->celular }}</td>
+                        <td>{{ $pedido->correo_electronico }}</td>
                         <td>{{ $pedido->total }}</td>
                         <td>
                             <span style="color: {{ $pedido->saldo == 0 ? 'green' : 'red' }}">

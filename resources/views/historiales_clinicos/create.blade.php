@@ -18,13 +18,67 @@
                 <hr>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="paciente_id">Paciente ID <span class="text-danger">*</span></label>
+                        <label for="nombres">Nombres <span class="text-danger">*</span></label>
                         <input 
                             type="text" 
-                            name="paciente_id" 
-                            id="paciente_id" 
+                            name="nombres" 
+                            id="nombres" 
                             class="form-control" 
-                            placeholder="Ingresa el ID del paciente"
+                            placeholder="Ingresa los nombres del paciente"
+                            required
+                        >
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="apellidos">Apellidos <span class="text-danger">*</span></label>
+                        <input 
+                            type="text" 
+                            name="apellidos" 
+                            id="apellidos" 
+                            class="form-control" 
+                            placeholder="Ingresa los apellidos del paciente"
+                            required
+                        >
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="edad">Edad <span class="text-danger">*</span></label>
+                        <input 
+                            type="number" 
+                            name="edad" 
+                            id="edad" 
+                            class="form-control" 
+                            placeholder="Ingresa la edad del paciente"
+                            required
+                        >
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="fecha_nacimiento">Fecha de Nacimiento <span class="text-danger">*</span></label>
+                        <input 
+                            type="date" 
+                            name="fecha_nacimiento" 
+                            id="fecha_nacimiento" 
+                            class="form-control" 
+                            required
+                        >
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="celular">Celular <span class="text-danger">*</span></label>
+                        <input 
+                            type="text" 
+                            name="celular" 
+                            id="celular" 
+                            class="form-control" 
+                            placeholder="Ingresa el número de celular del paciente"
+                            required
+                        >
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="ocupacion">Ocupación <span class="text-danger">*</span></label>
+                        <input 
+                            type="text" 
+                            name="ocupacion" 
+                            id="ocupacion" 
+                            class="form-control" 
+                            placeholder="Ingresa la ocupación del paciente"
                             required
                         >
                     </div>

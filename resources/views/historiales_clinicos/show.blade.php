@@ -16,8 +16,28 @@
             <hr>
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="paciente_id">Paciente ID</label>
-                    <input type="text" id="paciente_id" class="form-control" value="{{ $historialClinico->paciente_id }}" readonly>
+                    <label for="nombres">Nombres</label>
+                    <input type="text" id="nombres" class="form-control" value="{{ $historialClinico->nombres }}" readonly>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="apellidos">Apellidos</label>
+                    <input type="text" id="apellidos" class="form-control" value="{{ $historialClinico->apellidos }}" readonly>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="edad">Edad</label>
+                    <input type="text" id="edad" class="form-control" value="{{ $historialClinico->edad }}" readonly>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+                    <input type="date" id="fecha_nacimiento" class="form-control" value="{{ $historialClinico->fecha_nacimiento }}" readonly>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="celular">Celular</label>
+                    <input type="text" id="celular" class="form-control" value="{{ $historialClinico->celular }}" readonly>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="ocupacion">Ocupación</label>
+                    <input type="text" id="ocupacion" class="form-control" value="{{ $historialClinico->ocupacion }}" readonly>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="fecha">Fecha</label>

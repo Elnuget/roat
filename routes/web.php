@@ -1,21 +1,11 @@
 <?php
-
-use App\Http\Controllers\AjustesDeInventarioController;
-use App\Http\Controllers\ArticulosController;
-use App\Http\Controllers\ClientesController;
-use App\Http\Controllers\ComunasController;
 use App\Http\Controllers\PedidosController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\mediosdepagoController;
-use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\PagoController;
-use App\Http\Controllers\ProveedoresController;
 use App\Http\Controllers\UsuariosController;
-use App\Http\Controllers\RecepcionesController;
-use App\Http\Controllers\VentasController; 
 use App\Http\Controllers\PagonuevosController; 
-use App\Http\Controllers\DetalleVentasController;
 use App\Http\Controllers\HistorialClinicoController;
 use App\Models\Inventario;
 use Illuminate\Support\Facades\Route;
@@ -62,51 +52,6 @@ Route::delete('Configuración/MediosDePago/eliminar/{id}', [mediosdepagoControll
 Route::get('Configuración/MediosDePago/{id}/ver', [mediosdepagoController::class, 'show'])->name('configuracion.mediosdepago.show');
 Route::put('Configuración/MediosDePago/{id}', [mediosdepagoController::class, 'update'])->name('configuracion.mediosdepago.update');
 Route::post('Configuración/MediosDePago', [mediosdepagoController::class, 'store'])->name('configuracion.mediosdepago.store');
-// clientes
-
-Route::get('Clientes', [ClientesController::class, 'index'])->name('clientes.index');
-Route::get('Clientes/Crear', [ClientesController::class, 'create'])->name('clientes.create');
-Route::get('Clientes/{id}', [ClientesController::class, 'show'])->name('clientes.editar');
-Route::put('Clientes/{cliente}', [ClientesController::class, 'update'])->name('clientes.update');
-Route::post('Clientes', [ClientesController::class, 'store'])->name('clientes.store');
-
-//proveedores
-
-Route::get('Proveedores', [ProveedoresController::class, 'index'])->name('proveedores.index');
-Route::get('Proveedores/Crear', [ProveedoresController::class, 'create'])->name('proveedores.create');
-Route::get('Proveedores/{id}', [ProveedoresController::class, 'show'])->name('proveedores.editar');
-Route::put('Proveedores/{proveedor}', [ProveedoresController::class, 'update'])->name('proveedores.update');
-Route::post('Proveedores', [ProveedoresController::class, 'store'])->name('proveedores.store');
-
-//articulos
-
-Route::get('Articulos', [ArticulosController::class, 'index'])->name('articulos.index');
-Route::get('Articulos/Crear', [ArticulosController::class, 'create'])->name('articulos.create');
-Route::get('Articulos/{id}', [ArticulosController::class, 'show'])->name('articulos.editar');
-Route::get('Articulos/{id}/historial', [ArticulosController::class, 'getHistorialArticulo'])->name('articulos.historial');
-Route::put('Articulos/{articulo}', [ArticulosController::class, 'update'])->name('articulos.update');
-Route::post('Articulos', [ArticulosController::class, 'store'])->name('articulos.store');
-
-//recepciones
-Route::get('Recepciones', [RecepcionesController::class, 'index'])->name('recepciones.index');
-Route::get('Recepciones/Agregar', [RecepcionesController::class, 'create'])->name('recepciones.create');
-Route::get('Recepciones/{id}', [RecepcionesController::class, 'view'])->name('recepciones.view');
-Route::post('Recepciones/Agregar', [RecepcionesController::class, 'addArticulo'])->name('recepciones.addarticulo');
-Route::post('Recepciones/Finalizar', [RecepcionesController::class, 'store'])->name('recepciones.store');
-
-//ventas
-Route::get('Ventas', [VentasController::class, 'index'])->name('ventas.index');
-Route::get('Ventas/Agregar', [VentasController::class, 'create'])->name('ventas.create');
-Route::get('Ventas/{id}', [VentasController::class, 'show'])->name('ventas.show');
-Route::post('Ventas/Agregar', [VentasController::class, 'addArticulo'])->name('ventas.addarticulo');
-Route::post('Ventas/Finalizar', [VentasController::class, 'store'])->name('ventas.store');
-
-//ventas
-Route::get('AjustesDeInventario', [AjustesDeInventarioController::class, 'index'])->name('ajustesdeinventario.index');
-Route::get('AjustesDeInventario/Agregar', [AjustesDeInventarioController::class, 'create'])->name('ajustesdeinventario.create');
-Route::get('AjustesDeInventario/{id}', [AjustesDeInventarioController::class, 'view'])->name('ajustesdeinventario.view');
-Route::post('AjustesDeInventario/Agregar', [AjustesDeInventarioController::class, 'addArticulo'])->name('ajustesdeinventario.addarticulo');
-Route::post('AjustesDeInventario/Finalizar', [AjustesDeInventarioController::class, 'store'])->name('ajustesdeinventario.store');
 
 //Inventario
 Route::get('Inventario', [InventarioController::class, 'index'])->name('inventario.index');
@@ -129,14 +74,6 @@ Route::get('Venta/{id}/ver', [InventarioController::class, 'show'])->name('venta
 Route::put('Venta/{articulo}', [InventarioController::class, 'update'])->name('venta.update');
 Route::post('Venta', [InventarioController::class, 'store'])->name('venta.store');
 
-// Pacientes
-Route::get('Pacientes', [PacienteController::class, 'index'])->name('pacientes.index');
-Route::get('Pacientes/Crear', [PacienteController::class, 'create'])->name('pacientes.create');
-Route::post('Pacientes', [PacienteController::class, 'store'])->name('pacientes.store');
-Route::get('Pacientes/{id}', [PacienteController::class, 'show'])->name('pacientes.show');
-Route::get('Pacientes/{id}/editar', [PacienteController::class, 'edit'])->name('pacientes.edit');
-Route::put('Pacientes/{id}', [PacienteController::class, 'update'])->name('pacientes.update');
-Route::delete('Pacientes/{id}', [PacienteController::class, 'destroy'])->name('pacientes.destroy');
 
 // Admin
 Route::middleware(['auth:sanctum', 'verified'])->get('/admin', [AdminController::class, 'index'])->name('admin.index');

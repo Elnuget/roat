@@ -21,10 +21,39 @@ class HistorialClinicoController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'paciente_id' => 'required|exists:pacientes,id',
+            'nombres' => 'required|string|max:255',
+            'apellidos' => 'required|string|max:255',
+            'edad' => 'required|integer',
+            'fecha_nacimiento' => 'required|date',
+            'celular' => 'required|string|max:20',
+            'ocupacion' => 'required|string|max:100',
             'fecha' => 'required|date',
             'motivo_consulta' => 'required|string|max:255',
-            // ...other validation rules...
+            'enfermedad_actual' => 'nullable|string|max:255',
+            'antecedentes_personales_oculares' => 'nullable|string',
+            'antecedentes_personales_generales' => 'nullable|string',
+            'antecedentes_familiares_oculares' => 'nullable|string',
+            'antecedentes_familiares_generales' => 'nullable|string',
+            'agudeza_visual_vl_sin_correccion_od' => 'nullable|string|max:50',
+            'agudeza_visual_vl_sin_correccion_oi' => 'nullable|string|max:50',
+            'agudeza_visual_vl_sin_correccion_ao' => 'nullable|string|max:50',
+            'agudeza_visual_vp_sin_correccion_od' => 'nullable|string|max:50',
+            'agudeza_visual_vp_sin_correccion_oi' => 'nullable|string|max:50',
+            'agudeza_visual_vp_sin_correccion_ao' => 'nullable|string|max:50',
+            'optotipo' => 'nullable|string',
+            'lensometria_od' => 'nullable|string|max:50',
+            'lensometria_oi' => 'nullable|string|max:50',
+            'tipo_lente' => 'nullable|string|max:50',
+            'material' => 'nullable|string|max:50',
+            'filtro' => 'nullable|string|max:50',
+            'tiempo_uso' => 'nullable|string|max:50',
+            'refraccion_od' => 'nullable|string|max:50',
+            'refraccion_oi' => 'nullable|string|max:50',
+            'rx_final_dp' => 'nullable|string|max:50',
+            'rx_final_av_vl' => 'nullable|string|max:50',
+            'rx_final_av_vp' => 'nullable|string|max:50',
+            'diagnostico' => 'nullable|string',
+            'tratamiento' => 'nullable|string'
         ]);
 
         HistorialClinico::create($data);
@@ -45,10 +74,39 @@ class HistorialClinicoController extends Controller
     public function update(Request $request, HistorialClinico $historialClinico)
     {
         $data = $request->validate([
-            'paciente_id' => 'required|exists:pacientes,id',
+            'nombres' => 'required|string|max:255',
+            'apellidos' => 'required|string|max:255',
+            'edad' => 'required|integer',
+            'fecha_nacimiento' => 'required|date',
+            'celular' => 'required|string|max:20',
+            'ocupacion' => 'required|string|max:100',
             'fecha' => 'required|date',
             'motivo_consulta' => 'required|string|max:255',
-            // ...other validation rules...
+            'enfermedad_actual' => 'nullable|string|max:255',
+            'antecedentes_personales_oculares' => 'nullable|string',
+            'antecedentes_personales_generales' => 'nullable|string',
+            'antecedentes_familiares_oculares' => 'nullable|string',
+            'antecedentes_familiares_generales' => 'nullable|string',
+            'agudeza_visual_vl_sin_correccion_od' => 'nullable|string|max:50',
+            'agudeza_visual_vl_sin_correccion_oi' => 'nullable|string|max:50',
+            'agudeza_visual_vl_sin_correccion_ao' => 'nullable|string|max:50',
+            'agudeza_visual_vp_sin_correccion_od' => 'nullable|string|max:50',
+            'agudeza_visual_vp_sin_correccion_oi' => 'nullable|string|max:50',
+            'agudeza_visual_vp_sin_correccion_ao' => 'nullable|string|max:50',
+            'optotipo' => 'nullable|string',
+            'lensometria_od' => 'nullable|string|max:50',
+            'lensometria_oi' => 'nullable|string|max:50',
+            'tipo_lente' => 'nullable|string|max:50',
+            'material' => 'nullable|string|max:50',
+            'filtro' => 'nullable|string|max:50',
+            'tiempo_uso' => 'nullable|string|max:50',
+            'refraccion_od' => 'nullable|string|max:50',
+            'refraccion_oi' => 'nullable|string|max:50',
+            'rx_final_dp' => 'nullable|string|max:50',
+            'rx_final_av_vl' => 'nullable|string|max:50',
+            'rx_final_av_vp' => 'nullable|string|max:50',
+            'diagnostico' => 'nullable|string',
+            'tratamiento' => 'nullable|string'
         ]);
 
         $historialClinico->update($data);

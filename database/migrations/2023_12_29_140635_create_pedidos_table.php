@@ -18,9 +18,12 @@ class CreatePedidosTable extends Migration
             $table->date('fecha');
             $table->integer('numero_orden');
             $table->string('fact');
-            $table->unsignedBigInteger('paciente_id');
-            $table->foreign('paciente_id')->references('id')->on('pacientes');
             $table->decimal('examen_visual', 8, 2);
+
+            // Add new fields
+            $table->string('cliente');
+            $table->string('celular');
+            $table->string('correo_electronico');
 
             // Claves foráneas para los items del inventario
             $table->unsignedBigInteger('a_inventario_id');

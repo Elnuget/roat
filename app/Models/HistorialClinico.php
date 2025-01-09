@@ -12,7 +12,12 @@ class HistorialClinico extends Model
     protected $table = 'historiales_clinicos';
 
     protected $fillable = [
-        'paciente_id',
+        'nombres',
+        'apellidos',
+        'edad',
+        'fecha_nacimiento',
+        'celular',
+        'ocupacion',
         'fecha',
         'motivo_consulta',
         'enfermedad_actual',

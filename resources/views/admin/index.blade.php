@@ -2,8 +2,6 @@
 
 @section('title', 'Admin')
 
-
-
 @section('content_header')
 <h1>Administración</h1>
 <p>Funcionalidades Varias</p>
@@ -48,42 +46,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Feliz Cumpleaños</h3>
-            </div>
-            <div class="card-body">
-                <table class="table table-bordered table-striped table-responsive">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Telefono</th>
-                            <th>Fecha de nacimiento</th>
-                            <th>WhatsApp</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($pacientes as $paciente)
-                        <tr>
-                            <td>{{ $paciente->nombre }}</td>
-                            <td>{{ $paciente->telefono }}</td>
-                            <td>{{ $paciente->fecha_nacimiento }}</td>
-                            <td>
-                                <a href="https://wa.me/{{ $paciente->telefono }}" class="whatsapp-link"
-                                    data-phone="{{ $paciente->telefono }}" data-name="{{ $paciente->nombre }}"
-                                    target="_blank">
-                                    Enviar Mensaje <i class="fab fa-whatsapp"></i>
-                                    <!-- Ícono de WhatsApp de Font Awesome -->
-                                </a>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+    <!-- Sección de cumpleaños eliminada -->
 </div>
 @stop
 
@@ -115,9 +78,5 @@
             updateWhatsAppLink();
         });
     });
-
-
-
 </script>
-
 @stop

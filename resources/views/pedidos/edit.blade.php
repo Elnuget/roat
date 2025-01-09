@@ -78,22 +78,26 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-6">
-
-
-                            <label for="paciente_id" class="form-label">Paciente</label>
-                            <select class="form-control" id="paciente_id" name="paciente_id" required>
-                                <option value="">Seleccione un Paciente</option>
-                                @foreach ($pacientes as $paciente)
-                                    <option value="{{ $paciente->id }}"
-                                        {{ $pedido->paciente_id == $paciente->id ? 'selected' : '' }}>
-                                        {{ $paciente->nombre }}
-                                    </option>
-                                @endforeach
-                            </select>
+                        <div class="col-4">
+                            <label for="cliente" class="form-label">Cliente</label>
+                            <input type="text" class="form-control" id="cliente" name="cliente"
+                                value="{{ $pedido->cliente }}" required>
                         </div>
 
+                        <div class="col-4">
+                            <label for="celular" class="form-label">Celular</label>
+                            <input type="text" class="form-control" id="celular" name="celular"
+                                value="{{ $pedido->celular }}" required>
+                        </div>
 
+                        <div class="col-4">
+                            <label for="correo_electronico" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="correo_electronico" name="correo_electronico"
+                                value="{{ $pedido->correo_electronico }}" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <div class="col-6">
                             <label for="examen_visual" class="form-label">Examen Visual</label>
                             <input type="number" class="form-control" id="examen_visual" name="examen_visual"

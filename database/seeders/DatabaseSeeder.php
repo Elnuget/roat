@@ -16,10 +16,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             mediosdepagoSeeder::class,
-            PacienteSeeder::class,
             InventarioSeeder::class,
-            PedidoSeeder::class, // Añadir el seeder de pedidos
-            
+            PedidoSeeder::class,
+            HistorialesClinicosSeeder::class, // Añadir el seeder de historiales clínicos
         ]);
     }
 }

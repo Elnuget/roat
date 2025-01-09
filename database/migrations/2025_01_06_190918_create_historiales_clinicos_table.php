@@ -15,8 +15,12 @@ class CreateHistorialesClinicosTable extends Migration
     {
         Schema::create('historiales_clinicos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('paciente_id');
-            $table->foreign('paciente_id')->references('id')->on('pacientes')->onDelete('cascade');
+            $table->string('nombres', 255);
+            $table->string('apellidos', 255);
+            $table->integer('edad');
+            $table->date('fecha_nacimiento');
+            $table->string('celular', 20);
+            $table->string('ocupacion', 100);
             $table->date('fecha');
             $table->string('motivo_consulta', 255);
             $table->string('enfermedad_actual', 255)->nullable();

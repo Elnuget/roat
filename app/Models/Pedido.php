@@ -14,28 +14,23 @@ class Pedido extends Model
         'fecha',
         'numero_orden',
         'fact',
-        'paciente_id',
         'examen_visual',
-        'a_inventario_id', // Añadido según la nueva estructura
+        'cliente',
+        'celular',
+        'correo_electronico',
+        'a_inventario_id',
         'a_precio',
         'l_detalle',
         'l_medida',
         'l_precio',
-        'd_inventario_id', // Añadido según la nueva estructura
+        'd_inventario_id',
         'd_precio',
         'total',
         'saldo'
-        // Añade más campos según sea necesario
     ];
 
     // Define si tu modelo debe usar timestamps (created_at y updated_at)
     public $timestamps = true;
-
-    // Definir la relación con el modelo Paciente
-    public function paciente()
-    {
-        return $this->belongsTo(Paciente::class);
-    }
 
     // Relación con el modelo Inventario para 'a_inventario'
     public function aInventario()

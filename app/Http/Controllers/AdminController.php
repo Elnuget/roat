@@ -20,12 +20,13 @@ class AdminController extends Controller
         $hoy = Carbon::now('America/Guayaquil');
 
         // Obtener pacientes que cumplen años hoy
-        $pacientes = Paciente::whereMonth('fecha_nacimiento', '=', $hoy->month)
-            ->whereDay('fecha_nacimiento', '=', $hoy->day)
-            ->get();
+        // $pacientes = Paciente::whereMonth('fecha_nacimiento', '=', $hoy->month)
+        //     ->whereDay('fecha_nacimiento', '=', $hoy->day)
+        //     ->get();
 
         // Retornar la vista con los pacientes
-        return view('admin.index', compact('pacientes'));
+        // return view('admin.index', compact('pacientes'));
+        return view('admin.index');
     }
 
     /**

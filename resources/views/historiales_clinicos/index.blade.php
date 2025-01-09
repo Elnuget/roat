@@ -24,7 +24,8 @@
                 <thead>
                     <tr>
                         <td>ID</td>
-                        <td>Paciente ID</td>
+                        <td>Nombres</td>
+                        <td>Apellidos</td>
                         <td>Fecha</td>
                         <td>Motivo Consulta</td>
                         <td>Acciones</td>
@@ -34,7 +35,8 @@
                     @foreach ($historiales as $index => $historial)
                     <tr>
                         <td>{{ $index + 1 }}</td>
-                        <td>{{ $historial->paciente_id }}</td>
+                        <td>{{ $historial->nombres }}</td>
+                        <td>{{ $historial->apellidos }}</td>
                         <td>{{ $historial->fecha }}</td>
                         <td>{{ $historial->motivo_consulta }}</td>
                         <td>

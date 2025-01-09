@@ -27,7 +27,9 @@
                 <li><strong>Fecha:</strong> {{ date('d-m-Y', strtotime($pedido->fecha)) }}</li>
                 <li><strong>Número de Orden:</strong> {{ $pedido->numero_orden }}</li>
                 <li><strong>Factura:</strong> {{ $pedido->fact }}</li>
-                <li><strong>Paciente:</strong> {{ $pedido->paciente->nombre }}</li>
+                <li><strong>Cliente:</strong> {{ $pedido->cliente }}</li>
+                <li><strong>Celular:</strong> {{ $pedido->celular }}</li>
+                <li><strong>Correo Electrónico:</strong> {{ $pedido->correo_electronico }}</li>
                 <li><strong>Examen Visual:</strong> {{ $pedido->examen_visual }}</li>
                 <li><strong>Armazón:</strong> {{ $pedido->aInventario->codigo }}</li>
 
@@ -69,7 +71,9 @@
                     <th>Fecha</th>
                     <th>Orden</th>
                     <th>Factura</th>
-                    <th>Nombre del Paciente</th>
+                    <th>Cliente</th>
+                    <th>Celular</th>
+                    <th>Correo Electrónico</th>
                     <th>Examen Visual</th>
                     <th>Armazón</th>
                     <th>Precio Armazón</th>
@@ -89,8 +93,9 @@
                     <td>{{ $pedido->fecha }}</td>
                     <td>{{ $pedido->numero_orden }}</td>
                     <td>{{ $pedido->fact }}</td>
-                    <td>{{ $pedido->paciente->nombre }}</td>
-                    <!-- Asegúrate de que el modelo Paciente tenga un campo 'nombre' -->
+                    <td>{{ $pedido->cliente }}</td>
+                    <td>{{ $pedido->celular }}</td>
+                    <td>{{ $pedido->correo_electronico }}</td>
                     <td>{{ $pedido->examen_visual }}</td>
                     <td>{{ $pedido->aInventario->codigo ?? 'N/A' }}</td> <!-- Mostrar el nombre del objeto A -->
                     <td>{{ $pedido->a_precio }}</td>
