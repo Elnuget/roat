@@ -16,18 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             mediosdepagoSeeder::class,
-            RegionSeeder::class,
-            ComunaSeeder::class,
-            ClienteSeeder::class,
-            ProveedorSeeder::class,
-            ArticuloSeeder::class,
-            TipoMovimientoSeeder::class,
-            TipoDocumentoSeeder::class,
-            RecepcionesSeeder::class,
-            DetalleRecepcionSeeder::class,
-            VentasSeeder::class,
-            DetalleVentasSeeder::class,
-            DetalleMovimientosArticulosSeeder::class,
             PacienteSeeder::class,
             InventarioSeeder::class,
             PedidoSeeder::class, // Añadir el seeder de pedidos
