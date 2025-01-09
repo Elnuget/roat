@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\mediosdepago;
-use App\Models\Paciente;
 use App\Models\Pedido;
 use Illuminate\Http\Request;
-use App\Models\Pago; // Asegúrate de importar tu modelo Pago
+use App\Models\Pago; // Ensure the Pago model is correctly referenced
 
 class PagoController extends Controller
 {
@@ -15,10 +14,27 @@ class PagoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $pagos = Pago::all(); // Obtener todos los pagos
-        return view('pagos.index', compact('pagos')); // Retornar vista con los pagos
+        $mediosdepago = mediosdepago::all(); // Add this line to get all payment methods
+        $query = Pago::with(['pedido', 'mediodepago']);
+
+        if ($request->filled('ano')) {
+            $query->whereYear('created_at', '=', $request->ano);
+        }
+
+        if ($request->filled('mes')) {
+            $query->whereMonth('created_at', '=', (int)$request->mes);
+        }
+
+        if ($request->filled('metodo_pago')) {
+            $query->where('mediodepago_id', '=', $request->metodo_pago);
+        }
+
+        $pagos = $query->get();
+        $totalPagos = $pagos->sum('pago'); // Calculate total payments
+
+        return view('pagos.index', compact('pagos', 'mediosdepago', 'totalPagos'));
     }
 
     /**
@@ -26,14 +42,13 @@ class PagoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        
         $mediosdepago = mediosdepago::all();
-        $pedidos = Pedido::select('id', 'numero_orden', 'saldo')->get(); // Seleccionar solo id, codigo y saldo
-        return view('pagos.create', compact('pacientes', 'mediosdepago', 'pedidos')); // Pasar pedidos a la vista
+        $pedidos = Pedido::select('id', 'numero_orden', 'saldo')->get(); // Seleccionar solo id, numero_orden y saldo
+        $selectedPedidoId = $request->get('pedido_id'); // Obtener el pedido seleccionado si existe
+        return view('pagos.create', compact('mediosdepago', 'pedidos', 'selectedPedidoId')); // Pasar pedidos a la vista
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -42,44 +57,45 @@ class PagoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-{
-    // Validación de datos
-    $validatedData = $request->validate([
-        'pedido_id' => 'required|exists:pedidos,id',
-        'mediodepago_id' => 'required|exists:mediosdepagos,id',
-        'pago' => 'required|numeric',
-    ]);
-    try {
-    // Crear un nuevo pago
-    $nuevoPago = Pago::create($validatedData);
-
-   
-        // Buscar el pedido y restar el monto del pago del saldo
-        $pedido = Pedido::find($validatedData['pedido_id']);
-        if ($pedido) {
-            $pedido->saldo -= $validatedData['pago'];
-            $pedido->save();
-        }
-
-        return redirect('/Pagos')->with([
-            'error' => 'Exito',
-            'mensaje' => 'Pago creado exitosamente',
-            'tipo' => 'alert-success'
+    {
+        // Validate data
+        $validatedData = $request->validate([
+            'pedido_id' => 'nullable|exists:pedidos,id',
+            'mediodepago_id' => 'nullable|exists:mediosdepagos,id',
+            'pago' => 'nullable|numeric',
         ]);
-    } catch (\Exception $e) {
-        // En caso de error, eliminar el pago recién creado
-        if (isset($nuevoPago)) {
-            $nuevoPago->delete();
-        }
 
-        return redirect('/Pagos')->with([
-            'error' => 'Error',
-            'mensaje' => 'El pago no se ha creado. Error: ' . $e->getMessage(),
-            'tipo' => 'alert-danger'
-        ]);
+        try {
+            // Create a new pago using the 'pagos' table
+            $nuevoPago = Pago::create($validatedData);
+
+            // Update the pedido's saldo if pedido_id is provided
+            if (isset($validatedData['pedido_id'])) {
+                $pedido = Pedido::find($validatedData['pedido_id']);
+                if ($pedido) {
+                    $pedido->saldo -= $validatedData['pago'];
+                    $pedido->save();
+                }
+            }
+
+            return redirect()->route('pagos.index')->with([
+                'error' => 'Exito',
+                'mensaje' => 'Pago creado exitosamente',
+                'tipo' => 'alert-success'
+            ]);
+        } catch (\Exception $e) {
+            // If an error occurs, delete the created pago
+            if (isset($nuevoPago)) {
+                $nuevoPago->delete();
+            }
+
+            return redirect()->route('pagos.index')->with([
+                'error' => 'Error',
+                'mensaje' => 'El pago no se ha creado. Error: ' . $e->getMessage(),
+                'tipo' => 'alert-danger'
+            ]);
+        }
     }
-}
-
 
     /**
      * Display the specified resource.
@@ -101,11 +117,10 @@ class PagoController extends Controller
      */
     public function edit($id)
     {
-        $pacientes = Paciente::all();
         $mediosdepago = mediosdepago::all();
-        $pedidos = Pedido::select('id', 'codigo', 'saldo')->get(); // Seleccionar solo id, codigo y saldo
+        $pedidos = Pedido::select('id', 'numero_orden', 'saldo')->get(); // Seleccionar solo id, numero_orden y saldo
         $pago = Pago::findOrFail($id);
-        return view('pagos.edit', compact('pago', 'pacientes', 'mediosdepago', 'pedidos')); // Pasar pedidos a la vista
+        return view('pagos.edit', compact('pago', 'mediosdepago', 'pedidos')); // Pasar pedidos a la vista
     }
 
     /**
@@ -118,25 +133,42 @@ class PagoController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'pedido_id' => 'required|exists:pedidos,id',
-            'paciente_id' => 'required|exists:pacientes,id',
-            'mediodepago_id' => 'required|exists:mediosdepagos,id',
-            'saldo' => 'required|numeric',
-            'pago' => 'numeric',
+            'pedido_id' => 'nullable|exists:pedidos,id',
+            'mediodepago_id' => 'nullable|exists:mediosdepagos,id',
+            'pago' => 'nullable|numeric',
         ]);
+
         try {
-        Pago::whereId($id)->update($validatedData);
+            $pago = Pago::findOrFail($id);
+            $oldPagoAmount = $pago->pago;
 
+            $pago->update($validatedData); // Updates the 'pagos' table
+            
+            // Actualizar saldo del pedido si se proporciona pedido_id
+            if (isset($validatedData['pedido_id'])) {
+                $pedido = Pedido::find($validatedData['pedido_id']);
+                if ($pedido) {
+                    $pedido->saldo += $oldPagoAmount; // Revert the old payment amount
+                    $pedido->saldo -= $validatedData['pago']; // Apply the new payment amount
+                    $pedido->save();
+                }
+            } else {
+                // If pedido_id is not provided, update the saldo of the existing pedido
+                $pedido = $pago->pedido;
+                if ($pedido) {
+                    $pedido->saldo += $oldPagoAmount; // Revert the old payment amount
+                    $pedido->saldo -= $validatedData['pago']; // Apply the new payment amount
+                    $pedido->save();
+                }
+            }
 
-
-    
-            return redirect('/Pagos')->with([
+            return redirect()->route('pagos.index')->with([
                 'error' => 'Exito',
                 'mensaje' => 'Pago actualizado exitosamente',
                 'tipo' => 'alert-success'
             ]);
         } catch (\Exception $e) {
-            return redirect('/Pagos')->with([
+            return redirect()->route('pagos.index')->with([
                 'error' => 'Error',
                 'mensaje' => 'Pago no se ha actualizado',
                 'tipo' => 'alert-danger'
@@ -153,18 +185,23 @@ class PagoController extends Controller
     public function destroy($id)
     {
         try {
-        $pago = Pago::findOrFail($id);
-        $pago->delete();
+            $pago = Pago::findOrFail($id);
+            $pedido = $pago->pedido;
 
+            if ($pedido) {
+                $pedido->saldo += $pago->pago; // Add the payment amount back to the order's balance
+                $pedido->save();
+            }
 
-        
-            return redirect('/Pagos')->with([
+            $pago->delete(); // Deletes from the 'pagos' table
+
+            return redirect()->route('pagos.index')->with([
                 'error' => 'Exito',
                 'mensaje' => 'Pago eliminado exitosamente',
                 'tipo' => 'alert-success'
             ]);
         } catch (\Exception $e) {
-            return redirect('/Pagos')->with([
+            return redirect()->route('pagos.index')->with([
                 'error' => 'Error',
                 'mensaje' => 'Pago no se ha eliminado',
                 'tipo' => 'alert-danger'

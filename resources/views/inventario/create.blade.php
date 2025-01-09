@@ -75,7 +75,7 @@
                     <div class="form-goup row">
                         <div class="col-4">
                             <label>Cantidad</label>
-                            <input name="cantidad" id="cantidad" required type="number" class="form-control">
+                            <input name="cantidad" id="cantidad" required type="number" class="form-control" value="1">
                         </div>
                     </div>
 

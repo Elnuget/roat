@@ -16,29 +16,70 @@
 @stop
 
 @section('content')
-
     <div class="card">
         <div class="card-body">
+            {{-- Agregar resumen de totales --}}
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="info-box bg-success">
+                        <div class="info-box-content">
+                            <span class="info-box-text">Total Pagos</span>
+                            <span class="info-box-number">${{ number_format($totalPagos, 2, ',', '.') }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Agregar formulario de filtro --}}
+            <form method="GET" class="form-row mb-3" id="filterForm">
+                <div class="col-md-2">
+                    <label for="filtroAno">Seleccionar Año:</label>
+                    <select name="ano" class="form-control" id="filtroAno">
+                        <option value="">Seleccione Año</option>
+                        @for ($year = date('Y'); $year >= 2000; $year--)
+                            <option value="{{ $year }}" {{ request('ano') == $year ? 'selected' : '' }}>{{ $year }}</option>
+                        @endfor
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="filtroMes">Seleccionar Mes:</label>
+                    <select name="mes" class="form-control" id="filtroMes">
+                        <option value="">Seleccione Mes</option>
+                        @foreach (range(1, 12) as $m)
+                            <option value="{{ $m }}" {{ request('mes') == $m ? 'selected' : '' }}>
+                                {{ DateTime::createFromFormat('!m', $m)->format('F') }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="metodo_pago">Método de Pago:</label>
+                    <select name="metodo_pago" class="form-control" id="metodo_pago">
+                        <option value="">Todos los métodos</option>
+                        @foreach($mediosdepago as $medio)
+                            <option value="{{ $medio->id }}" {{ request('metodo_pago') == $medio->id ? 'selected' : '' }}>
+                                {{ $medio->medio_de_pago }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2 align-self-end">
+                    <button type="button" class="btn btn-primary" id="actualButton">Actual</button>
+                </div>
+            </form>
+
             <div class="table-responsive">
                 <table id="pagosTable" class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <td colspan="10">
-                                <div class="form-group col-6">
-                                    <label for="filtroPaciente">Filtrar por Paciente:</label>
-                                    <select id="filtroPaciente" class="form-control filtroPaciente">
-                                        <option value="">Todos los pacientes</option>
-                                        @foreach ($pagos as $pago)
-                                            <option value="{{ $pago->paciente->nombre }}">{{ $pago->paciente->nombre }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </td>
+                            <!-- Removed Paciente filter -->
                         </tr>
                         <tr>
                             <td>ID</td>
-                            <td>Paciente</td>
+                            <td>Fecha de Pago</td> <!-- Nueva columna -->
+                            <td>Orden Asociada</td> <!-- Nueva columna -->
+                            <td>Cliente Asociado</td> <!-- Nueva columna -->
+                            <!-- Removed Paciente column -->
                             <td>Método de pago</td>
                             <td>Saldo</td>
                             <td>Pago</td>
@@ -49,20 +90,23 @@
                         @foreach ($pagos as $index => $pago)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
-                                <td>{{ $pago->paciente->nombre }}</td>
+                                <td>{{ $pago->created_at->format('Y-m-d') }}</td> <!-- Fecha de Pago -->
+                                <td>{{ $pago->pedido->numero_orden }}</td> <!-- Orden Asociada -->
+                                <td>{{ $pago->pedido->cliente }}</td> <!-- Cliente Asociado -->
+                                <!-- Removed Paciente data -->
                                 <td>{{ $pago->mediodepago->medio_de_pago }}</td>
-                                <td>{{ $pago->saldo }}</td>
+                                <td>{{ $pago->pedido->saldo }}</td> <!-- Updated to access saldo from pedido -->
                                 <td>{{ $pago->pago }}</td>
 
-
                                 <td>
+                                    <a href="{{ route('pagos.show', $pago->id) }}"
+                                        class="btn btn-xs btn-default text-info mx-1 shadow" title="Ver">
+                                        <i class="fa fa-lg fa-fw fa-eye"></i>
+                                    </a>
                                     <a href="{{ route('pagos.edit', $pago->id) }}"
                                         class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar">
                                         <i class="fa fa-lg fa-fw fa-pen"></i>
                                     </a>
-
-
-
 
                                     <a class="btn btn-xs btn-default text-danger mx-1 shadow" href="#"
                                         data-toggle="modal" data-target="#confirmarEliminarModal"
@@ -116,7 +160,6 @@
         </div>
     </div>
 
-
 @stop
 
 @section('js')
@@ -124,8 +167,6 @@
 
     <script>
         $(document).ready(function() {
-
-
 
             // Configurar el modal antes de mostrarse
             $('#confirmarEliminarModal').on('show.bs.modal', function(event) {
@@ -154,7 +195,7 @@
                         "text": 'Imprimir',
                         "autoPrint": true,
                         "exportOptions": {
-                            "columns": [0, 1, 2, 3]
+                            "columns": [0, 1, 2, 3, 4, 5, 6] // Incluir nueva columna
                         },
                         "customize": function(win) {
                             $(win.document.body).css('font-size', '16pt');
@@ -169,7 +210,7 @@
                         "filename": 'Pagos.pdf',
                         "pageSize": 'LETTER',
                         "exportOptions": {
-                            "columns": [0, 1, 2, 3]
+                            "columns": [0, 1, 2, 3, 4, 5, 6] // Incluir nueva columna
                         }
                     }
                 ],
@@ -178,13 +219,36 @@
                 }
             });
 
-
-            $('#filtroPaciente').select2();
-            // Aplicar filtro al cambio en el select
-            $('#filtroPaciente').on('change', function() {
-                var pacienteId = $(this).val();
-                pagosTable.column(1).search(pacienteId).draw();
+            document.getElementById('filtroAno').addEventListener('change', function() {
+                document.getElementById('filterForm').submit();
             });
+            document.getElementById('filtroMes').addEventListener('change', function() {
+                document.getElementById('filterForm').submit();
+            });
+
+            // Añadir evento al botón "Actual"
+            document.getElementById('actualButton').addEventListener('click', function() {
+                const currentDate = new Date();
+                const currentYear = currentDate.getFullYear();
+                const currentMonth = currentDate.getMonth() + 1; // getMonth() es 0-indexado
+
+                document.getElementById('filtroAno').value = currentYear;
+                document.getElementById('filtroMes').value = currentMonth;
+
+                document.getElementById('filterForm').submit();
+            });
+
+            // Add event listener for payment method filter
+            document.getElementById('metodo_pago').addEventListener('change', function() {
+                document.getElementById('filterForm').submit();
+            });
+
+            // Removed Paciente filter
+            // $('#filtroPaciente').select2();
+            // $('#filtroPaciente').on('change', function() {
+            //     var pacienteId = $(this).val();
+            //     pagosTable.column(1).search(pacienteId).draw();
+            // });
         });
     </script>
 @stop

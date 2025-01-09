@@ -33,19 +33,11 @@
 
                 @csrf
                 @method('put')
-                <div class="form-group">
-                    <label>Seleccione un Paciente</label>
-                    <select name="paciente_id" required class="form-control">
-                      <option value="">Seleccionar el paciente</option>
-                        @foreach($pacientes as $paciente)
-                            <option value="{{ $paciente->id }}" @if($paciente->id == $pago->paciente_id) selected @endif>{{ $paciente->nombre }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                <!-- Removed Paciente selection -->
                 
                 <div class="form-group">
                     <label>Seleccione un Medio de Pago</label>
-                    <select name="mediodepago_id" required class="form-control">
+                    <select name="mediodepago_id" class="form-control">
                       
                       <option value="">Seleccionar el método de pago</option>
                         @foreach($mediosdepago as $medioDePago)
@@ -56,42 +48,52 @@
                 
                 <div class="form-group">
                     <label>Saldo</label>
-                    <input name="saldo" required type="text" class="form-control" value="{{ $pago->saldo }}">
+                    <input name="saldo" type="text" class="form-control" value="{{ $pago->pedido->saldo + $pago->pago }}" readonly>
                 </div>
                 
                 <div class="form-group">
                     <label>Pago</label>
-                    <input name="pago" required type="text" class="form-control" value="{{ $pago->pago }}">
+                    <input name="pago" type="text" class="form-control" value="{{ $pago->pago }}">
                 </div>
 
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
-                    <button type="button" class="btn btn-primary pull-left" data-toggle="modal"
-                        data-target="#modal">Editar
-                        Pago</button>
-                        <a href="{{ route('pacientes.index') }}" class="btn btn-secondary ">
-                            Cancelar
-                        </a>
-                    <div class="modal fade" id="modal">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
+                <button type="button" class="btn btn-primary pull-left" data-toggle="modal"
+                    data-target="#modal">Editar
+                    Pago</button>
+                <a href="{{ route('pagos.index') }}" class="btn btn-secondary ">
+                    Cancelar
+                </a>
+                <div class="modal fade" id="modal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
 
-                                    <h4 class="modal-title">Modificar pago</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span></button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Seguro que quiere guardar los cambios?&hellip;</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default pull-left"
-                                        data-dismiss="modal">Cancelar</button>
-                                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                                </div>
+                                <h4 class="modal-title">Modificar pago</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
                             </div>
-                            <!-- /.modal-content -->
+                            <div class="modal-body">
+                                <p>Seguro que quiere guardar los cambios?&hellip;</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default pull-left"
+                                    data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                            </div>
                         </div>
-                        <!-- /.modal-dialog -->
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
             </form>
         </div>
 

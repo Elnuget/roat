@@ -1,82 +1,168 @@
 @extends('adminlte::page')
 
-@section('title', 'Admin')
+@section('title', 'Admin Dashboard')
 
 @section('content_header')
-<h1>Administración</h1>
-<p>Funcionalidades Varias</p>
-<!-- Sección para mostrar mensajes de error de PHP -->
-@if (session('php_error'))
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <strong>Error:</strong> {{ session('php_error') }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-@endif
+    <h1>Admin Dashboard</h1>
+    <p>Funcionalidades Varias</p>
+    <!-- Sección para mostrar mensajes de error de PHP -->
+    @if (session('php_error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error:</strong> {{ session('php_error') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
 
-@if (session('error'))
-<div class="alert {{ session('tipo') }} alert-dismissible fade show" role="alert">
-    <strong>{{ session('error') }}</strong> {{ session('mensaje') }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-@endif
+    @if (session('error'))
+    <div class="alert {{ session('tipo') }} alert-dismissible fade show" role="alert">
+        <strong>{{ session('error') }}</strong> {{ session('mensaje') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
 @stop
 
 @section('content')
-<style>
-    .related-cards {
-        background-color: #6699cc;
-        /* Cambia este color según tus preferencias */
-    }
-</style>
-<div class="row related-cards">
-    <!-- Formulario para escribir el mensaje de WhatsApp -->
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Enviar Mensaje de WhatsApp</h3>
-            </div>
-            <div class="card-body">
-                <textarea id="whatsappMessage" class="form-control" rows="7"
-                    placeholder="Escribe tu mensaje aquí"></textarea>
-                <!-- El botón ha sido eliminado -->
+    <style>
+        .related-cards {
+            background-color: #6699cc;
+            /* Cambia este color según tus preferencias */
+        }
+    </style>
+    <div class="row related-cards">
+       
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Pedidos Recientes</h3>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="pedidosTable" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Cliente</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($pedidos as $pedido)
+                            <tr>
+                                <td>{{ $pedido->fecha }}</td>
+                                <td>{{ $pedido->cliente }}</td>
+                                <td>{{ number_format($pedido->total, 2, ',', '.') }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-    <!-- Sección de cumpleaños eliminada -->
-</div>
+
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3 class="card-title">Total de Ventas por Año</h3>
+        </div>
+        <div class="card-body">
+            <canvas id="salesChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Combobox para seleccionar el año -->
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3 class="card-title">Seleccionar Año</h3>
+        </div>
+        <div class="card-body">
+            <form method="GET" action="{{ route('admin.index') }}">
+                <div class="form-group">
+                    <label for="year">Año:</label>
+                    <select name="year" id="year" class="form-control" onchange="this.form.submit()">
+                        @foreach ($salesData['years'] as $year)
+                            <option value="{{ $year }}" {{ $year == $selectedYear ? 'selected' : '' }}>{{ $year }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Gráfico de ventas por mes -->
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3 class="card-title">Total de Ventas por Mes en {{ $selectedYear }}</h3>
+        </div>
+        <div class="card-body">
+            <canvas id="monthlySalesChart"></canvas>
+        </div>
+    </div>
 @stop
 
 @section('js')
-@include('atajos')
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Capturar el input de mensaje de WhatsApp
-        var whatsappInput = document.getElementById('whatsappMessage');
-
-        // Establecer un mensaje predeterminado
-        whatsappInput.value = "¡Feliz Cumpleaños desde Escleróptica! En este día tan especial, queremos enviarte un cálido saludo y nuestros mejores deseos. Esperamos que tu día esté lleno de alegría y momentos memorables. Recuerda que estamos aquí para cuidar de tu visión y acompañarte en cada paso de tu camino hacia una salud visual óptima. ¡Que tengas un maravilloso cumpleaños!";
-
-        // Función para actualizar el enlace de WhatsApp
-        function updateWhatsAppLink() {
-            var message = encodeURIComponent(whatsappInput.value);
-            document.querySelectorAll('.whatsapp-link').forEach(function (link) {
-                var name = link.dataset.name;
-                var personalizedMessage = message + ' ' + name;
-                link.href = 'https://wa.me/' + link.dataset.phone + '?text=' + personalizedMessage;
+    @include('atajos')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#pedidosTable').DataTable({
+                "order": [[0, "desc"]],
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+                }
             });
-        }
 
-        // Actualizar todos los enlaces de WhatsApp con el mensaje predeterminado
-        updateWhatsAppLink();
+            // Datos para el gráfico
+            var salesData = @json($salesData);
 
-        // Actualizar todos los enlaces de WhatsApp cuando se cambie el mensaje
-        whatsappInput.addEventListener('input', function () {
-            updateWhatsAppLink();
+            var ctx = document.getElementById('salesChart').getContext('2d');
+            var salesChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: salesData.years,
+                    datasets: [{
+                        label: 'Total de Ventas',
+                        data: salesData.totals,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Datos para el gráfico de ventas por mes
+            var monthlySalesData = @json($salesDataMonthly);
+
+            var ctxMonthly = document.getElementById('monthlySalesChart').getContext('2d');
+            var monthlySalesChart = new Chart(ctxMonthly, {
+                type: 'bar',
+                data: {
+                    labels: monthlySalesData.months,
+                    datasets: [{
+                        label: 'Total de Ventas',
+                        data: monthlySalesData.totals,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
         });
-    });
-</script>
+    </script>
 @stop

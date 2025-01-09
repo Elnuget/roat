@@ -17,6 +17,69 @@
 
 <div class="card">
     <div class="card-body">
+        {{-- Agregar resumen de totales --}}
+        @php
+            $totalVentas = $pedidos->sum('total');
+            $totalSaldos = $pedidos->sum('saldo');
+            $diferencia = $totalVentas - $totalSaldos;
+        @endphp
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="info-box bg-info">
+                    <div class="info-box-content">
+                        <span class="info-box-text">Total Ventas</span>
+                        <span class="info-box-number">${{ number_format($totalVentas, 2, ',', '.') }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="info-box bg-warning">
+                    <div class="info-box-content">
+                        <span class="info-box-text">Total Saldos</span>
+                        <span class="info-box-number">${{ number_format($totalSaldos, 2, ',', '.') }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="info-box bg-success">
+                    <div class="info-box-content">
+                        <span class="info-box-text">Total Cobrado</span>
+                        <span class="info-box-number">${{ number_format($diferencia, 2, ',', '.') }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Agregar formulario de filtro --}}
+        <form method="GET" class="form-row mb-3" id="filterForm">
+            <div class="col-md-2">
+                <label for="filtroAno">Seleccionar Año:</label>
+                <select name="ano" class="form-control" id="filtroAno">
+                    <option value="">Seleccione Año</option>
+                    @for ($year = date('Y'); $year >= 2000; $year--)
+                        <option value="{{ $year }}" {{ request('ano') == $year ? 'selected' : '' }}>{{ $year }}</option>
+                    @endfor
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label for="filtroMes">Seleccionar Mes:</label>
+                <select name="mes" class="form-control" id="filtroMes">
+                    <option value="">Seleccione Mes</option>
+                    @foreach (range(1, 12) as $m)
+                        <option value="{{ $m }}" {{ request('mes') == $m ? 'selected' : '' }}>
+                            {{ DateTime::createFromFormat('!m', $m)->format('F') }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-2 align-self-end">
+                <button type="button" class="btn btn-primary" id="actualButton">Actual</button>
+            </div>
+        </form>
+
+        {{-- Filtro por mes (removed) --}}
+        <!-- Previously here, now removed -->
+
         <div class="table-responsive">
             <table id="pedidosTable" class="table table-striped table-bordered table-responsive">
                 <thead>
@@ -35,7 +98,7 @@
                 <tbody>
                     @foreach ($pedidos as $pedido)
                     <tr>
-                        <td>{{ $pedido->fecha }}</td>
+                        <td>{{ $pedido->fecha->format('Y-m-d') }}</td>
                         <td>{{ $pedido->numero_orden }}</td>
                         <td>{{ $pedido->fact }}</td>
                         <td>{{ $pedido->cliente }}</td>
@@ -70,6 +133,10 @@
                                     data-target="#confirmarEliminarModal" data-id="{{ $pedido->id }}"
                                     data-url="{{ route('pedidos.destroy', $pedido->id) }}">
                                     <i class="fa fa-lg fa-fw fa-trash"></i>
+                                </a>
+                                <!-- Botón de Pago -->
+                                <a href="{{ route('pagos.create', ['pedido_id' => $pedido->id]) }}" class="btn btn-success btn-sm" title="Añadir Pago">
+                                    <i class="fas fa-money-bill-wave"></i>
                                 </a>
                             </div>
                             <!-- Confirmar Eliminar Modal -->
@@ -117,7 +184,7 @@
 @stop
 @section('js')
 @include('atajos')
-
+@parent
 <script>
     $(document).ready(function () {
         // Configurar el modal antes de mostrarse
@@ -171,6 +238,25 @@
                 "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
             }
         });
+    });
+
+    document.getElementById('filtroAno').addEventListener('change', function() {
+        document.getElementById('filterForm').submit();
+    });
+    document.getElementById('filtroMes').addEventListener('change', function() {
+        document.getElementById('filterForm').submit();
+    });
+
+    // Añadir evento al botón "Actual"
+    document.getElementById('actualButton').addEventListener('click', function() {
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+        const currentMonth = currentDate.getMonth() + 1; // getMonth() es 0-indexado
+
+        document.getElementById('filtroAno').value = currentYear;
+        document.getElementById('filtroMes').value = currentMonth;
+
+        document.getElementById('filterForm').submit();
     });
 </script>
 @stop

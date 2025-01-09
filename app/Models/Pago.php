@@ -9,20 +9,21 @@ class Pago extends Model
 {
     use HasFactory;
 
+    protected $table = 'pagos'; // Ensure the model uses the 'pagos' table
+
     protected $fillable = [
-        'paciente_id',
+        'pedido_id',
         'mediodepago_id',
-        'saldo',
         'pago'
     ];
-
-    public function paciente()
-    {
-        return $this->belongsTo(Paciente::class);
-    }
 
     public function mediodepago()
     {
         return $this->belongsTo(mediosdepago::class);
+    }
+
+    public function pedido()
+    {
+        return $this->belongsTo(Pedido::class);
     }
 }

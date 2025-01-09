@@ -34,6 +34,10 @@ class PedidoSeeder extends Seeder
             'l_precio' => 150.00,
             'd_inventario_id' => $inventario2->id,
             'd_precio' => 200.75,
+            // Nuevos campos
+            'tipo_lente' => 'Tipo A',
+            'material' => 'Material A',
+            'filtro' => 'Filtro A',
             'total' => 501.25,
             'saldo' => 100.00,
         ]);
@@ -53,6 +57,10 @@ class PedidoSeeder extends Seeder
             'l_precio' => 250.00,
             'd_inventario_id' => $inventario3->id,
             'd_precio' => 300.25,
+            // Nuevos campos
+            'tipo_lente' => 'Tipo B',
+            'material' => 'Material B',
+            'filtro' => 'Filtro B',
             'total' => 811.00,
             'saldo' => 200.00,
         ]);
@@ -72,6 +80,10 @@ class PedidoSeeder extends Seeder
             'l_precio' => 350.00,
             'd_inventario_id' => $inventario1->id,
             'd_precio' => 100.50,
+            // Nuevos campos
+            'tipo_lente' => 'Tipo C',
+            'material' => 'Material C',
+            'filtro' => 'Filtro C',
             'total' => 820.75,
             'saldo' => 300.00,
         ]);

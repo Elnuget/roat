@@ -32,15 +32,45 @@
                 <li><strong>Correo Electrónico:</strong> {{ $pedido->correo_electronico }}</li>
                 <li><strong>Examen Visual:</strong> {{ $pedido->examen_visual }}</li>
                 <li><strong>Armazón:</strong> {{ $pedido->aInventario->codigo }}</li>
-
-                <li><strong>Precio Armazón:</strong> ${{ number_format($pedido->a_precio, 0, ',', '.') }}</li>
+                @php
+                    // Armazón
+                    $armazonBase = round($pedido->a_precio / 1.15, 2);
+                    $armazonIva = round($pedido->a_precio - $armazonBase, 2);
+                    
+                    // Lunas
+                    $lunasBase = round($pedido->l_precio / 1.15, 2);
+                    $lunasIva = round($pedido->l_precio - $lunasBase, 2);
+                    
+                    // Accesorio
+                    $accesorioBase = round($pedido->d_precio / 1.15, 2);
+                    $accesorioIva = round($pedido->d_precio - $accesorioBase, 2);
+                @endphp
+                <li><strong>Precio Armazón:</strong> ${{ number_format($pedido->a_precio, 2, ',', '.') }}
+                    <span style="color: red;">
+                        (Base: ${{ number_format($armazonBase, 2, ',', '.') }})
+                        (IVA: ${{ number_format($armazonIva, 2, ',', '.') }})
+                    </span>
+                </li>
                 <li><strong>Lunas Detalle:</strong> {{ $pedido->l_detalle }}</li>
                 <li><strong>Lunas Medidas:</strong> {{ $pedido->l_medida }}</li>
-                <li><strong>Precio Lunas:</strong> ${{ number_format($pedido->l_precio, 0, ',', '.') }}</li>
+                <li><strong>Tipo de Lente:</strong> {{ $pedido->tipo_lente }}</li>
+                <li><strong>Material:</strong> {{ $pedido->material }}</li>
+                <li><strong>Filtro:</strong> {{ $pedido->filtro }}</li>
+                <li><strong>Precio Lunas:</strong> ${{ number_format($pedido->l_precio, 2, ',', '.') }}
+                    <span style="color: red;">
+                        (Base: ${{ number_format($lunasBase, 2, ',', '.') }})
+                        (IVA: ${{ number_format($lunasIva, 2, ',', '.') }})
+                    </span>
+                </li>
                 <li><strong>Accesorio:</strong> {{ $pedido->dInventario->codigo }}</li>
-                <li><strong>Accesorio Precio:</strong> ${{ number_format($pedido->d_precio, 0, ',', '.') }}</li>
-                <li><strong>Total:</strong> ${{ number_format($pedido->total, 0, ',', '.') }}</li>
-                <li><strong>Saldo:</strong> ${{ number_format($pedido->saldo, 0, ',', '.') }}</li>
+                <li><strong>Accesorio Precio:</strong> ${{ number_format($pedido->d_precio, 2, ',', '.') }}
+                    <span style="color: red;">
+                        (Base: ${{ number_format($accesorioBase, 2, ',', '.') }})
+                        (IVA: ${{ number_format($accesorioIva, 2, ',', '.') }})
+                    </span>
+                </li>
+                <li><strong>Total:</strong> ${{ number_format($pedido->total, 2, ',', '.') }}</li>
+                <li><strong>Saldo:</strong> ${{ number_format($pedido->saldo, 2, ',', '.') }}</li>
             </ul>
         </div>
     </div>
@@ -79,6 +109,9 @@
                     <th>Precio Armazón</th>
                     <th>Lunas Medidas</th>
                     <th>Lunas Detalle</th>
+                    <th>Tipo de Lente</th>
+                    <th>Material</th>
+                    <th>Filtro</th>
                     <th>Precio Lunas</th>
                     <th>Accesorio</th>
                     <th>Precio Accesorio</th>
@@ -101,6 +134,9 @@
                     <td>{{ $pedido->a_precio }}</td>
                     <td>{{ $pedido->l_medida }}</td>
                     <td>{{ $pedido->l_detalle }}</td>
+                    <td>{{ $pedido->tipo_lente }}</td>
+                    <td>{{ $pedido->material }}</td>
+                    <td>{{ $pedido->filtro }}</td>
                     <td>{{ $pedido->l_precio }}</td>
                     <td>{{ $pedido->dInventario->codigo ?? 'N/A' }}</td>
                     <!-- Mostrar el nombre del objeto D -->

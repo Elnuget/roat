@@ -26,7 +26,16 @@ class Pedido extends Model
         'd_inventario_id',
         'd_precio',
         'total',
-        'saldo'
+        'saldo',
+        // Nuevos campos
+        'tipo_lente',
+        'material',
+        'filtro'
+    ];
+
+    protected $dates = [
+        'fecha',
+        // ...other date fields...
     ];
 
     // Define si tu modelo debe usar timestamps (created_at y updated_at)

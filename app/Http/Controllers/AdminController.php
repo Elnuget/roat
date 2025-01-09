@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Models\Pedido;
 
 class AdminController extends Controller
 {
@@ -14,19 +16,53 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // Establecer la zona horaria a la de Quito, Ecuador
         $hoy = Carbon::now('America/Guayaquil');
 
-        // Obtener pacientes que cumplen años hoy
-        // $pacientes = Paciente::whereMonth('fecha_nacimiento', '=', $hoy->month)
-        //     ->whereDay('fecha_nacimiento', '=', $hoy->day)
-        //     ->get();
+        // Obtener pedidos ordenados por fecha descendente
+        $pedidos = Pedido::orderBy('fecha', 'desc')->get();
 
-        // Retornar la vista con los pacientes
-        // return view('admin.index', compact('pacientes'));
-        return view('admin.index');
+        // Obtener datos de ventas por año
+        $salesData = Pedido::select(
+            DB::raw('YEAR(fecha) as year'),
+            DB::raw('SUM(total) as total')
+        )
+        ->groupBy('year')
+        ->orderBy('year', 'asc')
+        ->get()
+        ->pluck('total', 'year')
+        ->toArray();
+
+        $salesData = [
+            'years' => array_keys($salesData),
+            'totals' => array_values($salesData)
+        ];
+
+        // Obtener el año seleccionado desde la solicitud o usar el más reciente
+        $selectedYear = $request->input('year', end($salesData['years']));
+
+        // Obtener datos de ventas por mes para el año seleccionado
+        $salesDataMonthly = Pedido::whereYear('fecha', $selectedYear)
+            ->select(
+                DB::raw('MONTH(fecha) as month'),
+                DB::raw('SUM(total) as total')
+            )
+            ->groupBy('month')
+            ->orderBy('month', 'asc')
+            ->get()
+            ->pluck('total', 'month')
+            ->toArray();
+
+        $salesDataMonthly = [
+            'months' => array_map(function($month) {
+                return DateTime::createFromFormat('!m', $month)->format('F');
+            }, array_keys($salesDataMonthly)),
+            'totals' => array_values($salesDataMonthly)
+        ];
+
+        return view('admin.index', compact('pedidos', 'salesData', 'salesDataMonthly', 'selectedYear'));
     }
 
     /**

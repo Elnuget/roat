@@ -13,10 +13,19 @@ class PedidosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Incluye las relaciones con 'aInventario' y 'dInventario'
-        $pedidos = Pedido::with(['aInventario', 'dInventario'])->get();
+        $query = Pedido::with(['aInventario', 'dInventario']);
+
+        if ($request->filled('ano')) {
+            $query->whereYear('fecha', '=', $request->ano);
+        }
+
+        if ($request->filled('mes')) {
+            $query->whereMonth('fecha', '=', (int)$request->mes);
+        }
+
+        $pedidos = $query->paginate(10);
 
         return view('pedidos.index', compact('pedidos'));
     }
@@ -47,22 +56,26 @@ class PedidosController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'fecha' => 'required|date',
-            'numero_orden' => 'required|integer',
-            'fact' => 'required|string|max:255',
-            'examen_visual' => 'required|numeric',
-            'cliente' => 'required|string|max:255',
-            'celular' => 'required|string|max:255',
-            'correo_electronico' => 'required|string|email|max:255',
-            'a_inventario_id' => 'required|exists:inventarios,id',
-            'a_precio' => 'required|numeric',
-            'l_detalle' => 'required|string|max:255',
-            'l_medida' => 'required|string|max:255',
-            'l_precio' => 'required|numeric',
-            'd_inventario_id' => 'required|exists:inventarios,id',
-            'd_precio' => 'required|numeric',
-            'total' => 'required|numeric',
-            'saldo' => 'required|numeric'
+            'fecha' => 'nullable|date',
+            'numero_orden' => 'nullable|integer',
+            'fact' => 'nullable|string|max:255',
+            'examen_visual' => 'nullable|numeric',
+            'cliente' => 'nullable|string|max:255',
+            'celular' => 'nullable|string|max:255',
+            'correo_electronico' => 'nullable|string|email|max:255',
+            'a_inventario_id' => 'nullable|exists:inventarios,id',
+            'a_precio' => 'nullable|numeric',
+            'l_detalle' => 'nullable|string|max:255',
+            'l_medida' => 'nullable|string|max:255',
+            'l_precio' => 'nullable|numeric',
+            'd_inventario_id' => 'nullable|exists:inventarios,id',
+            'd_precio' => 'nullable|numeric',
+            'total' => 'nullable|numeric',
+            'saldo' => 'nullable|numeric',
+            // Nuevos campos
+            'tipo_lente' => 'nullable|string|max:255',
+            'material' => 'nullable|string|max:255',
+            'filtro' => 'nullable|string|max:255'
         ]);
 
         try {
@@ -70,21 +83,25 @@ class PedidosController extends Controller
             $pedido->save();
 
             // Actualizar el inventario para el artículo A
-            $inventarioItemA = Inventario::find($validatedData['a_inventario_id']);
-            if ($inventarioItemA) {
-                $inventarioItemA->orden = $validatedData['numero_orden'];
-                $inventarioItemA->cantidad -= 1;
-                $inventarioItemA->valor = $validatedData['a_precio'];
-                $inventarioItemA->save();
+            if (!empty($validatedData['a_inventario_id'])) {
+                $inventarioItemA = Inventario::find($validatedData['a_inventario_id']);
+                if ($inventarioItemA) {
+                    $inventarioItemA->orden = $validatedData['numero_orden'];
+                    $inventarioItemA->cantidad -= 1;
+                    $inventarioItemA->valor = $validatedData['a_precio'];
+                    $inventarioItemA->save();
+                }
             }
 
             // Actualizar el inventario para el artículo D
-            $inventarioItemD = Inventario::find($validatedData['d_inventario_id']);
-            if ($inventarioItemD) {
-                $inventarioItemD->orden = $validatedData['numero_orden'];
-                $inventarioItemD->cantidad -= 1;
-                $inventarioItemD->valor = $validatedData['d_precio'];
-                $inventarioItemD->save();
+            if (!empty($validatedData['d_inventario_id'])) {
+                $inventarioItemD = Inventario::find($validatedData['d_inventario_id']);
+                if ($inventarioItemD) {
+                    $inventarioItemD->orden = $validatedData['numero_orden'];
+                    $inventarioItemD->cantidad -= 1;
+                    $inventarioItemD->valor = $validatedData['d_precio'];
+                    $inventarioItemD->save();
+                }
             }
 
             return redirect('/Pedidos')->with([
@@ -95,7 +112,7 @@ class PedidosController extends Controller
         } catch (\Exception $e) {
             return redirect('/Pedidos')->with([
                 'error' => 'Error',
-                'mensaje' => 'Pedido no se ha creado',
+                'mensaje' => 'Pedido no se ha creado. Motivo: ' . $e->getMessage(),
                 'tipo' => 'alert-danger'
             ]);
         }
@@ -139,22 +156,26 @@ class PedidosController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'fecha' => 'required|date',
-            'numero_orden' => 'required|integer',
-            'fact' => 'required|string|max:255',
-            'examen_visual' => 'required|numeric',
-            'cliente' => 'required|string|max:255',
-            'celular' => 'required|string|max:255',
-            'correo_electronico' => 'required|string|email|max:255',
-            'a_inventario_id' => 'required|exists:inventarios,id',
-            'a_precio' => 'required|numeric',
-            'l_detalle' => 'required|string|max:255',
-            'l_medida' => 'required|string|max:255',
-            'l_precio' => 'required|numeric',
-            'd_inventario_id' => 'required|exists:inventarios,id',
-            'd_precio' => 'required|numeric',
-            'total' => 'required|numeric',
-            'saldo' => 'required|numeric'
+            'fecha' => 'nullable|date',
+            'numero_orden' => 'nullable|integer',
+            'fact' => 'nullable|string|max:255',
+            'examen_visual' => 'nullable|numeric',
+            'cliente' => 'nullable|string|max:255',
+            'celular' => 'nullable|string|max:255',
+            'correo_electronico' => 'nullable|string|email|max:255',
+            'a_inventario_id' => 'nullable|exists:inventarios,id',
+            'a_precio' => 'nullable|numeric',
+            'l_detalle' => 'nullable|string|max:255',
+            'l_medida' => 'nullable|string|max:255',
+            'l_precio' => 'nullable|numeric',
+            'd_inventario_id' => 'nullable|exists:inventarios,id',
+            'd_precio' => 'nullable|numeric',
+            'total' => 'nullable|numeric',
+            'saldo' => 'nullable|numeric',
+            // Nuevos campos
+            'tipo_lente' => 'nullable|string|max:255',
+            'material' => 'nullable|string|max:255',
+            'filtro' => 'nullable|string|max:255'
         ]);
 
         try {

@@ -1,1 +1,1 @@
-Primera version software optica tomando de base sivig
+pago nuevo para pagos

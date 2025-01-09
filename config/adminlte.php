@@ -261,10 +261,9 @@ return [
         ],
 
         [
-            'text' => 'Pago',
-            'icon' => 'fas fa-credit-card', // Ícono cambiado aquí
-            'route' => 'pagonuevos.index',
-            'active' => ['pagonuevos/*']
+            'text' => 'Pagos',
+            'icon' => 'fas fa-fw fa-money-bill',
+            'route' => 'pagos.index', // Changed from 'pagonuevos.index' to 'pagos.index'
         ],
 
         [
