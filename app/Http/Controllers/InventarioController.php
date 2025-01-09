@@ -15,11 +15,22 @@ class InventarioController extends Controller
      */
     public function index(Request $request)
     {
-
         $lugares = Inventario::select('lugar', 'numero_lugar')->distinct()->get();
-        
-        $inventario = Inventario::all();
-        return view('inventario.index', compact('inventario', 'lugares'));
+        $inventario = [];
+
+        $fecha = $request->input('fecha');
+        $filtroLugar = $request->input('lugar');
+        $filtroNumero = $request->input('numero_lugar');
+
+        if ($fecha && $filtroLugar && $filtroNumero) {
+            $inventario = Inventario::where('fecha', 'like', $fecha . '%')
+                ->where('lugar', $filtroLugar)
+                ->where('numero_lugar', $filtroNumero)
+                ->get();
+        }
+        $totalCantidad = collect($inventario)->sum('cantidad');
+
+        return view('inventario.index', compact('inventario', 'lugares', 'totalCantidad'));
     }
 
     /**
@@ -51,9 +62,7 @@ class InventarioController extends Controller
             'fila' => 'required|integer', // Fila es requerida y debe ser un número entero
             'numero' => 'required|integer', // Número es requerido y debe ser un número entero
             'codigo' => 'required|string|max:255', // Código es requerido y debe ser una cadena de texto no mayor a 255 caracteres
-            'valor' => 'nullable|numeric',
             'cantidad' => 'required|integer', // Cantidad es requerida y debe ser un número entero
-            'orden' => 'nullable|integer', // Orden es requerido y debe ser un número entero
         ]);
 
         try {
@@ -66,9 +75,9 @@ class InventarioController extends Controller
         'fila' => $validatedData['fila'],
         'numero' => $validatedData['numero'],
         'codigo' => $validatedData['codigo'],
-        'valor' => $validatedData['valor'],
+        'valor' => null, // or use 0.00 if desired
         'cantidad' => $validatedData['cantidad'],
-        'orden' => $validatedData['orden'],
+        'orden' => null  // or use 0 if desired
     ]);
 
         
@@ -80,7 +89,7 @@ class InventarioController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('inventario.index')->with([
                 'error' => 'Error',
-                'mensaje' => 'Artículo no se ha creado',
+                'mensaje' => 'Artículo no se ha creado. Detalle: ' . $e->getMessage(),
                 'tipo' => 'alert-danger'
             ]);
         }
@@ -177,5 +186,9 @@ class InventarioController extends Controller
         }
     }
 
-   
+    public function getNumerosLugar($lugar)
+    {
+        $numeros = Inventario::where('lugar', $lugar)->pluck('numero_lugar')->unique()->values();
+        return response()->json($numeros);
+    }
 }

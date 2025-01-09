@@ -64,6 +64,9 @@ Route::post('Inventario', [InventarioController::class, 'store'])->name('inventa
 
 Route::resource('inventario', InventarioController::class);
 
+Route::get('/inventario/lugares/{lugar}', [App\Http\Controllers\InventarioController::class, 'getNumerosLugar'])
+    ->name('inventario.getNumerosLugar');
+
 // Venta nuevo
 
 Route::get('Venta', [InventarioController::class, 'index'])->name('venta.index');

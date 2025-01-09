@@ -17,41 +17,62 @@
 @stop
 
 @section('content')
-
     <div class="card">
         <div class="card-body">
-            <div id="itemCountLabel" class="mb-3"></div> <!-- Label for item count -->
+            @if(!empty($inventario))
+                @if($totalCantidad > 0)
+                    <div id="itemCountLabel" class="mb-3">
+                        <span class="badge badge-success">
+                            Cantidad total de artículos en el soporte: {{ $totalCantidad }}
+                        </span>
+                    </div>
+                @else
+                    <div id="itemCountLabel" class="mb-3">
+                        <span class="badge badge-danger">No hay artículos en el soporte</span>
+                    </div>
+                @endif
+            @endif
+            <div id="itemCountLabel" class="mb-3"></div>
+            <form method="GET" class="form-row mb-3">
+                <div class="col-md-4">
+                    <label for="filtroFecha">Seleccionar Fecha:</label>
+                    <input type="month" name="fecha" class="form-control"
+                           value="{{ request('fecha') ?? now()->format('Y-m') }}" />
+                </div>
+                <div class="col-md-4">
+                    <label for="lugar">Lugar:</label>
+                    <select class="form-control" name="lugar">
+                        <option value="">Seleccionar Lugar</option>
+                        @foreach ($lugares->unique('lugar') as $item)
+                            <option value="{{ $item->lugar }}" {{ request('lugar') == $item->lugar ? 'selected' : '' }}>
+                                {{ $item->lugar }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="numero_lugar">Número de Lugar:</label>
+                    <select class="form-control" name="numero_lugar">
+                        <option value="">Seleccionar Número</option>
+                        @foreach ($lugares->unique('numero_lugar') as $item)
+                            <option value="{{ $item->numero_lugar }}" {{ request('numero_lugar') == $item->numero_lugar ? 'selected' : '' }}>
+                                {{ $item->numero_lugar }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label>&nbsp;</label>
+                    <button class="btn btn-primary form-control" type="submit">Filtrar</button>
+                </div>
+                <div class="col-md-2">
+                    <label>&nbsp;</label>
+                    <a class="btn btn-secondary form-control" href="{{ route('inventario.index') }}">Limpiar</a>
+                </div>
+            </form>
             <div class="table-responsive">
                 <table id="example" class="table table-striped table-bordered">
                     <thead>
-                        <tr>
-                            <td colspan="10">
-                                <div class="form-row">
-                                    <div class="col-md-4">
-                                        <label for="filtroFecha">Seleccionar Fecha:</label>
-                                        <input type="month" class="form-control" id="filtroFecha" value="{{ now()->format('Y-m') }}" />
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="lugar">Lugar:</label>
-                                        <select class="form-control" id="lugar" name="lugar">
-                                            <option value="">Seleccionar Lugar</option>
-                                            @foreach ($lugares as $lugar)
-                                                <option value="{{ $lugar->lugar }}">
-                                                    {{ $lugar->lugar . ' ' . $lugar->numero_lugar }} </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label for="btnFiltrar">Filtrar:</label>
-                                        <button class="btn btn-primary form-control" id="btnFiltrar">Filtrar</button>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label for="btnLimpiar">Limpiar Filtrado:</label>
-                                        <button class="btn btn-secondary form-control" id="btnLimpiar">Limpiar</button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
                         <tr>
                             <td>ID</td>
                             <td>Fecha</td>
@@ -98,31 +119,15 @@
             </div>
         </div>
     </div>
-
-
 @stop
 
 @section('js')
 
     @include('atajos')
 
-
     <script>
         $(document).ready(function() {
-            var table;
-            // Configurar el modal antes de mostrarse
-            $('#confirmarEliminarModal').on('show.bs.modal', function(event) {
-                var button = $(event.relatedTarget);
-                var id = button.data('id');
-                var url = button.data('url');
-                var modal = $(this);
-                modal.find('#eliminarForm').attr('action', url);
-            });
-
-            // Cambiar el texto del campo de búsqueda después de la inicialización
-
-            // Inicializar DataTable
-            table = $('#example').DataTable({
+            $('#example').DataTable({
                 "columnDefs": [ {
                         "targets": [4],
                         "visible": true,
@@ -175,72 +180,14 @@
                 ],
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-                }
-            });
-            table.on('init', function() {
-                $('.dataTables_filter label input').attr('placeholder', 'Buscar por código');
-            });
-            // Aplicar el filtrado inicial por fecha actual
-        function aplicarFiltroInicial() {
-            var filtroFecha = $('#filtroFecha').val();
-            table.columns(1).search(filtroFecha).draw(); // Filtrar por la columna de fecha
-        }
-        // Aplicar el filtro cuando DataTable se inicializa
-        table.on('init', function() {
-            aplicarFiltroInicial();
-        });
-
-            // Evento click del botón de filtrar
-            $('#btnFiltrar').on('click', function() {
-                var filtroFecha = $('#filtroFecha').val();
-                var filtroLugar = $('#lugar').val();
-
-                // Verificar si ambos campos están seleccionados
-                if (filtroFecha && filtroLugar) {
-                    // Aplicar el filtrado
-                    table.columns(1).search(filtroFecha).draw(); // Columna de fecha
-                    table.columns(2).search(filtroLugar).draw(); // Columna de lugar
-
-                    // Sumar la cantidad de elementos filtrados
-                    var totalCantidad = 0;
-                    table.rows({ filter: 'applied' }).every(function(rowIdx, tableLoop, rowLoop) {
-                        var data = this.data();
-                        totalCantidad += parseInt(data[7]); // Sumar la cantidad (columna 7)
-                    });
-
-                    var itemCountLabel = $('#itemCountLabel');
-
-                    if (totalCantidad > 0) {
-                        itemCountLabel.html('<span class="badge badge-success">Cantidad total de artículos en el soporte: ' + totalCantidad + '</span>');
-                    } else {
-                        itemCountLabel.html('<span class="badge badge-danger">No hay artículos en el soporte</span>');
-                    }
-
-                    // Ocultar el botón de eliminar
-                    table.rows({ filter: 'applied' }).nodes().to$().find('.text-danger').hide();
-                } else {
-                    // Mostrar mensaje o tomar otra acción si no están ambos seleccionados
-                    alert('Selecciona fecha y lugar para filtrar.');
-                }
-            });
-
-            // Evento click del botón de limpiar
-            $('#btnLimpiar').on('click', function() {
-                // Limpiar el filtrado y mostrar todos los datos
-                $('#filtroFecha').val('');
-                $('#lugar').val('');
-                table.search('').columns().search('').draw();
-                $('#itemCountLabel').html(''); // Limpiar el label de conteo de artículos
-
-                // Mostrar el botón de eliminar
-                table.rows().nodes().to$().find('.text-danger').show();
+                },
+                "searching": false,
+                "paging": false,
+                "info": false
             });
         });
-
     </script>
 @stop
-
-
 
 @section('footer')
     

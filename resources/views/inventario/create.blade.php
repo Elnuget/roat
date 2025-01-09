@@ -74,17 +74,8 @@
 
                     <div class="form-goup row">
                         <div class="col-4">
-                            <label>Valor</label>
-                            <input name="valor" id="valor"  type="number" class="form-control">
-                        </div>
-                        <div class="col-4">
                             <label>Cantidad</label>
                             <input name="cantidad" id="cantidad" required type="number" class="form-control">
-
-                        </div>
-                        <div class="col-4">
-                            <label>Orden</label>
-                            <input name="orden"  type="text" class="form-control">
                         </div>
                     </div>
 
@@ -140,6 +131,29 @@ document.addEventListener('keydown', function(event) {
     if (event.key === "Home") { // Verifica si la tecla presionada es 'Inicio'
         window.location.href = '/dashboard'; // Redirecciona a '/dashboard'
     }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const lugarSelect = document.getElementById('lugar');
+    const numeroLugarInput = document.getElementById('numero_lugar');
+
+    lugarSelect.addEventListener('change', function() {
+        const lugar = this.value;
+        if(lugar) {
+            fetch(`/inventario/lugares/${lugar}`)
+                .then(res => res.json())
+                .then(data => {
+                    // Clear existing value
+                    numeroLugarInput.value = '';
+                    // If you want a dropdown, replace input with a select or similar
+                    // For now, just pick the first option or keep it empty
+                    if(data.length > 0) {
+                        numeroLugarInput.value = data[0]; 
+                    }
+                })
+                .catch(err => console.error(err));
+        }
+    });
 });
 </script>
 @stop
