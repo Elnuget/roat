@@ -49,6 +49,10 @@
                         <label>Teléfono</label>
                         <input name="telefono" required type="text" class="form-control">
                     </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input name="email" required type="email" class="form-control">
+                    </div>
 
 
                     <br>

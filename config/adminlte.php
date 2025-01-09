@@ -272,6 +272,12 @@ return [
             'active' => ['pagonuevos/*']
         ],
 
+        [
+            'text' => 'Historiales Clínicos',
+            'icon' => 'fas fa-notes-medical', // Puedes cambiar el ícono según prefieras
+            'route' => 'historiales_clinicos.index',
+            'active' => ['historiales_clinicos/*'], // Asegúrate de que esto coincida con tus rutas nombradas en Laravel
+        ],
 
         [
             'text' => 'Configuracion',

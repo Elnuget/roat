@@ -16,6 +16,7 @@ use App\Http\Controllers\RecepcionesController;
 use App\Http\Controllers\VentasController; 
 use App\Http\Controllers\PagonuevosController; 
 use App\Http\Controllers\DetalleVentasController;
+use App\Http\Controllers\HistorialClinicoController;
 use App\Models\Inventario;
 use Illuminate\Support\Facades\Route;
 
@@ -116,6 +117,7 @@ Route::get('Inventario/{id}/ver', [InventarioController::class, 'show'])->name('
 Route::put('Inventario/{articulo}', [InventarioController::class, 'update'])->name('inventario.update');
 Route::post('Inventario', [InventarioController::class, 'store'])->name('inventario.store');
 
+Route::resource('inventario', InventarioController::class);
 
 // Venta nuevo
 
@@ -154,6 +156,7 @@ Route::get('Pedidos/{id}', [PedidosController::class, 'show'])->name('pedidos.sh
 Route::get('Pedidos/{id}/editar', [PedidosController::class, 'edit'])->name('pedidos.edit');
 Route::put('Pedidos/{id}', [PedidosController::class, 'update'])->name('pedidos.update');
 Route::delete('Pedidos/{id}', [PedidosController::class, 'destroy'])->name('pedidos.destroy');
+Route::patch('/pedidos/{id}/approve', [PedidosController::class, 'approve'])->name('pedidos.approve');
 
 // Pagosnuevos
 Route::get('Pagonuevos', [PagonuevosController::class, 'index'])->name('pagonuevos.index');
@@ -163,3 +166,5 @@ Route::get('Pagonuevos/{id}', [PagonuevosController::class, 'show'])->name('pago
 Route::get('Pagonuevos/{id}/editar', [PagonuevosController::class, 'edit'])->name('pagonuevos.edit');
 Route::put('Pagonuevos/{id}', [PagonuevosController::class, 'update'])->name('pagonuevos.update');
 Route::delete('Pagonuevos/{id}', [PagonuevosController::class, 'destroy'])->name('pagonuevos.destroy');
+
+Route::resource('historiales_clinicos', HistorialClinicoController::class);

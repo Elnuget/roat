@@ -19,6 +19,7 @@ class CreatePacientesTable extends Migration
             $table->string('nombre'); // Campo para el nombre
             $table->string('telefono'); // Campo para el teléfono
             $table->date('fecha_nacimiento'); // Campo para la fecha de nacimiento
+            $table->string('email'); // Campo para el email
             $table->timestamps();
         });
     }

@@ -50,18 +50,18 @@
                     <div class="form-group row">
                         <div class="col-12">
                             <label for="fecha" class="form-label">Fecha</label>
-                            <input type="date" class="form-control" id="fecha" name="fecha" required>
+                            <input type="date" class="form-control" id="fecha" name="fecha" value="{{ old('fecha', $currentDate) }}" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-6">
                             <label for="numero_orden" class="form-label">Orden</label>
-                            <input type="number" class="form-control" id="numero_orden" name="numero_orden" required>
+                            <input type="number" class="form-control" id="numero_orden" name="numero_orden" value="{{ old('numero_orden', $nextOrderNumber) }}" required>
                         </div>
 
                         <div class="col-6">
                             <label for="fact" class="form-label">Factura</label>
-                            <input type="text" class="form-control" id="fact" name="fact" required>
+                            <input type="text" class="form-control" id="fact" name="fact" value="Pendiente">
                         </div>
                     </div>
                     <div class="form-group row">

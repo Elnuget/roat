@@ -45,7 +45,12 @@
                             <label>Lugar</label>
                             <select id="lugar" name="lugar" class="form-control">
                                 <option {{ $inventario->lugar === 'Soporte' ? 'selected' : '' }} value="Soporte">Soporte</option>
-                                <option {{ $inventario->lugar === 'Caja' ? 'selected' : '' }} value="Caja">Caja</option>
+                                <option {{ $inventario->lugar === 'Vitrina' ? 'selected' : '' }} value="Vitrina">Vitrina</option>
+                                <option {{ $inventario->lugar === 'Estuches' ? 'selected' : '' }} value="Estuches">Estuches</option>
+                                <option {{ $inventario->lugar === 'Cosas Extras' ? 'selected' : '' }} value="Cosas Extras">Cosas Extras</option>
+                                <option {{ $inventario->lugar === 'Armazones Extras' ? 'selected' : '' }} value="Armazones Extras">Armazones Extras</option>
+                                <option {{ $inventario->lugar === 'Líquidos' ? 'selected' : '' }} value="Líquidos">Líquidos</option>
+                                <option {{ $inventario->lugar === 'Goteros' ? 'selected' : '' }} value="Goteros">Goteros</option>
                             </select>
                         </div>
                         <div class="col-6">

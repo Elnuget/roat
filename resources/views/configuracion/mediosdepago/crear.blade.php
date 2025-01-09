@@ -26,18 +26,7 @@
 
                     <div class="form-group">
                         <label for="medio_de_pago">Medio de pago</label>
-                        <select name="medio_de_pago" required class="form-control">
-                            <option value="Transferencia Bancaria">Transferencia Bancaria</option>
-                            <option value="Depósito Bancario">Depósito Bancario</option>
-                            <option value="Tarjeta de Crédito">Tarjeta de Crédito</option>
-                            <option value="Tarjeta de Débito">Tarjeta de Débito</option>
-                            <option value="PayPal">PayPal</option>
-                            <option value="Stripe">Stripe</option>
-                            <option value="Bitcoin y otras Criptomonedas">Bitcoin y otras Criptomonedas</option>
-                            <option value="Cheque">Cheque</option>
-                            <option value="Efectivo">Efectivo</option>
-                            <option value="Pago Móvil">Pago Móvil</option>
-                        </select>
+                        <input type="text" name="medio_de_pago" required class="form-control">
                     </div>
                     <button type="button" class="btn btn-primary pull-left" data-toggle="modal" data-target="#modal">Crear
                         medio de pago</button>

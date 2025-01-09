@@ -48,7 +48,24 @@
 
     @livewireScripts
 
-    
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- ...existing menu items... -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('historiales_clinicos.index') }}">Historiales Clínicos</a>
+        </li>
+        <!-- ...existing menu items... -->
+    </ul>
+
+    <ul class="sidebar-menu" data-widget="tree">
+        <!-- ...existing menu items... -->
+        <li class="nav-item">
+            <a href="{{ route('historiales_clinicos.index') }}" class="nav-link">
+                <i class="nav-icon fas fa-file-medical"></i>
+                <p>Historiales Clínicos</p>
+            </a>
+        </li>
+        <!-- ...existing menu items... -->
+    </ul>
 </body>
 
 </html>

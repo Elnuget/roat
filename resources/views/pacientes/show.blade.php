@@ -1,0 +1,6 @@
+// ...existing code...
+<div class="form-group">
+    <label>Email</label>
+    <input name="email" required type="email" class="form-control" value="{{ $paciente->email }}" disabled>
+</div>
+// ...existing code...

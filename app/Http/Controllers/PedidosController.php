@@ -32,8 +32,13 @@ class PedidosController extends Controller
     {
         $pacientes = Paciente::all();
         $inventarioItems = Inventario::all(); // Obtener todos los items del inventario
+        $currentDate = date('Y-m-d'); // Obtener la fecha actual
+        $lastOrder = Pedido::orderBy('numero_orden', 'desc')->first();
+        $nextOrderNumber = $lastOrder ? $lastOrder->numero_orden + 1 : 1; // Obtener el siguiente número de orden
 
-        return view('pedidos.create', compact('pacientes', 'inventarioItems'));
+        $nextInvoiceNumber = 'Pendiente';
+
+        return view('pedidos.create', compact('pacientes', 'inventarioItems', 'currentDate', 'nextOrderNumber', 'nextInvoiceNumber'));
     }
 
     /**
@@ -200,5 +205,18 @@ class PedidosController extends Controller
                 'tipo' => 'alert-danger'
             ]);
         }
+    }
+
+    public function approve($id)
+    {
+        $pedido = Pedido::findOrFail($id);
+        $pedido->fact = 'Aprobado';
+        $pedido->save();
+
+        return redirect()->route('pedidos.index')->with([
+            'error' => 'Exito',
+            'mensaje' => 'Factura aprobada exitosamente',
+            'tipo' => 'alert-success'
+        ]);
     }
 }

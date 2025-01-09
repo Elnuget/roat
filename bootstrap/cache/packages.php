@@ -1,13 +1,13 @@
 <?php return array (
   'facade/ignition' => 
   array (
-    'providers' => 
-    array (
-      0 => 'Facade\\Ignition\\IgnitionServiceProvider',
-    ),
     'aliases' => 
     array (
       'Flare' => 'Facade\\Ignition\\Facades\\Flare',
+    ),
+    'providers' => 
+    array (
+      0 => 'Facade\\Ignition\\IgnitionServiceProvider',
     ),
   ),
   'fideloper/proxy' => 
@@ -26,13 +26,13 @@
   ),
   'jenssegers/agent' => 
   array (
-    'providers' => 
-    array (
-      0 => 'Jenssegers\\Agent\\AgentServiceProvider',
-    ),
     'aliases' => 
     array (
       'Agent' => 'Jenssegers\\Agent\\Facades\\Agent',
+    ),
+    'providers' => 
+    array (
+      0 => 'Jenssegers\\Agent\\AgentServiceProvider',
     ),
   ),
   'jeroennoten/laravel-adminlte' => 
@@ -79,13 +79,13 @@
   ),
   'livewire/livewire' => 
   array (
-    'providers' => 
-    array (
-      0 => 'Livewire\\LivewireServiceProvider',
-    ),
     'aliases' => 
     array (
       'Livewire' => 'Livewire\\Livewire',
+    ),
+    'providers' => 
+    array (
+      0 => 'Livewire\\LivewireServiceProvider',
     ),
   ),
   'nesbot/carbon' => 
@@ -104,24 +104,24 @@
   ),
   'pragmarx/version' => 
   array (
-    'providers' => 
-    array (
-      0 => 'PragmaRX\\Version\\Package\\ServiceProvider',
-    ),
     'aliases' => 
     array (
       'Version' => 'PragmaRX\\Version\\Package\\Facade',
     ),
+    'providers' => 
+    array (
+      0 => 'PragmaRX\\Version\\Package\\ServiceProvider',
+    ),
   ),
   'pragmarx/yaml' => 
   array (
-    'providers' => 
-    array (
-      0 => 'PragmaRX\\Yaml\\Package\\ServiceProvider',
-    ),
     'aliases' => 
     array (
       'Yaml' => 'PragmaRX\\Yaml\\Package\\Facade',
+    ),
+    'providers' => 
+    array (
+      0 => 'PragmaRX\\Yaml\\Package\\ServiceProvider',
     ),
   ),
 );

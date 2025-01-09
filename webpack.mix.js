@@ -12,10 +12,8 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-        require('postcss-import'),
-        require('tailwindcss'),
-    ]).extract(['jquery', 'select2']);;
+    .sass('resources/sass/app.scss', 'public/css') // Ensure this path is correct
+    .extract(['jquery', 'select2']);
 
 if (mix.inProduction()) {
     mix.version();

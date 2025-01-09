@@ -15,9 +15,7 @@ class InventarioController extends Controller
      */
     public function index(Request $request)
     {
-
         $lugares = Inventario::select('lugar', 'numero_lugar')->distinct()->get();
-        
         $inventario = Inventario::all();
         return view('inventario.index', compact('inventario', 'lugares'));
     }
@@ -158,11 +156,8 @@ class InventarioController extends Controller
     public function destroy($id)
     {
         try {
-        $inventario = Inventario::findOrFail($id);
-        $inventario->delete();
-        
-
-     
+            $inventario = Inventario::findOrFail($id);
+            $inventario->delete();
             return redirect()->route('inventario.index')->with([
                 'error' => 'Exito',
                 'mensaje' => 'Artículo eliminado exitosamente',

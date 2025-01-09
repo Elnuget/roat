@@ -35,15 +35,20 @@
                     <div class="form-group row">
                         <div class="col-12">
                             <label>Fecha</label>
-                            <input name="fecha" required type="date" class="form-control">
+                            <input name="fecha" required type="date" class="form-control" value="{{ now()->format('Y-m-d') }}">
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-6">
                             <label>Lugar</label>
                             <select id="lugar" name="lugar" class="form-control">
-                                <option selected=true value="Soporte">Soporte</option>
-                                <option value="Caja">Caja</option>
+                                <option value="Soporte">Soporte</option>
+                                <option value="Vitrina">Vitrina</option>
+                                <option value="Estuches">Estuches</option>
+                                <option value="Cosas Extras">Cosas Extras</option>
+                                <option value="Armazones Extras">Armazones Extras</option>
+                                <option value="Líquidos">Líquidos</option>
+                                <option value="Goteros">Goteros</option>
                             </select>
                         </div>
                         <div class="col-6">

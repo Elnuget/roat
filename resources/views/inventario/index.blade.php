@@ -20,6 +20,7 @@
 
     <div class="card">
         <div class="card-body">
+            <div id="itemCountLabel" class="mb-3"></div> <!-- Label for item count -->
             <div class="table-responsive">
                 <table id="example" class="table table-striped table-bordered">
                     <thead>
@@ -33,7 +34,6 @@
                                     <div class="col-md-4">
                                         <label for="lugar">Lugar:</label>
                                         <select class="form-control" id="lugar" name="lugar">
-
                                             <option value="">Seleccionar Lugar</option>
                                             @foreach ($lugares as $lugar)
                                                 <option value="{{ $lugar->lugar }}">
@@ -83,16 +83,13 @@
                                             class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar">
                                             <i class="fa fa-lg fa-fw fa-pen"></i>
                                         </a>
-    
-    
-    
-    
+                                        @if(!$i->filtered)
                                         <a class="btn btn-xs btn-default text-danger mx-1 shadow" href="#"
                                             data-toggle="modal" data-target="#confirmarEliminarModal"
                                             data-id="{{ $i->id }}" data-url="{{ route('inventario.destroy', $i->id) }}">
                                             <i class="fa fa-lg fa-fw fa-trash"></i>
                                         </a>
-                                    
+                                        @endif
                                         <div class="modal fade" id="confirmarEliminarModal" tabindex="-1" role="dialog"
                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
@@ -159,7 +156,7 @@
 
             // Inicializar DataTable
             table = $('#example').DataTable({
-                "columnDefs": [{
+                "columnDefs": [ {
                         "targets": [4],
                         "visible": true,
                         "searchable": true
@@ -236,6 +233,24 @@
                     // Aplicar el filtrado
                     table.columns(1).search(filtroFecha).draw(); // Columna de fecha
                     table.columns(2).search(filtroLugar).draw(); // Columna de lugar
+
+                    // Sumar la cantidad de elementos filtrados
+                    var totalCantidad = 0;
+                    table.rows({ filter: 'applied' }).every(function(rowIdx, tableLoop, rowLoop) {
+                        var data = this.data();
+                        totalCantidad += parseInt(data[7]); // Sumar la cantidad (columna 7)
+                    });
+
+                    var itemCountLabel = $('#itemCountLabel');
+
+                    if (totalCantidad > 0) {
+                        itemCountLabel.html('<span class="badge badge-success">Cantidad total de artículos en el soporte: ' + totalCantidad + '</span>');
+                    } else {
+                        itemCountLabel.html('<span class="badge badge-danger">No hay artículos en el soporte</span>');
+                    }
+
+                    // Ocultar el botón de eliminar
+                    table.rows({ filter: 'applied' }).nodes().to$().find('.text-danger').hide();
                 } else {
                     // Mostrar mensaje o tomar otra acción si no están ambos seleccionados
                     alert('Selecciona fecha y lugar para filtrar.');
@@ -248,6 +263,10 @@
                 $('#filtroFecha').val('');
                 $('#lugar').val('');
                 table.search('').columns().search('').draw();
+                $('#itemCountLabel').html(''); // Limpiar el label de conteo de artículos
+
+                // Mostrar el botón de eliminar
+                table.rows().nodes().to$().find('.text-danger').show();
             });
         });
 

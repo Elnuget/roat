@@ -27,6 +27,7 @@
                         <td>Nombre</td>
                         <td>Fecha de Nacimiento</td>
                         <td>Teléfono</td>
+                        <td>Email</td>
                         <td>Acciones</td>
                     </tr>
                 </thead>
@@ -37,6 +38,7 @@
                         <td>{{ $paciente->nombre }}</td>
                         <td>{{ $paciente->fecha_nacimiento }}</td>
                         <td>{{ $paciente->telefono }}</td>
+                        <td>{{ $paciente->email }}</td>
 
 
                         <td>

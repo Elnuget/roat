@@ -28,6 +28,10 @@ class DatabaseSeeder extends Seeder
             VentasSeeder::class,
             DetalleVentasSeeder::class,
             DetalleMovimientosArticulosSeeder::class,
+            PacienteSeeder::class,
+            InventarioSeeder::class,
+            PedidoSeeder::class, // Añadir el seeder de pedidos
+            
         ]);
     }
 }
