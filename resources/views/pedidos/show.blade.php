@@ -31,7 +31,7 @@
                 <li><strong>Celular:</strong> {{ $pedido->celular }}</li>
                 <li><strong>Correo Electrónico:</strong> {{ $pedido->correo_electronico }}</li>
                 <li><strong>Examen Visual:</strong> {{ $pedido->examen_visual }}</li>
-                <li><strong>Armazón:</strong> {{ $pedido->aInventario->codigo }}</li>
+                <li><strong>Armazón:</strong> {{ $pedido->aInventario ? $pedido->aInventario->codigo : 'No asignado' }}</li>
                 @php
                     // Armazón
                     $armazonBase = round($pedido->a_precio / 1.15, 2);
@@ -62,7 +62,7 @@
                         (IVA: ${{ number_format($lunasIva, 2, ',', '.') }})
                     </span>
                 </li>
-                <li><strong>Accesorio:</strong> {{ $pedido->dInventario->codigo }}</li>
+                <li><strong>Accesorio:</strong> {{ $pedido->dInventario ? $pedido->dInventario->codigo : 'No asignado' }}</li>
                 <li><strong>Accesorio Precio:</strong> ${{ number_format($pedido->d_precio, 2, ',', '.') }}
                     <span style="color: red;">
                         (Base: ${{ number_format($accesorioBase, 2, ',', '.') }})
@@ -130,7 +130,7 @@
                     <td>{{ $pedido->celular }}</td>
                     <td>{{ $pedido->correo_electronico }}</td>
                     <td>{{ $pedido->examen_visual }}</td>
-                    <td>{{ $pedido->aInventario->codigo ?? 'N/A' }}</td> <!-- Mostrar el nombre del objeto A -->
+                    <td>{{ $pedido->aInventario ? $pedido->aInventario->codigo : 'No asignado' }}</td> <!-- Mostrar el nombre del objeto A -->
                     <td>{{ $pedido->a_precio }}</td>
                     <td>{{ $pedido->l_medida }}</td>
                     <td>{{ $pedido->l_detalle }}</td>
@@ -138,7 +138,7 @@
                     <td>{{ $pedido->material }}</td>
                     <td>{{ $pedido->filtro }}</td>
                     <td>{{ $pedido->l_precio }}</td>
-                    <td>{{ $pedido->dInventario->codigo ?? 'N/A' }}</td>
+                    <td>{{ $pedido->dInventario ? $pedido->dInventario->codigo : 'No asignado' }}</td>
                     <!-- Mostrar el nombre del objeto D -->
                     <td>{{ $pedido->d_precio }}</td>
                     <td>{{ $pedido->total }}</td>

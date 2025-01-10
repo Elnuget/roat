@@ -42,14 +42,30 @@ class PedidosController extends Controller
      */
     public function create()
     {
-        $inventarioItems = Inventario::all(); // Obtener todos los items del inventario
-        $currentDate = date('Y-m-d'); // Obtener la fecha actual
-        $lastOrder = Pedido::orderBy('numero_orden', 'desc')->first();
-        $nextOrderNumber = $lastOrder ? $lastOrder->numero_orden + 1 : 1; // Obtener el siguiente número de orden
+        // Filtrar armazones (excluyendo accesorios)
+        $armazones = Inventario::where('cantidad', '>', 0)
+            ->where('codigo', 'not like', '%ESTUCHE%')
+            ->where('codigo', 'not like', '%LIQUIDO%')
+            ->where('codigo', 'not like', '%GOTERO%')
+            ->where('codigo', 'not like', '%SPRAY%')
+            ->get();
 
+        // Filtrar accesorios
+        $accesorios = Inventario::where('cantidad', '>', 0)
+            ->where(function($query) {
+                $query->where('codigo', 'like', '%ESTUCHE%')
+                    ->orWhere('codigo', 'like', '%LIQUIDO%')
+                    ->orWhere('codigo', 'like', '%GOTERO%')
+                    ->orWhere('codigo', 'like', '%SPRAY%');
+            })
+            ->get();
+
+        $currentDate = date('Y-m-d');
+        $lastOrder = Pedido::orderBy('numero_orden', 'desc')->first();
+        $nextOrderNumber = $lastOrder ? $lastOrder->numero_orden + 1 : 1;
         $nextInvoiceNumber = 'Pendiente';
 
-        return view('pedidos.create', compact('inventarioItems', 'currentDate', 'nextOrderNumber', 'nextInvoiceNumber'));
+        return view('pedidos.create', compact('armazones', 'accesorios', 'currentDate', 'nextOrderNumber', 'nextInvoiceNumber'));
     }
 
     /**

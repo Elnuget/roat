@@ -110,10 +110,8 @@
                             <label for="a_inventario_id" class="form-label">Armazón (Inventario)</label>
                             <select class="form-control" id="a_inventario_id" name="a_inventario_id">
                                 <option value="">Seleccione un Item del Inventario</option>
-                                @foreach ($inventarioItems as $item)
-                                    @if ($item->cantidad > 0 && empty($item->orden))
-                                        <option value="{{ $item->id }}">{{ $item->codigo }}</option>
-                                    @endif
+                                @foreach ($armazones as $item)
+                                    <option value="{{ $item->id }}">{{ $item->codigo }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -213,10 +211,8 @@
                             <label for="d_inventario_id" class="form-label">Accesorio (Inventario)</label>
                             <select class="form-control" id="d_inventario_id" name="d_inventario_id">
                                 <option value="">Seleccione un Item del Inventario</option>
-                                @foreach ($inventarioItems as $item)
-                                    @if ($item->cantidad > 0 && empty($item->orden))
-                                        <option value="{{ $item->id }}">{{ $item->codigo }}</option>
-                                    @endif
+                                @foreach ($accesorios as $item)
+                                    <option value="{{ $item->id }}">{{ $item->codigo }}</option>
                                 @endforeach
                             </select>
                         </div>
