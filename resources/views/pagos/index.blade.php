@@ -103,6 +103,7 @@
                                         class="btn btn-xs btn-default text-info mx-1 shadow" title="Ver">
                                         <i class="fa fa-lg fa-fw fa-eye"></i>
                                     </a>
+                                    @can('admin')
                                     <a href="{{ route('pagos.edit', $pago->id) }}"
                                         class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar">
                                         <i class="fa fa-lg fa-fw fa-pen"></i>
@@ -113,7 +114,7 @@
                                         data-id="{{ $pago->id }}" data-url="{{ route('pagos.destroy', $pago->id) }}">
                                         <i class="fa fa-lg fa-fw fa-trash"></i>
                                     </a>
-
+                                    @endcan
                                     <!-- Confirmar Eliminar Modal -->
                                     <div class="modal fade" id="confirmarEliminarModal" tabindex="-1" role="dialog"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">

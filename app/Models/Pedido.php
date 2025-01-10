@@ -30,7 +30,9 @@ class Pedido extends Model
         // Nuevos campos
         'tipo_lente',
         'material',
-        'filtro'
+        'filtro',
+        'valor_compra',
+        'motivo_compra'
     ];
 
     protected $dates = [

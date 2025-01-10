@@ -7,6 +7,11 @@ use App\Models\Inventario; // Asegúrate de importar el modelo Inventario
 
 class InventarioController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin')->only(['edit', 'update', 'destroy']);
+    }
+
     /**
      * Muestra una lista del recurso.
      *

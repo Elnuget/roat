@@ -29,6 +29,7 @@
                     <td>Usuario</td>
                     <td>Mail</td>
                     <td>Activo</td>
+                    <td>Administrador</td>
                     <td>Editar</td>
                 </tr>
             </thead>
@@ -46,6 +47,19 @@
                         @else
                            Inactivo
                         @endif       
+                        </td>
+                        <td>
+                            <form action="{{ route('configuracion.usuarios.toggleAdmin', $u->id) }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input admin-toggle" 
+                                           id="adminSwitch{{$u->id}}" 
+                                           {{ $u->is_admin ? 'checked' : '' }}
+                                           onchange="this.form.submit()">
+                                    <label class="custom-control-label" for="adminSwitch{{$u->id}}"></label>
+                                </div>
+                            </form>
                         </td>
                         <td><div class="btn-group">
                             <a type="button" class="btn btn-success" href="{{route('configuracion.usuarios.editar', $u->id)}}">Datos</a>

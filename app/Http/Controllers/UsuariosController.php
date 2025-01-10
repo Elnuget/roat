@@ -66,4 +66,17 @@ class UsuariosController extends Controller
             return view('configuracion.usuarios.editar', compact('usuario'));
         }
     }
+
+    public function toggleAdmin($id)
+    {
+        $usuario = User::findOrFail($id);
+        $usuario->is_admin = !$usuario->is_admin;
+        $usuario->save();
+
+        return redirect()->back()->with([
+            'error' => 'Éxito',
+            'mensaje' => 'Estado de administrador actualizado correctamente',
+            'tipo' => 'alert-success'
+        ]);
+    }
 }

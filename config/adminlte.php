@@ -241,6 +241,7 @@ return [
             'icon' => 'fas fa-user-cog', // Icono para la sección de administración. Cambia según tus preferencias
             'route' => 'admin.index', // La ruta debe coincidir con una ruta nombrada en tus rutas de Laravel
             'active' => ['admin', 'admin/*'], // Patrón para definir cuándo este ítem estará activo
+            'can' => 'admin'  // Add this line to check admin permission
         ],
 
         [
@@ -267,6 +268,12 @@ return [
         ],
 
         [
+            'text' => 'Caja',
+            'icon' => 'fas fa-cash-register',
+            'route' => 'caja.index',
+        ],
+
+        [
             'text' => 'Historiales Clínicos',
             'icon' => 'fas fa-notes-medical', // Puedes cambiar el ícono según prefieras
             'route' => 'historiales_clinicos.index',
@@ -282,7 +289,8 @@ return [
                     'text' => 'Usuarios',
                     'icon' => 'fas fa-cog',
                     'route' => 'configuracion.usuarios.index',
-                    'active' => ['Configuracion/Usuarios/*']
+                    'active' => ['Configuracion/Usuarios/*'],
+                    'can' => 'admin'  // Add this line to check admin permission
                 ],
                 [
                     'text' => 'Medios de pago',

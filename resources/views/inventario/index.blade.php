@@ -100,11 +100,13 @@
                                 <td>{{ $i->orden }}</td>
                                 <td>
                                     <div class="btn-group">
+                                        @can('admin')
                                         <a href="{{ route('inventario.edit', $i->id) }}"
                                             class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar">
                                             <i class="fa fa-lg fa-fw fa-pen"></i>
                                         </a>
                                         <!-- Removed delete button -->
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>

@@ -8,6 +8,11 @@ use App\Models\Inventario;
 
 class PedidosController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin')->only(['edit', 'update', 'destroy']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -75,7 +80,9 @@ class PedidosController extends Controller
             // Nuevos campos
             'tipo_lente' => 'nullable|string|max:255',
             'material' => 'nullable|string|max:255',
-            'filtro' => 'nullable|string|max:255'
+            'filtro' => 'nullable|string|max:255',
+            'valor_compra' => 'nullable|numeric',
+            'motivo_compra' => 'nullable|string|max:255'
         ]);
 
         try {
@@ -175,7 +182,9 @@ class PedidosController extends Controller
             // Nuevos campos
             'tipo_lente' => 'nullable|string|max:255',
             'material' => 'nullable|string|max:255',
-            'filtro' => 'nullable|string|max:255'
+            'filtro' => 'nullable|string|max:255',
+            'valor_compra' => 'nullable|numeric',
+            'motivo_compra' => 'nullable|string|max:255'
         ]);
 
         try {

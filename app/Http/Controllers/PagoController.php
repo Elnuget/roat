@@ -6,9 +6,15 @@ use App\Models\mediosdepago;
 use App\Models\Pedido;
 use Illuminate\Http\Request;
 use App\Models\Pago; // Ensure the Pago model is correctly referenced
+use App\Models\Caja;
 
 class PagoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin')->only(['edit', 'update', 'destroy']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -75,6 +81,16 @@ class PagoController extends Controller
                 if ($pedido) {
                     $pedido->saldo -= $validatedData['pago'];
                     $pedido->save();
+
+                    // Si el método de pago es Efectivo (asumiendo que el ID es 1)
+                    if ($validatedData['mediodepago_id'] == 1) {
+                        // Crear entrada en caja
+                        Caja::create([
+                            'valor' => $validatedData['pago'],
+                            'motivo' => 'Abono ' . $pedido->cliente,
+                            'user_id' => auth()->id()
+                        ]);
+                    }
                 }
             }
 

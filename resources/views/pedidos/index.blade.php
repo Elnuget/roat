@@ -116,24 +116,17 @@
                                     class="btn btn-xs btn-default text-primary mx-1 shadow" title="Ver">
                                     <i class="fa fa-lg fa-fw fa-eye"></i>
                                 </a>
+                                @can('admin')
                                 <a href="{{ route('pedidos.edit', $pedido->id) }}"
                                     class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar">
                                     <i class="fa fa-lg fa-fw fa-pen"></i>
                                 </a>
-                                @if($pedido->fact == 'Pendiente')
-                                <form action="{{ route('pedidos.approve', $pedido->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('PATCH')
-                                    <button type="submit" class="btn btn-xs btn-default text-success mx-1 shadow" title="Aprobar">
-                                        <i class="fa fa-lg fa-fw fa-check"></i>
-                                    </button>
-                                </form>
-                                @endif
                                 <a class="btn btn-xs btn-default text-danger mx-1 shadow" href="#" data-toggle="modal"
                                     data-target="#confirmarEliminarModal" data-id="{{ $pedido->id }}"
                                     data-url="{{ route('pedidos.destroy', $pedido->id) }}">
                                     <i class="fa fa-lg fa-fw fa-trash"></i>
                                 </a>
+                                @endcan
                                 <!-- Botón de Pago -->
                                 <a href="{{ route('pagos.create', ['pedido_id' => $pedido->id]) }}" class="btn btn-success btn-sm" title="Añadir Pago">
                                     <i class="fas fa-money-bill-wave"></i>

@@ -46,6 +46,11 @@ class CreatePedidosTable extends Migration
 
             $table->decimal('total', 8, 2)->nullable();
             $table->decimal('saldo', 8, 2)->nullable();
+            
+            // Nuevos campos adicionales
+            $table->decimal('valor_compra', 8, 2)->nullable();
+            $table->string('motivo_compra')->nullable();
+            
             $table->timestamps();
         });
     }
