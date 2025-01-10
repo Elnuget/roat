@@ -85,7 +85,13 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::patch('/pedidos/{id}/approve', [PedidosController::class, 'approve'])->name('pedidos.approve');
 
     // Historiales Clinicos
-    Route::resource('historiales_clinicos', HistorialClinicoController::class);
+    Route::get('historiales_clinicos', [HistorialClinicoController::class, 'index'])->name('historiales_clinicos.index');
+    Route::get('historiales_clinicos/create', [HistorialClinicoController::class, 'create'])->name('historiales_clinicos.create');
+    Route::post('historiales_clinicos', [HistorialClinicoController::class, 'store'])->name('historiales_clinicos.store');
+    Route::get('historiales_clinicos/{historial}/edit', [HistorialClinicoController::class, 'edit'])->name('historiales_clinicos.edit');
+    Route::put('historiales_clinicos/{historial}', [HistorialClinicoController::class, 'update'])->name('historiales_clinicos.update');
+    Route::get('historiales_clinicos/{historial}', [HistorialClinicoController::class, 'show'])->name('historiales_clinicos.show');
+    Route::delete('historiales_clinicos/{historial}', [HistorialClinicoController::class, 'destroy'])->name('historiales_clinicos.destroy');
 
     // Pagos
     Route::get('Pagos', [PagoController::class, 'index'])->name('pagos.index');

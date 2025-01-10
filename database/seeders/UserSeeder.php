@@ -18,10 +18,10 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'name' => 'Jordan Chango',
-            'user' => 'Chango',
-            'email' => 'jordan-chango@hotmail.com',
-            'password' => Hash::make('1234'),
+            'name' => 'Rogger Pucuji',
+            'user' => 'Rogger',
+            'email' => 'roggerp2016@hotmail.com',
+            'password' => Hash::make('Rogger021999#'),
             'active' => '1',
             "created_at" =>  \Carbon\Carbon::now(),
             "updated_at" => \Carbon\Carbon::now(),
@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
             'name' => 'Carlos Angulo',
             'user' => 'Carlos',
             'email' => 'cangulo009@outlook.es',
-            'password' => Hash::make('1234'),
+            'password' => Hash::make('carlosangulo1234'),
             'active' => '1',
             "created_at" =>  \Carbon\Carbon::now(),
             "updated_at" => \Carbon\Carbon::now(),

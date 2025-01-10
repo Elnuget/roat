@@ -39,7 +39,7 @@
                     <div class="info-box bg-success">
                         <div class="info-box-content">
                             <span class="info-box-text">Total en Caja</span>
-                            <span class="info-box-number">${{ number_format($movimientos->sum('valor'), 2, ',', '.') }}</span>
+                            <span class="info-box-number">${{ number_format($totalCaja, 2, ',', '.') }}</span>
                         </div>
                     </div>
                 </div>

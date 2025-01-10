@@ -9,7 +9,7 @@
 @section('content')
 <div class="card">
     <div class="card-body">
-        <form action="{{ route('historiales_clinicos.update', $historialClinico) }}" method="POST">
+        <form method="POST" action="{{ route('historiales_clinicos.update', $historialClinico->id) }}">
             @csrf
             @method('PUT')
 
@@ -278,7 +278,7 @@
                         >
                     </div>
                 </div>
-                <div class="form-row">
+                <div la="form-row">
                     <div class="form-group col-md-4">
                         <label for="tipo_lente">Tipo de Lente</label>
                         <input 

@@ -24,7 +24,9 @@ class CajaController extends Controller
         $query->whereDate('created_at', $fechaFiltro);
         
         $movimientos = $query->latest()->get();
-        return view('caja.index', compact('movimientos', 'fechaFiltro'));
+        $totalCaja = Caja::sum('valor'); // Calculate total from all records
+        
+        return view('caja.index', compact('movimientos', 'fechaFiltro', 'totalCaja'));
     }
 
     public function store(Request $request)

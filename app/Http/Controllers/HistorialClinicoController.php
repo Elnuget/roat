@@ -66,13 +66,15 @@ class HistorialClinicoController extends Controller
         return view('historiales_clinicos.show', compact('historialClinico'));
     }
 
-    public function edit(HistorialClinico $historialClinico)
+    public function edit($id)
     {
+        $historialClinico = HistorialClinico::findOrFail($id);
         return view('historiales_clinicos.edit', compact('historialClinico'));
     }
 
-    public function update(Request $request, HistorialClinico $historialClinico)
+    public function update(Request $request, $id)
     {
+        $historialClinico = HistorialClinico::findOrFail($id);
         $data = $request->validate([
             'nombres' => 'required|string|max:255',
             'apellidos' => 'required|string|max:255',
