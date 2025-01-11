@@ -89,7 +89,7 @@
                         <th>Factura</th>
                         <th>Cliente</th>
                         <th>Celular</th>
-                        <th>Correo Electrónico</th>
+                        <th>Paciente</th>
                         <th>Total</th>
                         <th>Saldo</th>
                         <th>Acciones</th>
@@ -103,7 +103,7 @@
                         <td>{{ $pedido->fact }}</td>
                         <td>{{ $pedido->cliente }}</td>
                         <td>{{ $pedido->celular }}</td>
-                        <td>{{ $pedido->correo_electronico }}</td>
+                        <td>{{ $pedido->paciente }}</td>
                         <td>{{ $pedido->total }}</td>
                         <td>
                             <span style="color: {{ $pedido->saldo == 0 ? 'green' : 'red' }}">

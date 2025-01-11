@@ -12,6 +12,23 @@
         <form action="{{ route('historiales_clinicos.store') }}" method="POST">
             @csrf
 
+            {{-- FECHA DE REGISTRO --}}
+            <div class="mb-4">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="fecha">Fecha de Registro <span class="text-danger">*</span></label>
+                        <input 
+                            type="date" 
+                            name="fecha" 
+                            id="fecha" 
+                            class="form-control" 
+                            value="{{ date('Y-m-d') }}"
+                            required
+                        >
+                    </div>
+                </div>
+            </div>
+
             {{-- DATOS DEL PACIENTE --}}
             <div class="mb-4">
                 <h5 class="text-primary">Datos del Paciente</h5>
@@ -79,16 +96,6 @@
                             id="ocupacion" 
                             class="form-control" 
                             placeholder="Ingresa la ocupación del paciente"
-                            required
-                        >
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="fecha">Fecha <span class="text-danger">*</span></label>
-                        <input 
-                            type="date" 
-                            name="fecha" 
-                            id="fecha" 
-                            class="form-control" 
                             required
                         >
                     </div>
