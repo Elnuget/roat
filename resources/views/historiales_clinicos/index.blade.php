@@ -40,10 +40,6 @@
                         <td>{{ $historial->fecha }}</td>
                         <td>{{ $historial->motivo_consulta }}</td>
                         <td>
-                            <a href="{{ route('historiales_clinicos.show', $historial->id) }}"
-                                class="btn btn-xs btn-default text-primary mx-1 shadow" title="Ver">
-                                <i class="fa fa-lg fa-fw fa-eye"></i>
-                            </a>
                             <a href="{{ route('historiales_clinicos.edit', $historial->id) }}"
                                 class="btn btn-xs btn-default text-warning mx-1 shadow" title="Editar">
                                 <i class="fa fa-lg fa-fw fa-pen"></i>

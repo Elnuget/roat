@@ -23,7 +23,7 @@
                 @if($totalCantidad > 0)
                     <div id="itemCountLabel" class="mb-3">
                         <span class="badge badge-success">
-                            Cantidad total de artículos en el soporte: {{ $totalCantidad }}
+                            Cantidad total de artículos: {{ $totalCantidad }}
                         </span>
                     </div>
                 @else
@@ -34,18 +34,29 @@
             @endif
             <div id="itemCountLabel" class="mb-3"></div>
             <form method="GET" class="form-row mb-3">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label for="filtroFecha">Seleccionar Fecha:</label>
                     <input type="month" name="fecha" class="form-control"
                            value="{{ request('fecha') ?? now()->format('Y-m') }}" />
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label for="lugar">Lugar:</label>
                     <select class="form-control" name="lugar">
                         <option value="">Seleccionar Lugar</option>
                         @foreach ($lugares->unique('lugar') as $item)
                             <option value="{{ $item->lugar }}" {{ request('lugar') == $item->lugar ? 'selected' : '' }}>
                                 {{ $item->lugar }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="columna">Columna:</label>
+                    <select class="form-control" name="columna">
+                        <option value="">Todas</option>
+                        @foreach ($columnas->unique('columna') as $col)
+                            <option value="{{ $col->columna }}" {{ request('columna') == $col->columna ? 'selected' : '' }}>
+                                {{ $col->columna }}
                             </option>
                         @endforeach
                     </select>
@@ -60,19 +71,18 @@
                 </div>
             </form>
             <div class="table-responsive">
-                <table id="example" class="table table-striped table-bordered">
+                <table id="example" class="table table-striped table-bordered table-sm small">
                     <thead>
-                        <tr>
+                        <tr class="text-sm">
                             <td>ID</td>
                             <td>Fecha</td>
                             <td>Lugar</td>
-                            <td>Columna</td>
                             <td>Número</td>
                             <td>Código</td>
-                            <td>Valor</td>
                             <td>Cantidad</td>
-                            <td>Orden</td>
+                            @can('admin')
                             <td>Acciones</td>
+                            @endcan
                         </tr>
                     </thead>
                     <tbody>
@@ -81,23 +91,19 @@
                                 <td>{{ $i->id }}</td>
                                 <td>{{ $i->fecha }}</td>
                                 <td>{{ $i->lugar }}</td>
-                                <td>{{ $i->columna }}</td>
                                 <td>{{ $i->numero }}</td>
                                 <td>{{ $i->codigo }}</td>
-                                <td>{{ $i->valor }}</td>
                                 <td>{{ $i->cantidad }}</td>
-                                <td>{{ $i->orden }}</td>
+                                @can('admin')
                                 <td>
                                     <div class="btn-group">
-                                        @can('admin')
                                         <a href="{{ route('inventario.edit', $i->id) }}"
                                             class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar">
                                             <i class="fa fa-lg fa-fw fa-pen"></i>
                                         </a>
-                                        <!-- Removed delete button -->
-                                        @endcan
                                     </div>
                                 </td>
+                                @endcan
                             </tr>
                         @endforeach
                     </tbody>
@@ -155,7 +161,7 @@
                         "text": 'Imprimir',
                         "autoPrint": true,
                         "exportOptions": {
-                            "columns": [1, 2, 3, 4, 5, 6, 7, 8]
+                            "columns": [1, 2, 3, 4, 5]
                         },
                         "customize": function(win) {
                             $(win.document.body).css('font-size', '16pt');
@@ -170,7 +176,7 @@
                         "filename": 'Pagos.pdf',
                         "pageSize": 'LETTER',
                         "exportOptions": {
-                            "columns": [1, 2, 3, 4, 5, 6, 7, 8]
+                            "columns": [1, 2, 3, 4, 5]
                         }
                     }
                 ],
@@ -183,6 +189,17 @@
             });
         });
     </script>
+@stop
+
+@section('css')
+    <style>
+        .table td, .table th {
+            padding: 0.5rem;
+        }
+        .btn-xs {
+            padding: 0.1rem 0.3rem;
+        }
+    </style>
 @stop
 
 @section('footer')

@@ -9,7 +9,7 @@ class InventarioController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:admin')->only(['edit', 'update', 'destroy']);
+        $this->middleware('can:admin')->only(['destroy', 'update']);
     }
 
     /**
@@ -20,21 +20,27 @@ class InventarioController extends Controller
      */
     public function index(Request $request)
     {
-        $lugares = Inventario::select('lugar')->distinct()->get(); // removed 'numero_lugar'
+        $lugares = Inventario::select('lugar')->distinct()->get();
+        $columnas = Inventario::select('columna')->distinct()->get();
         $inventario = [];
 
         $fecha = $request->input('fecha');
         $filtroLugar = $request->input('lugar');
-        // $filtroNumero = $request->input('numero_lugar'); // removed
+        $filtroColumna = $request->input('columna');
 
         if ($fecha && $filtroLugar) {
-            $inventario = Inventario::where('fecha', 'like', $fecha . '%')
-                ->where('lugar', $filtroLugar)
-                ->get(); // removed ->where('numero_lugar', $filtroNumero)
+            $query = Inventario::where('fecha', 'like', $fecha . '%')
+                ->where('lugar', $filtroLugar);
+            
+            if ($filtroColumna) {
+                $query->where('columna', $filtroColumna);
+            }
+            
+            $inventario = $query->get();
         }
         $totalCantidad = collect($inventario)->sum('cantidad');
 
-        return view('inventario.index', compact('inventario', 'lugares', 'totalCantidad'));
+        return view('inventario.index', compact('inventario', 'lugares', 'columnas', 'totalCantidad'));
     }
 
     /**

@@ -60,7 +60,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::BtwlpBAxYpZE8M78',
+            '_route' => 'generated::fJcLoI9k1S0ZeeEg',
           ),
           1 => NULL,
           2 => 
@@ -170,7 +170,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::wzRPCBASLfEStuYG',
+            '_route' => 'generated::kErDTH0BQWsMdcxR',
           ),
           1 => NULL,
           2 => 
@@ -227,7 +227,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::xQacGxreUqCttMJa',
+            '_route' => 'generated::3xXt2tlX3yWLnvav',
           ),
           1 => NULL,
           2 => 
@@ -300,7 +300,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::FQnEE5h660DzoRFs',
+            '_route' => 'generated::c4a1rKn3oz3kn4py',
           ),
           1 => NULL,
           2 => 
@@ -430,7 +430,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::KJUS6wMhyJCsEBiY',
+            '_route' => 'generated::LUvnbZgN5EDsK4ac',
           ),
           1 => NULL,
           2 => 
@@ -469,7 +469,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::EjfHnuWE9ZsxalSV',
+            '_route' => 'generated::YCsvERnMssrLXbWz',
           ),
           1 => NULL,
           2 => 
@@ -508,7 +508,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::3q1NhrSEwPn5g2Gp',
+            '_route' => 'generated::qXZco8lOs6zxfoUM',
           ),
           1 => NULL,
           2 => 
@@ -528,7 +528,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::xNxwO4lDAY4C8l76',
+            '_route' => 'generated::svU6pkXx0Hw78wle',
           ),
           1 => NULL,
           2 => 
@@ -548,7 +548,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::3b8cMmxutz89Qbji',
+            '_route' => 'generated::zpo8naFfSgL0TKDK',
           ),
           1 => NULL,
           2 => 
@@ -658,62 +658,6 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      '/Inventario/Crear' => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'inventario.create',
-          ),
-          1 => NULL,
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => false,
-          6 => NULL,
-        ),
-      ),
-      '/Inventario' => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'inventario.store',
-          ),
-          1 => NULL,
-          2 => 
-          array (
-            'POST' => 0,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => false,
-          6 => NULL,
-        ),
-        1 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'inventario.index',
-          ),
-          1 => NULL,
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => false,
-          6 => NULL,
-        ),
-      ),
       '/Configuración/MediosDePago' => 
       array (
         0 => 
@@ -763,6 +707,42 @@ app('router')->setCompiledRoutes(
           array (
             'GET' => 0,
             'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/Inventario' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'inventario.index',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'inventario.store',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
           ),
           3 => NULL,
           4 => false,
@@ -1093,7 +1073,7 @@ app('router')->setCompiledRoutes(
     ),
     2 => 
     array (
-      0 => '{^(?|/reset\\-password/([^/]++)(*:32)|/livewire/message/([^/]++)(*:65)|/([^/]++)/livewire/message/([^/]++)(*:107)|/livewire/preview\\-file/([^/]++)(*:147)|/Configuraci(?|on/Usuarios/([^/]++)(?|(*:193)|(*:201)|/toggle\\-admin(*:223))|ón/MediosDePago/(?|([^/]++)(*:260)|eliminar/([^/]++)(*:285)|([^/]++)(?|/ver(*:308)|(*:316))))|/Inventario/(?|([^/]++)(*:350)|eliminar/([^/]++)(*:375)|([^/]++)(?|(*:394)|/ver(*:406)))|/inventario/lugares/([^/]++)(*:444)|/Venta/(?|([^/]++)(*:470)|eliminar/([^/]++)(*:495)|([^/]++)(?|/ver(*:518)|(*:526)))|/P(?|edidos/([^/]++)(?|(*:559)|/editar(*:574)|(*:582))|agos/([^/]++)(?|(*:607)|/editar(*:622)|(*:630)))|/pedidos/([^/]++)/approve(*:665)|/historiales_clinicos/([^/]++)(?|/edit(*:711)|(*:719))|/caja/([^/]++)(?|(*:745)|/edit(*:758)|(*:766)))/?$}sDu',
+      0 => '{^(?|/reset\\-password/([^/]++)(*:32)|/livewire/message/([^/]++)(*:65)|/([^/]++)/livewire/message/([^/]++)(*:107)|/livewire/preview\\-file/([^/]++)(*:147)|/Configuraci(?|on/Usuarios/([^/]++)(?|(*:193)|(*:201)|/toggle\\-admin(*:223))|ón/MediosDePago/(?|([^/]++)(*:260)|eliminar/([^/]++)(*:285)|([^/]++)(?|/ver(*:308)|(*:316))))|/Inventario/(?|([^/]++)(*:350)|eliminar/([^/]++)(*:375)|Crear(*:388)|([^/]++)(?|(*:407)|/ver(*:419)))|/inventario/lugares/([^/]++)(*:457)|/Venta/(?|([^/]++)(*:483)|eliminar/([^/]++)(*:508)|([^/]++)(?|/ver(*:531)|(*:539)))|/P(?|edidos/([^/]++)(?|(*:572)|/editar(*:587)|(*:595))|agos/([^/]++)(?|(*:620)|/editar(*:635)|(*:643)))|/pedidos/([^/]++)/approve(*:678)|/historiales_clinicos/([^/]++)(?|(*:719)|/edit(*:732)|(*:740))|/caja/([^/]++)(?|(*:766)|/edit(*:779)|(*:787)))/?$}sDu',
     ),
     3 => 
     array (
@@ -1389,7 +1369,29 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      394 => 
+      388 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'inventario.create',
+          ),
+          1 => 
+          array (
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      407 => 
       array (
         0 => 
         array (
@@ -1412,7 +1414,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      406 => 
+      419 => 
       array (
         0 => 
         array (
@@ -1435,7 +1437,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      444 => 
+      457 => 
       array (
         0 => 
         array (
@@ -1458,7 +1460,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      470 => 
+      483 => 
       array (
         0 => 
         array (
@@ -1481,7 +1483,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      495 => 
+      508 => 
       array (
         0 => 
         array (
@@ -1503,7 +1505,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      518 => 
+      531 => 
       array (
         0 => 
         array (
@@ -1526,7 +1528,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      526 => 
+      539 => 
       array (
         0 => 
         array (
@@ -1548,7 +1550,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      559 => 
+      572 => 
       array (
         0 => 
         array (
@@ -1571,7 +1573,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      574 => 
+      587 => 
       array (
         0 => 
         array (
@@ -1594,7 +1596,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      582 => 
+      595 => 
       array (
         0 => 
         array (
@@ -1635,7 +1637,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      607 => 
+      620 => 
       array (
         0 => 
         array (
@@ -1658,7 +1660,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      622 => 
+      635 => 
       array (
         0 => 
         array (
@@ -1681,7 +1683,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      630 => 
+      643 => 
       array (
         0 => 
         array (
@@ -1722,7 +1724,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      665 => 
+      678 => 
       array (
         0 => 
         array (
@@ -1744,7 +1746,30 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      711 => 
+      719 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'historiales_clinicos.show',
+          ),
+          1 => 
+          array (
+            0 => 'historiales_clinico',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      732 => 
       array (
         0 => 
         array (
@@ -1754,7 +1779,7 @@ app('router')->setCompiledRoutes(
           ),
           1 => 
           array (
-            0 => 'historial',
+            0 => 'historiales_clinico',
           ),
           2 => 
           array (
@@ -1767,7 +1792,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      719 => 
+      740 => 
       array (
         0 => 
         array (
@@ -1777,11 +1802,12 @@ app('router')->setCompiledRoutes(
           ),
           1 => 
           array (
-            0 => 'historial',
+            0 => 'historiales_clinico',
           ),
           2 => 
           array (
             'PUT' => 0,
+            'PATCH' => 1,
           ),
           3 => NULL,
           4 => false,
@@ -1792,31 +1818,11 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'historiales_clinicos.show',
-          ),
-          1 => 
-          array (
-            0 => 'historial',
-          ),
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => true,
-          6 => NULL,
-        ),
-        2 => 
-        array (
-          0 => 
-          array (
             '_route' => 'historiales_clinicos.destroy',
           ),
           1 => 
           array (
-            0 => 'historial',
+            0 => 'historiales_clinico',
           ),
           2 => 
           array (
@@ -1828,7 +1834,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      745 => 
+      766 => 
       array (
         0 => 
         array (
@@ -1851,7 +1857,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      758 => 
+      779 => 
       array (
         0 => 
         array (
@@ -1874,7 +1880,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      766 => 
+      787 => 
       array (
         0 => 
         array (
@@ -2006,7 +2012,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::BtwlpBAxYpZE8M78' => 
+    'generated::fJcLoI9k1S0ZeeEg' => 
     array (
       'methods' => 
       array (
@@ -2029,7 +2035,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::BtwlpBAxYpZE8M78',
+        'as' => 'generated::fJcLoI9k1S0ZeeEg',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2275,7 +2281,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::wzRPCBASLfEStuYG' => 
+    'generated::kErDTH0BQWsMdcxR' => 
     array (
       'methods' => 
       array (
@@ -2297,7 +2303,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::wzRPCBASLfEStuYG',
+        'as' => 'generated::kErDTH0BQWsMdcxR',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2389,7 +2395,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::xQacGxreUqCttMJa' => 
+    'generated::3xXt2tlX3yWLnvav' => 
     array (
       'methods' => 
       array (
@@ -2412,7 +2418,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::xQacGxreUqCttMJa',
+        'as' => 'generated::3xXt2tlX3yWLnvav',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2544,7 +2550,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::FQnEE5h660DzoRFs' => 
+    'generated::c4a1rKn3oz3kn4py' => 
     array (
       'methods' => 
       array (
@@ -2567,7 +2573,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::FQnEE5h660DzoRFs',
+        'as' => 'generated::c4a1rKn3oz3kn4py',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2820,7 +2826,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::KJUS6wMhyJCsEBiY' => 
+    'generated::LUvnbZgN5EDsK4ac' => 
     array (
       'methods' => 
       array (
@@ -2843,7 +2849,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::KJUS6wMhyJCsEBiY',
+        'as' => 'generated::LUvnbZgN5EDsK4ac',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2898,7 +2904,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::EjfHnuWE9ZsxalSV' => 
+    'generated::YCsvERnMssrLXbWz' => 
     array (
       'methods' => 
       array (
@@ -2919,7 +2925,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
         ),
-        'as' => 'generated::EjfHnuWE9ZsxalSV',
+        'as' => 'generated::YCsvERnMssrLXbWz',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3060,7 +3066,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::3q1NhrSEwPn5g2Gp' => 
+    'generated::qXZco8lOs6zxfoUM' => 
     array (
       'methods' => 
       array (
@@ -3072,7 +3078,7 @@ app('router')->setCompiledRoutes(
       array (
         'uses' => 'Livewire\\Controllers\\LivewireJavaScriptAssets@source',
         'controller' => 'Livewire\\Controllers\\LivewireJavaScriptAssets@source',
-        'as' => 'generated::3q1NhrSEwPn5g2Gp',
+        'as' => 'generated::qXZco8lOs6zxfoUM',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3088,7 +3094,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::xNxwO4lDAY4C8l76' => 
+    'generated::svU6pkXx0Hw78wle' => 
     array (
       'methods' => 
       array (
@@ -3100,7 +3106,7 @@ app('router')->setCompiledRoutes(
       array (
         'uses' => 'Livewire\\Controllers\\LivewireJavaScriptAssets@maps',
         'controller' => 'Livewire\\Controllers\\LivewireJavaScriptAssets@maps',
-        'as' => 'generated::xNxwO4lDAY4C8l76',
+        'as' => 'generated::svU6pkXx0Hw78wle',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3116,7 +3122,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::3b8cMmxutz89Qbji' => 
+    'generated::zpo8naFfSgL0TKDK' => 
     array (
       'methods' => 
       array (
@@ -3139,7 +3145,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::3b8cMmxutz89Qbji',
+        'as' => 'generated::zpo8naFfSgL0TKDK',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3465,87 +3471,6 @@ app('router')->setCompiledRoutes(
         array (
         ),
         'as' => 'admin.index',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
-      'withTrashed' => false,
-    ),
-    'inventario.create' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'Inventario/Crear',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'auth',
-          2 => 'auth:sanctum',
-          3 => 'verified',
-          4 => 'admin',
-        ),
-        'uses' => 'App\\Http\\Controllers\\InventarioController@create',
-        'controller' => 'App\\Http\\Controllers\\InventarioController@create',
-        'namespace' => NULL,
-        'prefix' => '',
-        'where' => 
-        array (
-        ),
-        'as' => 'inventario.create',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
-      'withTrashed' => false,
-    ),
-    'inventario.store' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'POST',
-      ),
-      'uri' => 'Inventario',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'auth',
-          2 => 'auth:sanctum',
-          3 => 'verified',
-          4 => 'admin',
-        ),
-        'uses' => 'App\\Http\\Controllers\\InventarioController@store',
-        'controller' => 'App\\Http\\Controllers\\InventarioController@store',
-        'namespace' => NULL,
-        'prefix' => '',
-        'where' => 
-        array (
-        ),
-        'as' => 'inventario.store',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3943,6 +3868,85 @@ app('router')->setCompiledRoutes(
         array (
         ),
         'as' => 'inventario.index',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'inventario.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'Inventario/Crear',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'auth:sanctum',
+          3 => 'verified',
+        ),
+        'uses' => 'App\\Http\\Controllers\\InventarioController@create',
+        'controller' => 'App\\Http\\Controllers\\InventarioController@create',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'inventario.create',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'inventario.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'Inventario',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'auth:sanctum',
+          3 => 'verified',
+        ),
+        'uses' => 'App\\Http\\Controllers\\InventarioController@store',
+        'controller' => 'App\\Http\\Controllers\\InventarioController@store',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'inventario.store',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4688,6 +4692,7 @@ app('router')->setCompiledRoutes(
           2 => 'auth:sanctum',
           3 => 'verified',
         ),
+        'as' => 'historiales_clinicos.index',
         'uses' => 'App\\Http\\Controllers\\HistorialClinicoController@index',
         'controller' => 'App\\Http\\Controllers\\HistorialClinicoController@index',
         'namespace' => NULL,
@@ -4695,7 +4700,6 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'historiales_clinicos.index',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4728,6 +4732,7 @@ app('router')->setCompiledRoutes(
           2 => 'auth:sanctum',
           3 => 'verified',
         ),
+        'as' => 'historiales_clinicos.create',
         'uses' => 'App\\Http\\Controllers\\HistorialClinicoController@create',
         'controller' => 'App\\Http\\Controllers\\HistorialClinicoController@create',
         'namespace' => NULL,
@@ -4735,7 +4740,6 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'historiales_clinicos.create',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4767,6 +4771,7 @@ app('router')->setCompiledRoutes(
           2 => 'auth:sanctum',
           3 => 'verified',
         ),
+        'as' => 'historiales_clinicos.store',
         'uses' => 'App\\Http\\Controllers\\HistorialClinicoController@store',
         'controller' => 'App\\Http\\Controllers\\HistorialClinicoController@store',
         'namespace' => NULL,
@@ -4774,86 +4779,6 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'historiales_clinicos.store',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
-      'withTrashed' => false,
-    ),
-    'historiales_clinicos.edit' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'historiales_clinicos/{historial}/edit',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'auth',
-          2 => 'auth:sanctum',
-          3 => 'verified',
-        ),
-        'uses' => 'App\\Http\\Controllers\\HistorialClinicoController@edit',
-        'controller' => 'App\\Http\\Controllers\\HistorialClinicoController@edit',
-        'namespace' => NULL,
-        'prefix' => '',
-        'where' => 
-        array (
-        ),
-        'as' => 'historiales_clinicos.edit',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
-      'withTrashed' => false,
-    ),
-    'historiales_clinicos.update' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'PUT',
-      ),
-      'uri' => 'historiales_clinicos/{historial}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-          1 => 'auth',
-          2 => 'auth:sanctum',
-          3 => 'verified',
-        ),
-        'uses' => 'App\\Http\\Controllers\\HistorialClinicoController@update',
-        'controller' => 'App\\Http\\Controllers\\HistorialClinicoController@update',
-        'namespace' => NULL,
-        'prefix' => '',
-        'where' => 
-        array (
-        ),
-        'as' => 'historiales_clinicos.update',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4876,7 +4801,7 @@ app('router')->setCompiledRoutes(
         0 => 'GET',
         1 => 'HEAD',
       ),
-      'uri' => 'historiales_clinicos/{historial}',
+      'uri' => 'historiales_clinicos/{historiales_clinico}',
       'action' => 
       array (
         'middleware' => 
@@ -4886,6 +4811,7 @@ app('router')->setCompiledRoutes(
           2 => 'auth:sanctum',
           3 => 'verified',
         ),
+        'as' => 'historiales_clinicos.show',
         'uses' => 'App\\Http\\Controllers\\HistorialClinicoController@show',
         'controller' => 'App\\Http\\Controllers\\HistorialClinicoController@show',
         'namespace' => NULL,
@@ -4893,7 +4819,86 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'historiales_clinicos.show',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'historiales_clinicos.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'historiales_clinicos/{historiales_clinico}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'auth:sanctum',
+          3 => 'verified',
+        ),
+        'as' => 'historiales_clinicos.edit',
+        'uses' => 'App\\Http\\Controllers\\HistorialClinicoController@edit',
+        'controller' => 'App\\Http\\Controllers\\HistorialClinicoController@edit',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'historiales_clinicos.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'historiales_clinicos/{historiales_clinico}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'auth:sanctum',
+          3 => 'verified',
+        ),
+        'as' => 'historiales_clinicos.update',
+        'uses' => 'App\\Http\\Controllers\\HistorialClinicoController@update',
+        'controller' => 'App\\Http\\Controllers\\HistorialClinicoController@update',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
       ),
       'fallback' => false,
       'defaults' => 
@@ -4915,7 +4920,7 @@ app('router')->setCompiledRoutes(
       array (
         0 => 'DELETE',
       ),
-      'uri' => 'historiales_clinicos/{historial}',
+      'uri' => 'historiales_clinicos/{historiales_clinico}',
       'action' => 
       array (
         'middleware' => 
@@ -4925,6 +4930,7 @@ app('router')->setCompiledRoutes(
           2 => 'auth:sanctum',
           3 => 'verified',
         ),
+        'as' => 'historiales_clinicos.destroy',
         'uses' => 'App\\Http\\Controllers\\HistorialClinicoController@destroy',
         'controller' => 'App\\Http\\Controllers\\HistorialClinicoController@destroy',
         'namespace' => NULL,
@@ -4932,7 +4938,6 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'historiales_clinicos.destroy',
       ),
       'fallback' => false,
       'defaults' => 

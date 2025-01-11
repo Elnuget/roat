@@ -106,6 +106,7 @@
                             <button type="submit" class="btn btn-primary btn-block">Registrar</button>
                         </div>
                     </div>
+                    <input type="hidden" name="user_email" value="{{ Auth::user()->email }}">
                 </form>
             </div>
         </div>

@@ -7,6 +7,9 @@ use App\Models\Pedido;
 use Illuminate\Http\Request;
 use App\Models\Pago; // Ensure the Pago model is correctly referenced
 use App\Models\Caja;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PagoNotification;
+use Illuminate\Support\Facades\Log;
 
 class PagoController extends Controller
 {
@@ -92,6 +95,14 @@ class PagoController extends Controller
                         ]);
                     }
                 }
+            }
+
+            // Send email notification
+            try {
+                Mail::to('cangulo009@outlook.es')->send(new PagoNotification($nuevoPago));
+                Log::info('Email sent successfully for payment ID: ' . $nuevoPago->id);
+            } catch (\Exception $e) {
+                Log::error('Failed to send email for payment ID: ' . $nuevoPago->id . '. Error: ' . $e->getMessage());
             }
 
             return redirect()->route('pagos.index')->with([

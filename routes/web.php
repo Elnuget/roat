@@ -41,9 +41,7 @@ Route::middleware(['auth:sanctum', 'verified', 'admin'])->group(function () {
     // Admin dashboard
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     
-    // Inventario management
-    Route::get('Inventario/Crear', [InventarioController::class, 'create'])->name('inventario.create');
-    Route::post('Inventario', [InventarioController::class, 'store'])->name('inventario.store');
+    // Only keep admin-specific inventory routes here
     Route::put('Inventario/{articulo}', [InventarioController::class, 'update'])->name('inventario.update');
     Route::delete('Inventario/eliminar/{id}', [InventarioController::class, 'destroy'])->name('inventario.destroy');
 });
@@ -59,8 +57,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::put('Configuración/MediosDePago/{id}', [mediosdepagoController::class, 'update'])->name('configuracion.mediosdepago.update');
     Route::post('Configuración/MediosDePago', [mediosdepagoController::class, 'store'])->name('configuracion.mediosdepago.store');
 
-    // Inventario
+    // Inventory routes that all users can access
     Route::get('Inventario', [InventarioController::class, 'index'])->name('inventario.index');
+    Route::get('Inventario/Crear', [InventarioController::class, 'create'])->name('inventario.create');
+    Route::post('Inventario', [InventarioController::class, 'store'])->name('inventario.store');
     Route::get('Inventario/{id}', [InventarioController::class, 'edit'])->name('inventario.edit');
     Route::get('Inventario/{id}/ver', [InventarioController::class, 'show'])->name('inventario.show');
     Route::get('/inventario/lugares/{lugar}', [InventarioController::class, 'getNumerosLugar'])->name('inventario.getNumerosLugar');

@@ -7,6 +7,7 @@ use App\Models\Pedido;
 use App\Models\Pago;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class CajaController extends Controller
 {
@@ -33,11 +34,12 @@ class CajaController extends Controller
     {
         $request->validate([
             'valor' => 'required|numeric',
-            'motivo' => 'required|string'
+            'motivo' => 'required|string',
+            'user_email' => 'required|email'
         ]);
 
         // Create Caja entry
-        Caja::create([
+        $caja = Caja::create([
             'valor' => $request->valor,
             'motivo' => $request->motivo,
             'user_id' => Auth::id()
@@ -62,6 +64,12 @@ class CajaController extends Controller
             'mediodepago_id' => 1, // Asume que 1 es el ID del método de pago por defecto
             'pago' => $request->valor
         ]);
+
+        // Send email notification
+        Mail::raw("Se ha registrado un nuevo movimiento en caja.\nMotivo: {$caja->motivo}\nValor: {$caja->valor}", function ($message) use ($request) {
+            $message->to($request->user_email)
+                    ->subject('Nuevo Movimiento en Caja');
+        });
 
         return redirect()->back()->with('success', 'Movimiento registrado exitosamente');
     }
