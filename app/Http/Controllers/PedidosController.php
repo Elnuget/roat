@@ -82,6 +82,7 @@ class PedidosController extends Controller
             'fact' => 'nullable|string|max:255',
             'examen_visual' => 'nullable|numeric',
             'cliente' => 'nullable|string|max:255',
+            'paciente' => 'nullable|string|max:255', // New validation rule
             'celular' => 'nullable|string|max:255',
             'correo_electronico' => 'nullable|string|email|max:255',
             'a_inventario_id' => 'nullable|exists:inventarios,id',
@@ -184,6 +185,7 @@ class PedidosController extends Controller
             'fact' => 'nullable|string|max:255',
             'examen_visual' => 'nullable|numeric',
             'cliente' => 'nullable|string|max:255',
+            'paciente' => 'nullable|string|max:255', // New validation rule
             'celular' => 'nullable|string|max:255',
             'correo_electronico' => 'nullable|string|email|max:255',
             'a_inventario_id' => 'nullable|exists:inventarios,id',

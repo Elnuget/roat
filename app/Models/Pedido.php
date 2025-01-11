@@ -16,6 +16,7 @@ class Pedido extends Model
         'fact',
         'examen_visual',
         'cliente',
+        'paciente', // New field
         'celular',
         'correo_electronico',
         'a_inventario_id',

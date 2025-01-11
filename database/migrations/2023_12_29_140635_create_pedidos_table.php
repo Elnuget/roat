@@ -27,6 +27,7 @@ class CreatePedidosTable extends Migration
 
             // Add new fields
             $table->string('cliente')->nullable();
+            $table->string('paciente')->nullable(); // New field
             $table->string('celular')->nullable();
             $table->string('correo_electronico')->nullable();
 
