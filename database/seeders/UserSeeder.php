@@ -23,6 +23,7 @@ class UserSeeder extends Seeder
             'email' => 'roggerp2016@hotmail.com',
             'password' => Hash::make('Rogger021999#'),
             'active' => '1',
+            'is_admin' => true,
             "created_at" =>  \Carbon\Carbon::now(),
             "updated_at" => \Carbon\Carbon::now(),
         ]);
@@ -34,6 +35,7 @@ class UserSeeder extends Seeder
             'email' => 'cangulo009@outlook.es',
             'password' => Hash::make('carlosangulo1234'),
             'active' => '1',
+            'is_admin' => true,
             "created_at" =>  \Carbon\Carbon::now(),
             "updated_at" => \Carbon\Carbon::now(),
         ]);
