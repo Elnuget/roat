@@ -14,8 +14,8 @@ class Inventario extends Model
         'id',
         'fecha',
         'lugar',
-        'numero_lugar',
-        'fila',
+        // 'numero_lugar', // removed
+        'columna', // renamed from fila
         'numero',
         'codigo',
         'valor',

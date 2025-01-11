@@ -17,8 +17,7 @@ class CreateInventarioTable extends Migration
             $table->id();
             $table->date('fecha'); // para la fecha
             $table->string('lugar'); // para el lugar, asumiendo que es una cadena de texto
-            $table->integer('numero_lugar'); 
-            $table->integer('fila'); // para la fila, asumiendo que es un número entero
+            $table->integer('columna'); // para la columna, asumiendo que es un número entero
             $table->integer('numero'); // para el número, asumiendo que es un número entero
             $table->string('codigo'); // para el código, asumiendo que es una cadena de texto
             $table->decimal('valor', 8, 2)->nullable();

@@ -41,25 +41,22 @@
                     <div class="form-group row">
                         <div class="col-6">
                             <label>Lugar</label>
-                            <select id="lugar" name="lugar" class="form-control">
-                                <option value="Soporte">Soporte</option>
-                                <option value="Vitrina">Vitrina</option>
-                                <option value="Estuches">Estuches</option>
-                                <option value="Cosas Extras">Cosas Extras</option>
-                                <option value="Armazones Extras">Armazones Extras</option>
-                                <option value="Líquidos">Líquidos</option>
-                                <option value="Goteros">Goteros</option>
-                            </select>
-                        </div>
-                        <div class="col-6">
-                            <label>Número de lugar</label>
-                            <input name="numero_lugar" id="numero_lugar" class="form-control" required type="number">
+                            <input list="lugares" name="lugar" class="form-control" required value="{{ request('lugar') }}">
+                            <datalist id="lugares">
+                                <option value="Soporte">
+                                <option value="Vitrina">
+                                <option value="Estuches">
+                                <option value="Cosas Extras">
+                                <option value="Armazones Extras">
+                                <option value="Líquidos">
+                                <option value="Goteros">
+                            </datalist>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-4">
-                            <label>Fila</label>
-                            <input name="fila" required type="text" class="form-control">
+                            <label>Columna</label> <!-- renamed from Fila -->
+                            <input name="columna" required type="text" class="form-control" value="{{ request('columna') }}">
                         </div>
                         <div class="col-4">
                             <label>Número</label>
@@ -126,7 +123,8 @@
 
 @section('js')
 
-<script>// Agrega un 'event listener' al documento para escuchar eventos de teclado
+<script>
+// Agrega un 'event listener' al documento para escuchar eventos de teclado
 document.addEventListener('keydown', function(event) {
     if (event.key === "Home") { // Verifica si la tecla presionada es 'Inicio'
         window.location.href = '/dashboard'; // Redirecciona a '/dashboard'
@@ -135,23 +133,13 @@ document.addEventListener('keydown', function(event) {
 
 document.addEventListener('DOMContentLoaded', function() {
     const lugarSelect = document.getElementById('lugar');
-    const numeroLugarInput = document.getElementById('numero_lugar');
+    const newLugarInput = document.getElementById('newLugar');
 
     lugarSelect.addEventListener('change', function() {
-        const lugar = this.value;
-        if(lugar) {
-            fetch(`/inventario/lugares/${lugar}`)
-                .then(res => res.json())
-                .then(data => {
-                    // Clear existing value
-                    numeroLugarInput.value = '';
-                    // If you want a dropdown, replace input with a select or similar
-                    // For now, just pick the first option or keep it empty
-                    if(data.length > 0) {
-                        numeroLugarInput.value = data[0]; 
-                    }
-                })
-                .catch(err => console.error(err));
+        if (this.value === 'new') {
+            newLugarInput.style.display = 'block';
+        } else {
+            newLugarInput.style.display = 'none';
         }
     });
 });

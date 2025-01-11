@@ -29,9 +29,9 @@
         </div>
         <div class="card-body">
             <div class="col-md-10">
-                <form role="form" action="{{ route('inventario.update', $inventario) }}" method="POST">
+                <form role="form" action="{{ route('inventario.update', $inventario->id) }}" method="POST">
                     @csrf
-                    @method('put')
+                    @method('PUT')
 
                     <div class="form-group row">
                         <div class="col-12">
@@ -43,15 +43,16 @@
                     <div class="form-group row">
                         <div class="col-6">
                             <label>Lugar</label>
-                            <select id="lugar" name="lugar" class="form-control">
-                                <option {{ $inventario->lugar === 'Soporte' ? 'selected' : '' }} value="Soporte">Soporte</option>
-                                <option {{ $inventario->lugar === 'Vitrina' ? 'selected' : '' }} value="Vitrina">Vitrina</option>
-                                <option {{ $inventario->lugar === 'Estuches' ? 'selected' : '' }} value="Estuches">Estuches</option>
-                                <option {{ $inventario->lugar === 'Cosas Extras' ? 'selected' : '' }} value="Cosas Extras">Cosas Extras</option>
-                                <option {{ $inventario->lugar === 'Armazones Extras' ? 'selected' : '' }} value="Armazones Extras">Armazones Extras</option>
-                                <option {{ $inventario->lugar === 'Líquidos' ? 'selected' : '' }} value="Líquidos">Líquidos</option>
-                                <option {{ $inventario->lugar === 'Goteros' ? 'selected' : '' }} value="Goteros">Goteros</option>
-                            </select>
+                            <input list="lugares" name="lugar" class="form-control" required value="{{ $inventario->lugar }}">
+                            <datalist id="lugares">
+                                <option value="Soporte">
+                                <option value="Vitrina">
+                                <option value="Estuches">
+                                <option value="Cosas Extras">
+                                <option value="Armazones Extras">
+                                <option value="Líquidos">
+                                <option value="Goteros">
+                            </datalist>
                         </div>
                         <div class="col-6">
                             <label>Número de lugar</label>
@@ -61,8 +62,8 @@
 
                     <div class="form-group row">
                         <div class="col-4">
-                            <label>Fila</label>
-                            <input name="fila" required type="text" class="form-control" value="{{ $inventario->fila }}">
+                            <label>Columna</label> <!-- renamed from Fila -->
+                            <input name="columna" required type="text" class="form-control" value="{{ $inventario->columna }}">
                         </div>
                         <div class="col-4">
                             <label>Número</label>
@@ -142,6 +143,18 @@ document.addEventListener('keydown', function(event) {
     }
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    const lugarSelect = document.getElementById('lugar');
+    const newLugarInput = document.getElementById('newLugar');
+
+    lugarSelect.addEventListener('change', function() {
+        if (this.value === 'new') {
+            newLugarInput.style.display = 'block';
+        } else {
+            newLugarInput.style.display = 'none';
+        }
+    });
+});
 </script>
 
 @stop

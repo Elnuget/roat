@@ -103,4 +103,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::delete('Pagos/{id}', [PagoController::class, 'destroy'])->name('pagos.destroy');
 
     Route::resource('caja', 'App\Http\Controllers\CajaController');
+
+    Route::get('/generar-qr', function () {
+        return view('inventario.generarQR');
+    })->name('generarQR');
+
+    Route::get('/leer-qr', function () {
+        return view('inventario.leerQR');
+    })->name('leerQR');
 });

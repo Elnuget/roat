@@ -32,11 +32,10 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-6">
-                    {{-- <p>{{ $inventario }}</p> --}}
                     <p><strong>ID inventario:</strong> {{ $inventario->id }}</p>
                     <p><strong>Fecha:</strong> {{ $inventario->fecha }}</p>
                     <p><strong>Lugar:</strong> {{ $inventario->lugar }}</p>
-                    <p><strong>Fila:</strong> {{ $inventario->fila }}</p>
+                    <p><strong>Columna:</strong> {{ $inventario->columna }}</p>
                     <p><strong>Número:</strong> {{ $inventario->numero }}</p>
                 </div>
                 <div class="col-6">
@@ -45,9 +44,7 @@
                     <p><strong>Cantidad:</strong> {{ $inventario->cantidad }}</p>
                     <p><strong>Orden:</strong> {{ $inventario->orden }}</p>
                 </div>
-
             </div>
-
         </div>
     </div>
     <div class="card">
@@ -63,7 +60,6 @@
                         <td>Cantidad</td>
                         <td>Fecha</td>
                         <td>Usuario</td>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -97,88 +93,72 @@
                             <td>{{ $h->cantidad }}</td>
                             <td> @datetime($h->created_at) </td>
                             <td>{{ $h->User->name }}</td>
-
-
                         </tr> --}}
                     {{--  @endforeach --}}
                 </tbody>
             </table>
             <br>
-
         </div>
+    </div>
+@stop
 
-
-    @stop
-
-    @section('js')
-        <script>
-            $(document).ready(function() {
-                $("#example").DataTable({
-                    order: [
-                        [0, "desc"]
-                    ],
-                    columnDefs: [{
-                        targets: [2],
-                        visible: true,
-                        searchable: true,
-                    }, ],
-                    dom: 'Bfrtip',
-                    buttons: [
-                        'excelHtml5',
-                        'csvHtml5',
-
-                        {
-                            extend: 'print',
-                            text: 'Imprimir',
-                            autoPrint: true,
-                            exportOptions: {
-                                columns: [0, 1, 3, 4, 5, 6, 7]
-                            },
-
-                            customize: function(win) {
-                                $(win.document.body).css('font-size', '16pt');
-                                $(win.document.body).find('table')
-                                    .addClass('compact')
-                                    .css('font-size', 'inherit');
-
-                            }
+@section('js')
+    <script>
+        $(document).ready(function() {
+            $("#example").DataTable({
+                order: [
+                    [0, "desc"]
+                ],
+                columnDefs: [{
+                    targets: [2],
+                    visible: true,
+                    searchable: true,
+                }, ],
+                dom: 'Bfrtip',
+                buttons: [
+                    'excelHtml5',
+                    'csvHtml5',
+                    {
+                        extend: 'print',
+                        text: 'Imprimir',
+                        autoPrint: true,
+                        exportOptions: {
+                            columns: [0, 1, 3, 4, 5, 6, 7]
                         },
-                        {
-                            extend: 'pdfHtml5',
-                            text: 'PDF',
-                            filename: 'historial.pdf',
-
-                            title: 'Historial {{ $inventario->codigo }}',
-                            pageSize: 'LETTER',
-                            exportOptions: {
-                                columns: [0, 1, 3, 4, 5, 6, 7]
-                            }
-
-
+                        customize: function(win) {
+                            $(win.document.body).css('font-size', '16pt');
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
                         }
-
-
-
-
-
-                    ],
-                    language: {
-                        url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json",
                     },
-                });
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'PDF',
+                        filename: 'historial.pdf',
+                        title: 'Historial {{ $inventario->codigo }}',
+                        pageSize: 'LETTER',
+                        exportOptions: {
+                            columns: [0, 1, 3, 4, 5, 6, 7]
+                        }
+                    }
+                ],
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json",
+                },
             });
-            // Agrega un 'event listener' al documento para escuchar eventos de teclado
-document.addEventListener('keydown', function(event) {
-    if (event.key === "Home") { // Verifica si la tecla presionada es 'Inicio'
-        window.location.href = '/dashboard'; // Redirecciona a '/dashboard'
-    }
-});
+        });
+        // Agrega un 'event listener' al documento para escuchar eventos de teclado
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Home") { // Verifica si la tecla presionada es 'Inicio'
+                window.location.href = '/dashboard'; // Redirecciona a '/dashboard'
+            }
+        });
+    </script>
+@stop
 
-        </script>
-    @stop
-
-    @section('footer')
-        <div class="float-right d-none d-sm-block">
-            <b>Version</b> @version('compact')
-        </div>
-    @stop
+@section('footer')
+    <div class="float-right d-none d-sm-block">
+        <b>Version</b> @version('compact')
+    </div>
+@stop

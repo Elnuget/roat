@@ -20,18 +20,17 @@ class InventarioController extends Controller
      */
     public function index(Request $request)
     {
-        $lugares = Inventario::select('lugar', 'numero_lugar')->distinct()->get();
+        $lugares = Inventario::select('lugar')->distinct()->get(); // removed 'numero_lugar'
         $inventario = [];
 
         $fecha = $request->input('fecha');
         $filtroLugar = $request->input('lugar');
-        $filtroNumero = $request->input('numero_lugar');
+        // $filtroNumero = $request->input('numero_lugar'); // removed
 
-        if ($fecha && $filtroLugar && $filtroNumero) {
+        if ($fecha && $filtroLugar) {
             $inventario = Inventario::where('fecha', 'like', $fecha . '%')
                 ->where('lugar', $filtroLugar)
-                ->where('numero_lugar', $filtroNumero)
-                ->get();
+                ->get(); // removed ->where('numero_lugar', $filtroNumero)
         }
         $totalCantidad = collect($inventario)->sum('cantidad');
 
@@ -56,36 +55,22 @@ class InventarioController extends Controller
      */
     public function store(Request $request)
     {
-
-        $lugarNumero = $request->input('lugar') . ' ' . $request->input('numero');
-
-
         $validatedData = $request->validate([
-            'fecha' => 'required|date', // Fecha es requerida y debe ser una fecha válida
+            'fecha' => 'required|date',
             'lugar' => 'required|string|max:255',
-            'numero_lugar' => 'required|integer', // Lugar es requerido y debe ser una cadena de texto no mayor a 255 caracteres
-            'fila' => 'required|integer', // Fila es requerida y debe ser un número entero
-            'numero' => 'required|integer', // Número es requerido y debe ser un número entero
-            'codigo' => 'required|string|max:255', // Código es requerido y debe ser una cadena de texto no mayor a 255 caracteres
-            'cantidad' => 'required|integer', // Cantidad es requerida y debe ser un número entero
+            'columna' => 'required|integer',
+            'numero' => 'required|integer',
+            'codigo' => 'required|string|max:255',
+            'cantidad' => 'required|integer',
         ]);
 
+        if ($request->input('lugar') === 'new') {
+            $validatedData['lugar'] = $request->input('new_lugar');
+        }
+
         try {
+            Inventario::create($validatedData);
 
-    // Almacenar en la base de datos
-    Inventario::create([
-        'fecha' => $validatedData['fecha'],
-        'lugar' =>$validatedData['lugar'],
-        'numero_lugar' => $validatedData['numero_lugar'],
-        'fila' => $validatedData['fila'],
-        'numero' => $validatedData['numero'],
-        'codigo' => $validatedData['codigo'],
-        'valor' => null, // or use 0.00 if desired
-        'cantidad' => $validatedData['cantidad'],
-        'orden' => null  // or use 0 if desired
-    ]);
-
-        
             return redirect()->route('inventario.index')->with([
                 'error' => 'Exito',
                 'mensaje' => 'Artículo creado exitosamente',
@@ -99,8 +84,6 @@ class InventarioController extends Controller
             ]);
         }
     }
-
-   
 
     /**
      * Muestra un recurso específico.
@@ -138,17 +121,21 @@ class InventarioController extends Controller
         $validatedData = $request->validate([
             'fecha' => 'required|date',
             'lugar' => 'required|string|max:255',
-            'fila' => 'required|integer',
+            'columna' => 'required|integer', // renamed from 'fila'
             'numero' => 'required|integer',
             'codigo' => 'required|string|max:255',
             'valor' => 'nullable|numeric',
             'cantidad' => 'required|integer',
             'orden' => 'nullable|integer',
         ]);
-        try {
-        Inventario::whereId($id)->update($validatedData);
 
-      
+        if ($request->input('lugar') === 'new') {
+            $validatedData['lugar'] = $request->input('new_lugar');
+        }
+
+        try {
+            Inventario::whereId($id)->update($validatedData);
+
             return redirect()->route('inventario.index')->with([
                 'error' => 'Exito',
                 'mensaje' => 'Artículo actualizado exitosamente',
@@ -172,11 +159,9 @@ class InventarioController extends Controller
     public function destroy($id)
     {
         try {
-        $inventario = Inventario::findOrFail($id);
-        $inventario->delete();
-        
+            $inventario = Inventario::findOrFail($id);
+            $inventario->delete();
 
-     
             return redirect()->route('inventario.index')->with([
                 'error' => 'Exito',
                 'mensaje' => 'Artículo eliminado exitosamente',
@@ -193,7 +178,13 @@ class InventarioController extends Controller
 
     public function getNumerosLugar($lugar)
     {
-        $numeros = Inventario::where('lugar', $lugar)->pluck('numero_lugar')->unique()->values();
-        return response()->json($numeros);
+        // removed: pluck('numero_lugar')
+        return response()->json([]);
+    }
+
+    public function leerQR()
+    {
+        \Log::info('Accediendo a la vista de lector QR');
+        return view('inventario.leerQR');
     }
 }

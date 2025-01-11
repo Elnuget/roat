@@ -50,17 +50,6 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-4">
-                    <label for="numero_lugar">Número de Lugar:</label>
-                    <select class="form-control" name="numero_lugar">
-                        <option value="">Seleccionar Número</option>
-                        @foreach ($lugares->unique('numero_lugar') as $item)
-                            <option value="{{ $item->numero_lugar }}" {{ request('numero_lugar') == $item->numero_lugar ? 'selected' : '' }}>
-                                {{ $item->numero_lugar }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
                 <div class="col-md-2">
                     <label>&nbsp;</label>
                     <button class="btn btn-primary form-control" type="submit">Filtrar</button>
@@ -77,7 +66,7 @@
                             <td>ID</td>
                             <td>Fecha</td>
                             <td>Lugar</td>
-                            <td>Fila</td>
+                            <td>Columna</td>
                             <td>Número</td>
                             <td>Código</td>
                             <td>Valor</td>
@@ -91,8 +80,8 @@
                         <tr @if($i->cantidad == 0) style="background-color: #FF0000;" @endif>
                                 <td>{{ $i->id }}</td>
                                 <td>{{ $i->fecha }}</td>
-                                <td>{{ $i->lugar . ' ' . $i->numero_lugar }}</td>
-                                <td>{{ ' Fila' . ' ' . $i->fila }}</td>
+                                <td>{{ $i->lugar }}</td>
+                                <td>{{ $i->columna }}</td>
                                 <td>{{ $i->numero }}</td>
                                 <td>{{ $i->codigo }}</td>
                                 <td>{{ $i->valor }}</td>
@@ -116,7 +105,12 @@
                 <br>
                 <div class="btn-group">
                     <a type="button" class="btn btn-success" href="{{ route('inventario.create') }}">Crear articulo</a>
-
+                    <a type="button" class="btn btn-success" href="{{ route('generarQR') }}">
+                        <i class="fa fa-lg fa-fw fa-qrcode"></i> Generar
+                    </a>
+                    <a type="button" class="btn btn-success" href="{{ route('leerQR') }}">
+                        <i class="fa fa-lg fa-fw fa-qrcode"></i> Añadir
+                    </a>
                 </div>
             </div>
         </div>
