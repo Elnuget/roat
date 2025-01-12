@@ -62,7 +62,7 @@
 
                     <div class="form-group row">
                         <div class="col-4">
-                            <label>Columna</label> <!-- renamed from Fila -->
+                            <label>Columna</label>
                             <input name="columna" required type="text" class="form-control" value="{{ $inventario->columna }}">
                         </div>
                         <div class="col-4">

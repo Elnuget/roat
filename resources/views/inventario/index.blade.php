@@ -101,6 +101,13 @@
                                             class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar">
                                             <i class="fa fa-lg fa-fw fa-pen"></i>
                                         </a>
+                                        <form action="{{ route('inventario.destroy', $i->id) }}" method="POST" onsubmit="return confirm('¿Está seguro de que desea eliminar este artículo?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-xs btn-default text-danger mx-1 shadow" title="Eliminar">
+                                                <i class="fa fa-lg fa-fw fa-trash"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 </td>
                                 @endcan
