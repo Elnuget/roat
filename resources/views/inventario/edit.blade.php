@@ -54,10 +54,6 @@
                                 <option value="Goteros">
                             </datalist>
                         </div>
-                        <div class="col-6">
-                            <label>Número de lugar</label>
-                            <input name="numero_lugar" id="numero_lugar" class="form-control" required type="number" value="{{ $inventario->numero_lugar }}">
-                        </div>
                     </div>
 
                     <div class="form-group row">
@@ -135,7 +131,7 @@
 @stop
 
 @section('js')
-<script>
+<script></script>
     // Agrega un 'event listener' al documento para escuchar eventos de teclado
 document.addEventListener('keydown', function(event) {
     if (event.key === "Home") { // Verifica si la tecla presionada es 'Inicio'
