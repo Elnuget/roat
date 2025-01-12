@@ -172,20 +172,23 @@ class InventarioController extends Controller
     public function destroy($id)
     {
         try {
-            $inventario = Inventario::findOrFail($id);
-            $inventario->delete();
-
-            return redirect()->route('inventario.index')->with([
-                'error' => 'Exito',
-                'mensaje' => 'Artículo eliminado exitosamente',
-                'tipo' => 'alert-success'
-            ]);
+            $inventario = Inventario::find($id);
+            if($inventario) {
+                $inventario->delete();
+                return redirect()->route('inventario.index')
+                    ->with('error', true)
+                    ->with('tipo', 'alert-success')
+                    ->with('mensaje', 'Artículo eliminado correctamente');
+            }
+            return redirect()->route('inventario.index')
+                ->with('error', true)
+                ->with('tipo', 'alert-danger')
+                ->with('mensaje', 'No se encontró el artículo');
         } catch (\Exception $e) {
-            return redirect()->route('inventario.index')->with([
-                'error' => 'Error',
-                'mensaje' => 'No se puede eliminar el artículo del inventario porque está asociado a pedidos existentes. Por favor, elimine los pedidos que contienen este artículo antes de intentar eliminarlo.',
-                'tipo' => 'alert-danger'
-            ]);
+            return redirect()->route('inventario.index')
+                ->with('error', true)
+                ->with('tipo', 'alert-danger')
+                ->with('mensaje', 'Error al eliminar el artículo');
         }
     }
 
