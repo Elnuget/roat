@@ -50,10 +50,7 @@ class InventarioController extends Controller
      */
     public function create()
     {
-        $lastLugar = session('last_lugar');
-        $lastColumna = session('last_columna');
-        
-        return view('inventario.create', compact('lastLugar', 'lastColumna'));
+        return view('inventario.create');
     }
 
     /**
@@ -79,18 +76,14 @@ class InventarioController extends Controller
 
         try {
             Inventario::create($validatedData);
-            
-            // Store the last used values in session
-            session(['last_lugar' => $validatedData['lugar']]);
-            session(['last_columna' => $validatedData['columna']]);
 
-            return redirect()->route('inventario.create')->with([
+            return redirect()->route('inventario.index')->with([
                 'error' => 'Exito',
                 'mensaje' => 'Artículo creado exitosamente',
                 'tipo' => 'alert-success'
             ]);
         } catch (\Exception $e) {
-            return redirect()->route('inventario.create')->with([
+            return redirect()->route('inventario.index')->with([
                 'error' => 'Error',
                 'mensaje' => 'Artículo no se ha creado. Detalle: ' . $e->getMessage(),
                 'tipo' => 'alert-danger'

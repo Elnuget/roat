@@ -1,153 +1,196 @@
-@extends('adminlte::page')
+<?php
 
-@section('title', 'Crear Articulo')
+namespace App\Http\Controllers;
 
-@section('content_header')
-    @if (session('error'))
-        <div class="alert {{ session('tipo') }} alert-dismissible fade show" role="alert">
-            <strong> {{ session('mensaje') }}</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-@stop
+use Illuminate\Http\Request;
+use App\Models\Inventario; // Asegúrate de importar el modelo Inventario
 
-@section('content')
-    <br>
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">Crear Articulo</h3>
-
-            <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip"
-                    title="Collapse">
-                    <i class="fas fa-minus"></i></button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                    <i class="fas fa-times"></i></button>
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="col-md-10">
-                <form role="form" action="{{ route('inventario.store') }}" method="POST">
-                    @csrf
-
-                    <div class="form-group row">
-                        <div class="col-12">
-                            <label>Fecha</label>
-                            <input name="fecha" required type="date" class="form-control" value="{{ now()->format('Y-m-d') }}">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-6">
-                            <label>Lugar</label>
-                            <input list="lugares" name="lugar" class="form-control" required value="{{ $lastLugar ?? old('lugar') }}">
-                            <datalist id="lugares">
-                                <option value="Soporte">
-                                <option value="Vitrina">
-                                <option value="Estuches">
-                                <option value="Cosas Extras">
-                                <option value="Armazones Extras">
-                                <option value="Líquidos">
-                                <option value="Goteros">
-                            </datalist>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-4">
-                            <label>Columna</label> <!-- renamed from Fila -->
-                            <input name="columna" required type="text" class="form-control" value="{{ $lastColumna ?? old('columna') }}">
-                        </div>
-                        <div class="col-4">
-                            <label>Número</label>
-                            <input name="numero" id="numero" class="form-control" required type="number">
-                        </div>
-                        <div class="col-4">
-                            <label>Código</label>
-                            <input name="codigo" id="codigo" required type="text" class="form-control">
-                        </div>
-                        
-                    </div>
-
-                    <div class="form-goup row">
-                        <div class="col-4">
-                            <label>Cantidad</label>
-                            <input name="cantidad" id="cantidad" required type="number" class="form-control" value="1">
-                        </div>
-                    </div>
-
-                    <br>
-
-
-                    <button type="button" class="btn btn-primary pull-left" data-toggle="modal" data-target="#modal">Crear
-                        Articulo</button>
-                        <a href="{{ route('inventario.index') }}" class="btn btn-secondary ">
-                            Cancelar
-                        </a>
-                    <div class="modal fade" id="modal">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-
-                                    <h4 class="modal-title">Crear Articulo</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span></button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>¿Estás seguro que desea guardar?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default pull-left"
-                                        data-dismiss="modal">Cancelar</button>
-                                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                                </div>
-                            </div>
-                            <!-- /.modal-content -->
-                        </div>
-                        <!-- /.modal-dialog -->
-                </form>
-            </div>
-
-            <br>
-            <!-- Fin contenido -->
-        </div>
-    </div>
-    <!-- /.card-body -->
-    <div class="card-footer">
-        Crear Articulo
-    </div>
-    <!-- /.card-footer-->
-    </div>
-
-@stop
-
-@section('js')
-
-<script>
-// Agrega un 'event listener' al documento para escuchar eventos de teclado
-document.addEventListener('keydown', function(event) {
-    if (event.key === "Home") { // Verifica si la tecla presionada es 'Inicio'
-        window.location.href = '/dashboard'; // Redirecciona a '/dashboard'
+class InventarioController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware('can:admin')->only(['destroy', 'update']);
     }
-});
 
-document.addEventListener('DOMContentLoaded', function() {
-    const lugarSelect = document.getElementById('lugar');
-    const newLugarInput = document.getElementById('newLugar');
+    /**
+     * Muestra una lista del recurso.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $lugares = Inventario::select('lugar')->distinct()->get();
+        $columnas = Inventario::select('columna')->distinct()->get();
+        $inventario = [];
 
-    lugarSelect.addEventListener('change', function() {
-        if (this.value === 'new') {
-            newLugarInput.style.display = 'block';
-        } else {
-            newLugarInput.style.display = 'none';
+        $fecha = $request->input('fecha');
+        $filtroLugar = $request->input('lugar');
+        $filtroColumna = $request->input('columna');
+
+        if ($fecha && $filtroLugar) {
+            $query = Inventario::where('fecha', 'like', $fecha . '%')
+                ->where('lugar', $filtroLugar);
+            
+            if ($filtroColumna) {
+                $query->where('columna', $filtroColumna);
+            }
+            
+            $inventario = $query->get();
         }
-    });
-});
-</script>
-@stop
+        $totalCantidad = collect($inventario)->sum('cantidad');
 
-@section('footer')
-    <div class="float-right d-none d-sm-block">
-        <b>Version</b> @version('compact')
-    </div>
-@stop
+        return view('inventario.index', compact('inventario', 'lugares', 'columnas', 'totalCantidad'));
+    }
+
+    /**
+     * Muestra el formulario para crear un nuevo recurso.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('inventario.create');
+    }
+
+    /**
+     * Almacena un recurso recién creado en la base de datos.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'fecha' => 'required|date',
+            'lugar' => 'required|string|max:255',
+            'columna' => 'required|integer',
+            'numero' => 'required|integer',
+            'codigo' => 'required|string|max:255',
+            'cantidad' => 'required|integer',
+        ]);
+
+        if ($request->input('lugar') === 'new') {
+            $validatedData['lugar'] = $request->input('new_lugar');
+        }
+
+        try {
+            Inventario::create($validatedData);
+
+            return redirect()->route('inventario.index')->with([
+                'error' => 'Exito',
+                'mensaje' => 'Artículo creado exitosamente',
+                'tipo' => 'alert-success'
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->route('inventario.index')->with([
+                'error' => 'Error',
+                'mensaje' => 'Artículo no se ha creado. Detalle: ' . $e->getMessage(),
+                'tipo' => 'alert-danger'
+            ]);
+        }
+    }
+
+    /**
+     * Muestra un recurso específico.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $inventario = Inventario::findOrFail($id);
+        return view('inventario.show', compact('inventario'));
+    }
+
+    /**
+     * Muestra el formulario para editar un recurso específico.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $inventario = Inventario::findOrFail($id);
+        return view('inventario.edit', compact('inventario'));
+    }
+
+    /**
+     * Actualiza un recurso específico en la base de datos.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'fecha' => 'required|date',
+            'lugar' => 'required|string|max:255',
+            'columna' => 'required|integer', // renamed from 'fila'
+            'numero' => 'required|integer',
+            'codigo' => 'required|string|max:255',
+            'valor' => 'nullable|numeric',
+            'cantidad' => 'required|integer',
+            'orden' => 'nullable|integer',
+        ]);
+
+        if ($request->input('lugar') === 'new') {
+            $validatedData['lugar'] = $request->input('new_lugar');
+        }
+
+        try {
+            Inventario::whereId($id)->update($validatedData);
+
+            return redirect()->route('inventario.index')->with([
+                'error' => 'Exito',
+                'mensaje' => 'Artículo actualizado exitosamente',
+                'tipo' => 'alert-success'
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->route('inventario.index')->with([
+                'error' => 'Error',
+                'mensaje' => 'Artículo no se ha actualizado',
+                'tipo' => 'alert-danger'
+            ]);
+        }
+    }
+
+    /**
+     * Elimina un recurso específico de la base de datos.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        try {
+            $inventario = Inventario::findOrFail($id);
+            $inventario->delete();
+
+            return redirect()->route('inventario.index')->with([
+                'error' => 'Exito',
+                'mensaje' => 'Artículo eliminado exitosamente',
+                'tipo' => 'alert-success'
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->route('inventario.index')->with([
+                'error' => 'Error',
+                'mensaje' => 'No se puede eliminar el artículo del inventario porque está asociado a pedidos existentes. Por favor, elimine los pedidos que contienen este artículo antes de intentar eliminarlo.',
+                'tipo' => 'alert-danger'
+            ]);
+        }
+    }
+
+    public function getNumerosLugar($lugar)
+    {
+        // removed: pluck('numero_lugar')
+        return response()->json([]);
+    }
+
+    public function leerQR()
+    {
+        \Log::info('Accediendo a la vista de lector QR');
+        return view('inventario.leerQR');
+    }
+}
