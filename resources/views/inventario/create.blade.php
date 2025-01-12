@@ -41,7 +41,7 @@
                     <div class="form-group row">
                         <div class="col-6">
                             <label>Lugar</label>
-                            <input list="lugares" name="lugar" class="form-control" required value="{{ request('lugar') }}">
+                            <input list="lugares" name="lugar" class="form-control" required value="{{ $lastLugar ?? old('lugar') }}">
                             <datalist id="lugares">
                                 <option value="Soporte">
                                 <option value="Vitrina">
@@ -56,7 +56,7 @@
                     <div class="form-group row">
                         <div class="col-4">
                             <label>Columna</label> <!-- renamed from Fila -->
-                            <input name="columna" required type="text" class="form-control" value="{{ request('columna') }}">
+                            <input name="columna" required type="text" class="form-control" value="{{ $lastColumna ?? old('columna') }}">
                         </div>
                         <div class="col-4">
                             <label>Número</label>
