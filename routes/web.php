@@ -64,7 +64,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('Inventario/{id}', [InventarioController::class, 'edit'])->name('inventario.edit');
     Route::get('Inventario/{id}/ver', [InventarioController::class, 'show'])->name('inventario.show');
     Route::get('/inventario/lugares/{lugar}', [InventarioController::class, 'getNumerosLugar'])->name('inventario.getNumerosLugar');
-    Route::delete('/inventario/{id}', [App\Http\Controllers\InventarioController::class, 'destroy'])->name('inventario.destroy');
 
     // Venta nuevo
     Route::get('Venta', [InventarioController::class, 'index'])->name('venta.index');
