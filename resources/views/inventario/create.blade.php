@@ -64,7 +64,7 @@
                         </div>
                         <div class="col-4">
                             <label>Código</label>
-                            <input name="codigo" id="codigo" required type="text" class="form-control">
+                            <input name="codigo" id="codigo" required type="text" class="form-control text-uppercase" style="text-transform:uppercase" oninput="this.value = this.value.toUpperCase()">
                         </div>
                         
                     </div>

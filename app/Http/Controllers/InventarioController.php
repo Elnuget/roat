@@ -21,7 +21,10 @@ class InventarioController extends Controller
     public function index(Request $request)
     {
         $lugares = Inventario::select('lugar')->distinct()->get();
-        $columnas = Inventario::select('columna')->distinct()->get();
+        $columnas = Inventario::select('columna')
+                        ->distinct()
+                        ->orderBy('columna', 'asc')
+                        ->get();
         $inventario = [];
 
         $fecha = $request->input('fecha');
@@ -73,6 +76,9 @@ class InventarioController extends Controller
         if ($request->input('lugar') === 'new') {
             $validatedData['lugar'] = $request->input('new_lugar');
         }
+
+        // Convertir código a mayúsculas
+        $validatedData['codigo'] = strtoupper($validatedData['codigo']);
 
         try {
             Inventario::create($validatedData);
