@@ -41,16 +41,7 @@
                     <div class="form-group row">
                         <div class="col-6">
                             <label>Lugar</label>
-                            <input list="lugares" name="lugar" class="form-control" required value="{{ request('lugar') }}">
-                            <datalist id="lugares">
-                                <option value="Soporte">
-                                <option value="Vitrina">
-                                <option value="Estuches">
-                                <option value="Cosas Extras">
-                                <option value="Armazones Extras">
-                                <option value="Líquidos">
-                                <option value="Goteros">
-                            </datalist>
+                            <input type="text" name="lugar" id="lugar" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -143,7 +134,106 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// Función para guardar un lugar en el historial
+function saveLocation(lugar) {
+    let locations = JSON.parse(localStorage.getItem('recentLocations') || '[]');
+    // Eliminar si ya existe para evitar duplicados
+    locations = locations.filter(loc => loc !== lugar);
+    // Agregar al principio del array
+    locations.unshift(lugar);
+    // Mantener solo los últimos 5 lugares
+    if (locations.length > 5) {
+        locations.pop();
+    }
+    localStorage.setItem('recentLocations', JSON.stringify(locations));
+}
+
+// Función para obtener sugerencias
+function getSuggestions(input) {
+    const locations = JSON.parse(localStorage.getItem('recentLocations') || '[]');
+    return locations.filter(location => 
+        location.toLowerCase().includes(input.toLowerCase())
+    );
+}
+
+// Cuando el formulario se envía, guardar el lugar
+document.querySelector('form').addEventListener('submit', function(e) {
+    const lugar = document.getElementById('lugar').value;
+    if (lugar) {
+        saveLocation(lugar);
+    }
+});
+
+// Configurar el autocompletado
+const lugarInput = document.getElementById('lugar');
+let currentFocus;
+
+lugarInput.addEventListener('input', function(e) {
+    const val = this.value;
+    // cerrar cualquier lista abierta
+    closeAllLists();
+    if (!val) { return false; }
+    currentFocus = -1;
+
+    const suggestions = getSuggestions(val);
+    if (suggestions.length === 0) return;
+
+    const suggList = document.createElement("DIV");
+    suggList.setAttribute("id", this.id + "autocomplete-list");
+    suggList.setAttribute("class", "autocomplete-items");
+    this.parentNode.appendChild(suggList);
+
+    suggestions.forEach(sugg => {
+        const suggDiv = document.createElement("DIV");
+        suggDiv.innerHTML = sugg;
+        suggDiv.addEventListener("click", function(e) {
+            lugarInput.value = this.innerText;
+            closeAllLists();
+        });
+        suggList.appendChild(suggDiv);
+    });
+});
+
+function closeAllLists(elmnt) {
+    const x = document.getElementsByClassName("autocomplete-items");
+    for (let i = 0; i < x.length; i++) {
+        if (elmnt != x[i] && elmnt != lugarInput) {
+            x[i].parentNode.removeChild(x[i]);
+        }
+    }
+}
+
+document.addEventListener("click", function (e) {
+    closeAllLists(e.target);
+});
+
+// Resto del código JavaScript existente...
 </script>
+
+<style>
+.autocomplete-items {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+}
+
+.autocomplete-items div {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #d4d4d4;
+}
+
+.autocomplete-items div:hover {
+    background-color: #e9e9e9;
+}
+</style>
 @stop
 
 @section('footer')
