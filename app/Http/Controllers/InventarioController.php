@@ -77,13 +77,13 @@ class InventarioController extends Controller
         try {
             Inventario::create($validatedData);
 
-            return redirect()->route('inventario.create')->with([
+            return redirect()->back()->with([
                 'error' => 'Exito',
                 'mensaje' => 'Artículo creado exitosamente',
                 'tipo' => 'alert-success'
             ]);
         } catch (\Exception $e) {
-            return redirect()->route('inventario.create')->with([
+            return redirect()->back()->with([
                 'error' => 'Error',
                 'mensaje' => 'Artículo no se ha creado. Detalle: ' . $e->getMessage(),
                 'tipo' => 'alert-danger'
