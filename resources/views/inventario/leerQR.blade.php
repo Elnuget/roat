@@ -83,14 +83,33 @@
 
     Instascan.Camera.getCameras().then(function (cameras) {
         if (cameras.length > 0) {
+            // Verifica si el dispositivo es móvil
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+            
+            let backCamera = null;
+
             cameras.forEach(function(camera, i) {
                 const option = document.createElement('option');
                 option.value = camera.id;
                 option.text = camera.name || `Cámara ${i + 1}`;
                 cameraSelect.appendChild(option);
+
+                // Detecta la cámara trasera (generalmente contiene "back" en su nombre)
+                if (isMobile && camera.name && camera.name.toLowerCase().includes('back')) {
+                    backCamera = camera;
+                }
             });
 
-            scanner.start(cameras[0]);
+            // Inicia con la cámara trasera si está disponible
+            const defaultCamera = backCamera || cameras[0];
+            scanner.start(defaultCamera).catch(function (e) {
+                console.error('Error al iniciar la cámara: ', e);
+            });
+
+            // Selecciona la cámara trasera en el selector si está disponible
+            if (backCamera) {
+                cameraSelect.value = backCamera.id;
+            }
         } else {
             console.error('No se encontraron cámaras.');
             alert('No se encontraron cámaras en el dispositivo.');
