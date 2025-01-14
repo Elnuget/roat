@@ -137,7 +137,7 @@
                     </div>
 
                     {{-- Armazón --}}
-                    <div class="card collapsed-card">
+                    <div id="armazon-container" class="card collapsed-card">
                         <div class="card-header">
                             <h3 class="card-title">Armazón</h3>
                             <div class="card-tools">
@@ -173,10 +173,13 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="card-footer">
+                            <button type="button" class="btn btn-success" onclick="duplicateArmazon()">Agregar más Armazón</button>
+                        </div>
                     </div>
 
                     {{-- Lunas --}}
-                    <div class="card collapsed-card">
+                    <div id="lunas-container" class="card collapsed-card">
                         <div class="card-header">
                             <h3 class="card-title">Lunas</h3>
                             <div class="card-tools">
@@ -259,10 +262,13 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="card-footer">
+                            <button type="button" class="btn btn-success" onclick="duplicateLunas()">Agregar más Lunas</button>
+                        </div>
                     </div>
 
                     {{-- Accesorios --}}
-                    <div class="card collapsed-card">
+                    <div id="accesorios-container" class="card collapsed-card">
                         <div class="card-header">
                             <h3 class="card-title">Accesorios</h3>
                             <div class="card-tools">
@@ -293,6 +299,9 @@
                                            name="d_precio_descuento" min="0" max="100" value="0">
                                 </div>
                             </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="button" class="btn btn-success" onclick="duplicateAccesorios()">Agregar más Accesorios</button>
                         </div>
                     </div>
 
@@ -397,29 +406,45 @@
 @section('js')
     <script>
         function calculateTotal() {
-            // Obtener valores base
+            let total = 0;
+
+            // Examen visual
             const examenVisual = parseFloat(document.getElementById('examen_visual').value) || 0;
-            const aPrecio = parseFloat(document.getElementById('a_precio').value) || 0;
-            const lPrecio = parseFloat(document.getElementById('l_precio').value) || 0;
-            const dPrecio = parseFloat(document.getElementById('d_precio').value) || 0;
-            const valorCompra = parseFloat(document.getElementById('valor_compra').value) || 0; // Añadir valor_compra
-
-            // Obtener porcentajes de descuento
             const examenVisualDescuento = parseFloat(document.getElementById('examen_visual_descuento').value) || 0;
-            const aPrecioDescuento = parseFloat(document.getElementById('a_precio_descuento').value) || 0;
-            const lPrecioDescuento = parseFloat(document.getElementById('l_precio_descuento').value) || 0;
-            const dPrecioDescuento = parseFloat(document.getElementById('d_precio_descuento').value) || 0;
+            total += examenVisual * (1 - (examenVisualDescuento / 100));
 
-            // Calcular descuentos
-            const examenVisualFinal = examenVisual * (1 - (examenVisualDescuento / 100));
-            const aPrecioFinal = aPrecio * (1 - (aPrecioDescuento / 100));
-            const lPrecioFinal = lPrecio * (1 - (lPrecioDescuento / 100));
-            const dPrecioFinal = dPrecio * (1 - (dPrecioDescuento / 100));
+            // Armazones - incluir tanto el original como los campos añadidos
+            const armazonPrecios = document.querySelectorAll('[name="a_precio"], [name="a_precio[]"]');
+            const armazonDescuentos = document.querySelectorAll('[name="a_precio_descuento"], [name="a_precio_descuento[]"]');
+            armazonPrecios.forEach((precio, index) => {
+                const precioValue = parseFloat(precio.value) || 0;
+                const descuento = parseFloat(armazonDescuentos[index]?.value) || 0;
+                total += precioValue * (1 - (descuento / 100));
+            });
 
-            // Calcular total incluyendo valor_compra
-            const total = examenVisualFinal + aPrecioFinal + lPrecioFinal + dPrecioFinal + valorCompra;
+            // Lunas - incluir tanto el original como los campos añadidos
+            const lunasPrecios = document.querySelectorAll('[name="l_precio"], [name="l_precio[]"]');
+            const lunasDescuentos = document.querySelectorAll('[name="l_precio_descuento"], [name="l_precio_descuento[]"]');
+            lunasPrecios.forEach((precio, index) => {
+                const precioValue = parseFloat(precio.value) || 0;
+                const descuento = parseFloat(lunasDescuentos[index]?.value) || 0;
+                total += precioValue * (1 - (descuento / 100));
+            });
 
-            // Actualizar campos de total y saldo
+            // Accesorios - incluir tanto el original como los campos añadidos
+            const accesoriosPrecios = document.querySelectorAll('[name="d_precio"], [name="d_precio[]"]');
+            const accesoriosDescuentos = document.querySelectorAll('[name="d_precio_descuento"], [name="d_precio_descuento[]"]');
+            accesoriosPrecios.forEach((precio, index) => {
+                const precioValue = parseFloat(precio.value) || 0;
+                const descuento = parseFloat(accesoriosDescuentos[index]?.value) || 0;
+                total += precioValue * (1 - (descuento / 100));
+            });
+
+            // Valor compra
+            const valorCompra = parseFloat(document.getElementById('valor_compra').value) || 0;
+            total += valorCompra;
+
+            // Actualizar campos
             document.getElementById('total').value = total.toFixed(2);
             document.getElementById('saldo').value = total.toFixed(2);
         }
@@ -440,5 +465,139 @@
                 this.setAttribute('list', this.getAttribute('list'));
             });
         });
+
+        function createNewFields(type) {
+            let html = '';
+            const index = document.querySelectorAll(`[data-${type}-section]`).length;
+            
+            if (type === 'armazon') {
+                html = `
+                    <div data-armazon-section class="mt-4">
+                        <hr>
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.parentElement.remove(); calculateTotal();">
+                                <i class="fas fa-times"></i> Eliminar
+                            </button>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label">Armazón (Inventario)</label>
+                                <select class="form-control" name="a_inventario_id[]">
+                                    @foreach ($armazones as $item)
+                                        <option value="{{ $item->id }}">{{ $item->codigo }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <label class="form-label">Precio Armazón</label>
+                                <input type="number" class="form-control form-control-sm" name="a_precio[]" onchange="calculateTotal()">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Desc. Armazón (%)</label>
+                                <input type="number" class="form-control form-control-sm" name="a_precio_descuento[]" min="0" max="100" value="0" onchange="calculateTotal()">
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            else if (type === 'lunas') {
+                html = `
+                    <div data-lunas-section class="mt-4">
+                        <hr>
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.parentElement.remove(); calculateTotal();">
+                                <i class="fas fa-times"></i> Eliminar
+                            </button>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Lunas Medidas</label>
+                                <input type="text" class="form-control" name="l_medida[]">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Lunas Detalle</label>
+                                <input type="text" class="form-control" name="l_detalle[]">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label class="form-label">Tipo de Lente</label>
+                                <input type="text" class="form-control" name="tipo_lente[]" list="tipo_lente_options" 
+                                       placeholder="Seleccione o escriba un tipo de lente">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Material</label>
+                                <input type="text" class="form-control" name="material[]" list="material_options"
+                                       placeholder="Seleccione o escriba un material">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Filtro</label>
+                                <input type="text" class="form-control" name="filtro[]" list="filtro_options"
+                                       placeholder="Seleccione o escriba un filtro">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <label class="form-label">Precio Lunas</label>
+                                <input type="number" class="form-control input-sm" name="l_precio[]" onchange="calculateTotal()">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Desc. Lunas (%)</label>
+                                <input type="number" class="form-control input-sm" name="l_precio_descuento[]" 
+                                       min="0" max="100" value="0" onchange="calculateTotal()">
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            else if (type === 'accesorios') {
+                html = `
+                    <div data-accesorios-section class="mt-4">
+                        <hr>
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.parentElement.remove(); calculateTotal();">
+                                <i class="fas fa-times"></i> Eliminar
+                            </button>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Accesorio (Inventario)</label>
+                                <select class="form-control" name="d_inventario_id[]">
+                                    @foreach ($accesorios as $item)
+                                        <option value="{{ $item->id }}">{{ $item->codigo }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Precio Accesorio</label>
+                                <input type="number" class="form-control input-sm" name="d_precio[]" onchange="calculateTotal()">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Desc. Accesorio (%)</label>
+                                <input type="number" class="form-control input-sm" name="d_precio_descuento[]" 
+                                       min="0" max="100" value="0" onchange="calculateTotal()">
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            const container = document.querySelector(`#${type}-container .card-body`);
+            container.insertAdjacentHTML('beforeend', html);
+        }
+
+        function duplicateArmazon() {
+            createNewFields('armazon');
+        }
+
+        function duplicateLunas() {
+            createNewFields('lunas');
+        }
+
+        function duplicateAccesorios() {
+            createNewFields('accesorios');
+        }
     </script>
 @stop
