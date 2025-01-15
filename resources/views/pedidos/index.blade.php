@@ -93,12 +93,13 @@
                         <th>Total</th>
                         <th>Saldo</th>
                         <th>Acciones</th>
+                        <th>Usuario</th> <!-- ...added Usuario column... -->
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($pedidos as $pedido)
                     <tr>
-                        <td>{{ $pedido->fecha->format('Y-m-d') }}</td>
+                        <td>{{ $pedido->fecha ? $pedido->fecha->format('Y-m-d') : 'Sin fecha' }}</td>
                         <td>{{ $pedido->numero_orden }}</td>
                         <td>{{ $pedido->fact }}</td>
                         <td>{{ $pedido->cliente }}</td>
@@ -162,6 +163,7 @@
 
                             </div>
                         </td>
+                        <td>{{ $pedido->usuario }}</td> <!-- ...display usuario... -->
                     </tr>
                     @endforeach
                 </tbody>
@@ -188,19 +190,39 @@
             modal.find('#eliminarForm').attr('action', url); // Actualizar la acción del formulario
         });
 
-        // Inicializar DataTable
+        // Inicializar DataTable con nueva configuración
         var pedidosTable = $('#pedidosTable').DataTable({
             "scrollX": true,
-            "order": [[0, "desc"]],
-            "columnDefs": [{
-                "targets": [2],
-                "visible": true,
-                "searchable": true,
-            }],
+            // Cambiar el orden por defecto a la columna "Orden" (índice 1) descendente
+            "order": [[1, "desc"]],  // Índice 1 = columna "Orden"
+            "columnDefs": [
+                {
+                    "targets": [2],
+                    "visible": true,
+                    "searchable": true,
+                }
+            ],
             "dom": 'Bfrtip',
+            "pageLength": 10,  // Mantener consistencia con la paginación del backend
+            "processing": true,  // Mostrar indicador de carga
+            "serverSide": false,  // Desactivado porque ya tenemos paginación del backend
             "buttons": [
-                'excelHtml5',
-                'csvHtml5',
+                {
+                    "extend": 'excelHtml5',
+                    "text": 'Excel',
+                    "title": 'Pedidos_' + new Date().toISOString().split('T')[0],
+                    "exportOptions": {
+                        "columns": [0, 1, 2, 3, 4, 5, 6]
+                    }
+                },
+                {
+                    "extend": 'csvHtml5',
+                    "text": 'CSV',
+                    "title": 'Pedidos_' + new Date().toISOString().split('T')[0],
+                    "exportOptions": {
+                        "columns": [0, 1, 2, 3, 4, 5, 6]
+                    }
+                },
                 {
                     "extend": 'print',
                     "text": 'Imprimir',
@@ -219,7 +241,7 @@
                 {
                     "extend": 'pdfHtml5',
                     "text": 'PDF',
-                    "filename": 'Pedidos.pdf',
+                    "filename": 'Pedidos_' + new Date().toISOString().split('T')[0],
                     "pageSize": 'LETTER',
                     "orientation": "landscape",
                     "exportOptions": {
@@ -228,9 +250,30 @@
                 }
             ],
             "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json",
+                "buttons": {
+                    "excel": "Excel",
+                    "csv": "CSV",
+                    "print": "Imprimir",
+                    "pdf": "PDF"
+                }
+            },
+            // Mantener el estado de la tabla (filtros, orden, etc.)
+            "stateSave": true,
+            "stateDuration": 60 * 60 * 24, // 24 horas
+            // Evento para restaurar el orden después de recargar la página
+            "stateLoadParams": function (settings, data) {
+                // Asegurar que siempre se mantenga el orden por la columna "Orden"
+                data.order = [[1, "desc"]];
             }
         });
+
+        // Aplicar filtros existentes al cargar la página
+        var year = $('#filtroAno').val();
+        var month = $('#filtroMes').val();
+        if (year || month) {
+            pedidosTable.draw(); // Redibujar tabla con filtros aplicados
+        }
     });
 
     document.getElementById('filtroAno').addEventListener('change', function() {

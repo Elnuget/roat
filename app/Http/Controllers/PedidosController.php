@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pedido;
 use App\Models\Inventario;
+use App\Models\PedidoLuna; // Add this line
 
 class PedidosController extends Controller
 {
@@ -30,7 +31,7 @@ class PedidosController extends Controller
             $query->whereMonth('fecha', '=', (int)$request->mes);
         }
 
-        $pedidos = $query->paginate(10);
+        $pedidos = $query->get();
 
         return view('pedidos.index', compact('pedidos'));
     }
@@ -76,55 +77,80 @@ class PedidosController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'fecha' => 'nullable|date',
-            'numero_orden' => 'nullable|integer',
-            'fact' => 'nullable|string|max:255',
-            'examen_visual' => 'nullable|numeric',
-            'cliente' => 'nullable|string|max:255',
-            'paciente' => 'nullable|string|max:255', // New validation rule
-            'celular' => 'nullable|string|max:255',
-            'correo_electronico' => 'nullable|string|email|max:255',
-            'a_inventario_id' => 'nullable|exists:inventarios,id',
-            'a_precio' => 'nullable|numeric',
-            'l_detalle' => 'nullable|string|max:255',
-            'l_medida' => 'nullable|string|max:255',
-            'l_precio' => 'nullable|numeric',
-            'd_inventario_id' => 'nullable|exists:inventarios,id',
-            'd_precio' => 'nullable|numeric',
-            'total' => 'nullable|numeric',
-            'saldo' => 'nullable|numeric',
-            // Nuevos campos
-            'tipo_lente' => 'nullable|string|max:255',
-            'material' => 'nullable|string|max:255',
-            'filtro' => 'nullable|string|max:255',
-            'valor_compra' => 'nullable|numeric',
-            'motivo_compra' => 'nullable|string|max:255'
-        ]);
-
         try {
-            $pedido = new Pedido($validatedData);
+            // Remover los campos de arrays del pedido principal
+            $pedidoData = $request->except([
+                'a_inventario_id', 'a_precio', 'a_precio_descuento',
+                'd_inventario_id', 'd_precio', 'd_precio_descuento',
+                'l_medida', 'l_detalle', 'l_precio', 'l_precio_descuento',
+                'tipo_lente', 'material', 'filtro'
+            ]);
+            
+            $pedido = new Pedido();
+            $pedido->fill($pedidoData);
+            $pedido->usuario = auth()->user()->name;
             $pedido->save();
 
-            // Actualizar el inventario para el artículo A
-            if (!empty($validatedData['a_inventario_id'])) {
-                $inventarioItemA = Inventario::find($validatedData['a_inventario_id']);
-                if ($inventarioItemA) {
-                    $inventarioItemA->orden = $validatedData['numero_orden'];
-                    $inventarioItemA->cantidad -= 1;
-                    $inventarioItemA->valor = $validatedData['a_precio'];
-                    $inventarioItemA->save();
+            // Manejamos los armazones (tanto el principal como los adicionales)
+            if ($request->has('a_inventario_id')) {
+                foreach ($request->a_inventario_id as $index => $inventarioId) {
+                    if (!empty($inventarioId)) {
+                        $precio = $request->a_precio[$index] ?? 0;
+                        $descuento = $request->a_precio_descuento[$index] ?? 0;
+
+                        $pedido->inventarios()->attach($inventarioId, [
+                            'precio' => (float) $precio,
+                            'descuento' => (float) $descuento,
+                        ]);
+
+                        $inventarioItem = Inventario::find($inventarioId);
+                        if ($inventarioItem) {
+                            $inventarioItem->orden = $pedido->numero_orden;
+                            $inventarioItem->valor = (float) $precio;
+                            $inventarioItem->cantidad -= 1;
+                            $inventarioItem->save();
+                        }
+                    }
                 }
             }
 
-            // Actualizar el inventario para el artículo D
-            if (!empty($validatedData['d_inventario_id'])) {
-                $inventarioItemD = Inventario::find($validatedData['d_inventario_id']);
-                if ($inventarioItemD) {
-                    $inventarioItemD->orden = $validatedData['numero_orden'];
-                    $inventarioItemD->cantidad -= 1;
-                    $inventarioItemD->valor = $validatedData['d_precio'];
-                    $inventarioItemD->save();
+            // Manejamos los accesorios
+            if ($request->has('d_inventario_id')) {
+                foreach ($request->d_inventario_id as $index => $accesorioId) {
+                    if (!empty($accesorioId)) {
+                        $precio = $request->d_precio[$index] ?? 0;
+                        $descuento = $request->d_precio_descuento[$index] ?? 0;
+
+                        $pedido->inventarios()->attach($accesorioId, [
+                            'precio' => (float) $precio,
+                            'descuento' => (float) $descuento,
+                        ]);
+
+                        $inventarioItem = Inventario::find($accesorioId);
+                        if ($inventarioItem) {
+                            $inventarioItem->orden = $pedido->numero_orden;
+                            $inventarioItem->valor = (float) $precio;
+                            $inventarioItem->cantidad -= 1;
+                            $inventarioItem->save();
+                        }
+                    }
+                }
+            }
+
+            // Procesar lunas
+            if ($request->has('l_medida')) {
+                foreach ($request->l_medida as $key => $medida) {
+                    if (!empty($medida)) {
+                        $pedido->lunas()->create([
+                            'l_medida' => $medida,
+                            'l_detalle' => $request->l_detalle[$key] ?? null,
+                            'l_precio' => $request->l_precio[$key] ?? 0,
+                            'tipo_lente' => $request->tipo_lente[$key] ?? null,
+                            'material' => $request->material[$key] ?? null,
+                            'filtro' => $request->filtro[$key] ?? null,
+                            'l_precio_descuento' => $request->l_precio_descuento[$key] ?? 0
+                        ]);
+                    }
                 }
             }
 
@@ -133,12 +159,9 @@ class PedidosController extends Controller
                 'mensaje' => 'Pedido creado exitosamente',
                 'tipo' => 'alert-success'
             ]);
+
         } catch (\Exception $e) {
-            return redirect('/Pedidos')->with([
-                'error' => 'Error',
-                'mensaje' => 'Pedido no se ha creado. Motivo: ' . $e->getMessage(),
-                'tipo' => 'alert-danger'
-            ]);
+            return redirect()->back()->withErrors($e->getMessage());
         }
     }
 
@@ -150,8 +173,12 @@ class PedidosController extends Controller
      */
     public function show($id)
     {
-        // Incluye las relaciones con 'aInventario' y 'dInventario'
-        $pedido = Pedido::with(['aInventario', 'dInventario'])->findOrFail($id);
+        $pedido = Pedido::with([
+            'aInventario',
+            'dInventario',
+            'inventarios',
+            'lunas'  // Add this line to eager load lunas
+        ])->findOrFail($id);
 
         return view('pedidos.show', compact('pedido'));
     }
@@ -164,7 +191,7 @@ class PedidosController extends Controller
      */
     public function edit($id)
     {
-        $pedido = Pedido::findOrFail($id);
+        $pedido = Pedido::with(['inventarios', 'lunas'])->findOrFail($id);
         $inventarioItems = Inventario::all(); // Obtener todos los items del inventario
 
         return view('pedidos.edit', compact('pedido', 'inventarioItems'));
@@ -179,36 +206,56 @@ class PedidosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'fecha' => 'nullable|date',
-            'numero_orden' => 'nullable|integer',
-            'fact' => 'nullable|string|max:255',
-            'examen_visual' => 'nullable|numeric',
-            'cliente' => 'nullable|string|max:255',
-            'paciente' => 'nullable|string|max:255', // New validation rule
-            'celular' => 'nullable|string|max:255',
-            'correo_electronico' => 'nullable|string|email|max:255',
-            'a_inventario_id' => 'nullable|exists:inventarios,id',
-            'a_precio' => 'nullable|numeric',
-            'l_detalle' => 'nullable|string|max:255',
-            'l_medida' => 'nullable|string|max:255',
-            'l_precio' => 'nullable|numeric',
-            'd_inventario_id' => 'nullable|exists:inventarios,id',
-            'd_precio' => 'nullable|numeric',
-            'total' => 'nullable|numeric',
-            'saldo' => 'nullable|numeric',
-            // Nuevos campos
-            'tipo_lente' => 'nullable|string|max:255',
-            'material' => 'nullable|string|max:255',
-            'filtro' => 'nullable|string|max:255',
-            'valor_compra' => 'nullable|numeric',
-            'motivo_compra' => 'nullable|string|max:255'
-        ]);
-
         try {
             $pedido = Pedido::findOrFail($id);
-            $pedido->fill($validatedData);
+            
+            // Update basic pedido information
+            $pedido->fill($request->except(['a_inventario_id', 'a_precio', 'a_precio_descuento', 'd_inventario_id', 'd_precio', 'd_precio_descuento']));
             $pedido->save();
+
+            // Update pedido_inventario relationships
+            $pedido->inventarios()->detach(); // Remove existing relationships
+
+            if ($request->has('a_inventario_id')) {
+                foreach ($request->a_inventario_id as $index => $inventarioId) {
+                    if (!empty($inventarioId)) {
+                        $pedido->inventarios()->attach($inventarioId, [
+                            'precio' => $request->a_precio[$index] ?? 0,
+                            'descuento' => $request->a_precio_descuento[$index] ?? 0,
+                        ]);
+                    }
+                }
+            }
+
+            // Update accesorios relationships
+            if ($request->has('d_inventario_id')) {
+                foreach ($request->d_inventario_id as $index => $accesorioId) {
+                    if (!empty($accesorioId)) {
+                        $pedido->inventarios()->attach($accesorioId, [
+                            'precio' => $request->d_precio[$index] ?? 0,
+                            'descuento' => $request->d_precio_descuento[$index] ?? 0,
+                        ]);
+                    }
+                }
+            }
+
+            // Update lunas
+            $pedido->lunas()->delete(); // Remove existing lunas
+            if ($request->has('l_medida')) {
+                foreach ($request->l_medida as $key => $medida) {
+                    if (!empty($medida)) {
+                        $pedido->lunas()->create([
+                            'l_medida' => $medida,
+                            'l_detalle' => $request->l_detalle[$key] ?? null,
+                            'l_precio' => $request->l_precio[$key] ?? 0,
+                            'tipo_lente' => $request->tipo_lente[$key] ?? null,
+                            'material' => $request->material[$key] ?? null,
+                            'filtro' => $request->filtro[$key] ?? null,
+                            'l_precio_descuento' => $request->l_precio_descuento[$key] ?? 0
+                        ]);
+                    }
+                }
+            }
 
             return redirect('/Pedidos')->with([
                 'error' => 'Exito',
@@ -218,7 +265,7 @@ class PedidosController extends Controller
         } catch (\Exception $e) {
             return redirect('/Pedidos')->with([
                 'error' => 'Error',
-                'mensaje' => 'Pedido no se ha actualizado',
+                'mensaje' => 'Pedido no se ha actualizado: ' . $e->getMessage(),
                 'tipo' => 'alert-danger'
             ]);
         }
