@@ -120,11 +120,6 @@
                                     <input type="number" class="form-control form-control-sm" id="examen_visual" name="examen_visual">
                                 </div>
                                 <div class="col-md-3">
-                                    <label for="examen_visual_descuento" class="form-label">Descuento Examen (%)</label>
-                                    <input type="number" class="form-control form-control-sm" id="examen_visual_descuento"
-                                           name="examen_visual_descuento" min="0" max="100" value="0">
-                                </div>
-                                <div class="col-md-3">
                                     <label for="celular" class="form-label">Celular</label>
                                     <input type="text" class="form-control" id="celular" name="celular">
                                 </div>
@@ -412,8 +407,7 @@
 
             // Examen visual
             const examenVisual = parseFloat(document.getElementById('examen_visual').value) || 0;
-            const examenVisualDescuento = parseFloat(document.getElementById('examen_visual_descuento').value) || 0;
-            total += examenVisual * (1 - (examenVisualDescuento / 100));
+            total += examenVisual;
 
             // Armazones - incluir tanto el original como los campos añadidos
             const armazonPrecios = document.querySelectorAll('[name="a_precio"], [name="a_precio[]"]');

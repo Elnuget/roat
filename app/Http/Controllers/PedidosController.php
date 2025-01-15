@@ -78,21 +78,30 @@ class PedidosController extends Controller
     public function store(Request $request)
     {
         try {
-            // Remover los campos de arrays del pedido principal
-            $pedidoData = $request->except([
-                'a_inventario_id', 'a_precio', 'a_precio_descuento',
-                'd_inventario_id', 'd_precio', 'd_precio_descuento',
-                'l_medida', 'l_detalle', 'l_precio', 'l_precio_descuento',
-                'tipo_lente', 'material', 'filtro'
-            ]);
-            
+            // Filtrar los arrays vacíos antes de crear el pedido
+            $pedidoData = collect($request->all())->filter(function ($value) {
+                // Si es un array, verifica si tiene elementos no vacíos
+                if (is_array($value)) {
+                    return !empty(array_filter($value));
+                }
+                return true;
+            })->toArray();
+
+            // Create basic pedido
             $pedido = new Pedido();
             $pedido->fill($pedidoData);
             $pedido->usuario = auth()->user()->name;
+
+            // Asegurar que los campos tengan valores por defecto si están vacíos
+            $pedido->total = $pedidoData['total'] ?? 0;
+            $pedido->saldo = $pedidoData['saldo'] ?? 0;
+            $pedido->examen_visual = $pedidoData['examen_visual'] ?? 0;
+            $pedido->valor_compra = $pedidoData['valor_compra'] ?? 0;
+            
             $pedido->save();
 
-            // Manejamos los armazones (tanto el principal como los adicionales)
-            if ($request->has('a_inventario_id')) {
+            // Handle armazones solo si hay datos válidos
+            if ($request->has('a_inventario_id') && is_array($request->a_inventario_id)) {
                 foreach ($request->a_inventario_id as $index => $inventarioId) {
                     if (!empty($inventarioId)) {
                         $precio = $request->a_precio[$index] ?? 0;
@@ -114,31 +123,8 @@ class PedidosController extends Controller
                 }
             }
 
-            // Manejamos los accesorios
-            if ($request->has('d_inventario_id')) {
-                foreach ($request->d_inventario_id as $index => $accesorioId) {
-                    if (!empty($accesorioId)) {
-                        $precio = $request->d_precio[$index] ?? 0;
-                        $descuento = $request->d_precio_descuento[$index] ?? 0;
-
-                        $pedido->inventarios()->attach($accesorioId, [
-                            'precio' => (float) $precio,
-                            'descuento' => (float) $descuento,
-                        ]);
-
-                        $inventarioItem = Inventario::find($accesorioId);
-                        if ($inventarioItem) {
-                            $inventarioItem->orden = $pedido->numero_orden;
-                            $inventarioItem->valor = (float) $precio;
-                            $inventarioItem->cantidad -= 1;
-                            $inventarioItem->save();
-                        }
-                    }
-                }
-            }
-
-            // Procesar lunas
-            if ($request->has('l_medida')) {
+            // Handle lunas solo si hay datos válidos
+            if ($request->has('l_medida') && is_array($request->l_medida)) {
                 foreach ($request->l_medida as $key => $medida) {
                     if (!empty($medida)) {
                         $pedido->lunas()->create([
