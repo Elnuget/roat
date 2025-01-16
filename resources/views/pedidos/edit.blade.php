@@ -89,6 +89,20 @@
                             </div>
                         </div>
 
+                        {{-- Nueva fila para cédula y paciente --}}
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="cedula" class="form-label">Cédula</label>
+                                <input type="text" class="form-control" id="cedula" name="cedula"
+                                       value="{{ $pedido->cedula }}">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="paciente" class="form-label">Paciente</label>
+                                <input type="text" class="form-control" id="paciente" name="paciente" 
+                                       value="{{ $pedido->paciente }}">
+                            </div>
+                        </div>
+
                         {{-- Fila 3 --}}
                         <div class="row mb-3">
                             <div class="col-md-3">

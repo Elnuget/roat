@@ -105,9 +105,13 @@
                                 </div>
                             </div>
 
-                            {{-- Nueva fila para paciente --}}
+                            {{-- Nueva fila para cédula --}}
                             <div class="row mb-3">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <label for="cedula" class="form-label">Cédula</label>
+                                    <input type="text" class="form-control" id="cedula" name="cedula">
+                                </div>
+                                <div class="col-md-6">
                                     <label for="paciente" class="form-label">Paciente</label>
                                     <input type="text" class="form-control" id="paciente" name="paciente">
                                 </div>

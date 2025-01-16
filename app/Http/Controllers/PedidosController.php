@@ -31,7 +31,7 @@ class PedidosController extends Controller
             $query->whereMonth('fecha', '=', (int)$request->mes);
         }
 
-        $pedidos = $query->get();
+        $pedidos = $query->orderBy('numero_orden', 'desc')->get();
 
         return view('pedidos.index', compact('pedidos'));
     }
@@ -49,7 +49,6 @@ class PedidosController extends Controller
             ->where('lugar', 'not like', '%LIQUIDO%')
             ->where('lugar', 'not like', '%GOTERO%')
             ->where('lugar', 'not like', '%SPRAY%')
-            ->where('lugar', 'not like', '%VITRINA%')
             ->where('lugar', 'not like', '%COSAS%')
             ->get();
 
@@ -101,6 +100,7 @@ class PedidosController extends Controller
             $pedido->saldo = $pedidoData['saldo'] ?? 0;
             $pedido->examen_visual = $pedidoData['examen_visual'] ?? 0;
             $pedido->valor_compra = $pedidoData['valor_compra'] ?? 0;
+            $pedido->cedula = $pedidoData['cedula'] ?? null;  // Agregar esta línea
             
             $pedido->save();
 
@@ -234,7 +234,7 @@ class PedidosController extends Controller
         try {
             $pedido = Pedido::findOrFail($id);
             
-            // Update basic pedido information
+            // Update basic pedido information including cedula
             $pedido->fill($request->except(['a_inventario_id', 'a_precio', 'a_precio_descuento', 'd_inventario_id', 'd_precio', 'd_precio_descuento']));
             $pedido->save();
 
@@ -258,7 +258,7 @@ class PedidosController extends Controller
                     if (!empty($accesorioId)) {
                         $pedido->inventarios()->attach($accesorioId, [
                             'precio' => $request->d_precio[$index] ?? 0,
-                            'descuento' => $request->d_precio_descuento[$index] ?? 0,
+                            'descuento' => $request->d_precio[$index] ?? 0,
                         ]);
                     }
                 }

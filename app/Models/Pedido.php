@@ -16,6 +16,7 @@ class Pedido extends Model
         'fact',
         'examen_visual',
         'cliente',
+        'cedula',     // Agregar este campo
         'paciente', // New field
         'celular',
         'correo_electronico',
