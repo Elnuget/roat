@@ -146,7 +146,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-12">
                                     <label for="a_inventario_id" class="form-label">Armazón (Inventario)</label>
-                                    <select class="form-control" id="a_inventario_id" name="a_inventario_id[]">
+                                    <select class="form-control selectpicker" data-live-search="true" id="a_inventario_id" name="a_inventario_id[]">
                                         <option value="">Seleccione un Item del Inventario</option>
                                         @foreach ($armazones as $item)
                                             <option value="{{ $item->id }}">{{ $item->codigo }}</option>
@@ -159,7 +159,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-3">
                                     <label for="a_precio" class="form-label">Precio Armazón</label>
-                                    <input type="number" class="form-control form-control-sm precio-armazon" id="a_precio" name="a_precio[]" oninput="calculateTotal()">
+                                    <input type="number" class="form-control form-control-sm precio-armazon" id="a_precio" name="a_precio[]" step="0.01" oninput="calculateTotal()">
                                 </div>
                                 <div class="col-md-3">
                                     <label for="a_precio_descuento" class="form-label">Desc. Armazón (%)</label>
@@ -245,12 +245,12 @@
                             {{-- Fila nueva para precio y descuento de lunas --}}
                             <div class="row mb-3">
                                 <div class="col-md-3">
-                                    <label for="l_precio" class="form-label">Precio Lunas</label>
-                                    <input type="number" class="form-control input-sm" id="l_precio" name="l_precio[]">
+                                    <label class="form-label">Precio Lunas</label>
+                                    <input type="number" class="form-control input-sm" name="l_precio[]" step="0.01" oninput="calculateTotal()">
                                 </div>
                                 <div class="col-md-3">
-                                    <label for="l_precio_descuento" class="form-label">Desc. Lunas (%)</label>
-                                    <input type="number" class="form-control input-sm" id="l_precio_descuento" name="l_precio_descuento[]" min="0" max="100" value="0">
+                                    <label class="form-label">Desc. Lunas (%)</label>
+                                    <input type="number" class="form-control input-sm" name="l_precio_descuento[]" min="0" max="100" value="0" oninput="calculateTotal()">
                                 </div>
                             </div>
                         </div>
@@ -274,7 +274,7 @@
                             <div class="row mb-3 accesorio-item">
                                 <div class="col-md-6">
                                     <label for="d_inventario_id[]" class="form-label">Accesorio (Inventario)</label>
-                                    <select class="form-control" id="d_inventario_id[]" name="d_inventario_id[]">
+                                    <select class="form-control selectpicker" data-live-search="true" id="d_inventario_id[]" name="d_inventario_id[]">
                                         <option value="">Seleccione un Item del Inventario</option>
                                         @foreach ($accesorios as $item)
                                             <option value="{{ $item->id }}">{{ $item->codigo }}</option>
@@ -283,11 +283,11 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label for="d_precio[]" class="form-label">Precio Accesorio</label>
-                                    <input type="number" class="form-control input-sm" id="d_precio[]" name="d_precio[]" step="0.01">
+                                    <input type="number" class="form-control input-sm" id="d_precio[]" name="d_precio[]" step="0.01" oninput="calculateTotal()">
                                 </div>
                                 <div class="col-md-3">
                                     <label for="d_precio_descuento[]" class="form-label">Desc. Accesorio (%)</label>
-                                    <input type="number" class="form-control input-sm" id="d_precio_descuento[]" name="d_precio_descuento[]" min="0" max="100" value="0">
+                                    <input type="number" class="form-control input-sm" id="d_precio_descuento[]" name="d_precio_descuento[]" min="0" max="100" value="0" oninput="calculateTotal()">
                                 </div>
                             </div>
                         </div>
@@ -311,7 +311,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="valor_compra" class="form-label">Valor de Compra</label>
-                                    <input type="number" class="form-control input-sm" id="valor_compra" name="valor_compra">
+                                    <input type="number" class="form-control input-sm" id="valor_compra" name="valor_compra" step="0.01">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="motivo_compra" class="form-label">Motivo de Compra</label>
@@ -335,7 +335,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-12">
                                     <label for="total" class="form-label" style="color: red;">Total</label>
-                                    <input type="number" class="form-control input-sm" id="total" name="total" readonly>
+                                    <input type="number" class="form-control input-sm" id="total" name="total" step="0.01" readonly>
                                 </div>
                             </div>
 
@@ -454,7 +454,7 @@
         });
 
         // Event listeners para descuentos
-        ['examen_visual_descuento', 'a_precio_descuento', 'l_precio_descuento', 'd_precio_descuento'].forEach(id => {
+        ['a_precio_descuento', 'l_precio_descuento', 'd_precio_descuento'].forEach(id => {
             const element = document.getElementById(id);
             if(element){
                 element.addEventListener('input', calculateTotal);
@@ -484,7 +484,7 @@
                         <div class="row mb-3">
                             <div class="col-md-12">
                                 <label class="form-label">Armazón (Inventario)</label>
-                                <select class="form-control" name="a_inventario_id[]">
+                                <select class="form-control selectpicker" data-live-search="true" name="a_inventario_id[]">
                                     <option value="" selected>Seleccione un Item del Inventario</option>
                                     @foreach ($armazones as $item)
                                         <option value="{{ $item->id }}">{{ $item->codigo }}</option>
@@ -495,7 +495,7 @@
                         <div class="row mb-3">
                             <div class="col-md-3">
                                 <label class="form-label">Precio Armazón</label>
-                                <input type="number" class="form-control form-control-sm precio-armazon" name="a_precio[]" oninput="calculateTotal()">
+                                <input type="number" class="form-control form-control-sm precio-armazon" name="a_precio[]" step="0.01" oninput="calculateTotal()">
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Desc. Armazón (%)</label>
@@ -544,7 +544,7 @@
                         <div class="row mb-3">
                             <div class="col-md-3">
                                 <label class="form-label">Precio Lunas</label>
-                                <input type="number" class="form-control input-sm" name="l_precio[]" oninput="calculateTotal()">
+                                <input type="number" class="form-control input-sm" name="l_precio[]" step="0.01" oninput="calculateTotal()">
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Desc. Lunas (%)</label>
@@ -567,7 +567,7 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="form-label">Accesorio (Inventario)</label>
-                                <select class="form-control" name="d_inventario_id[]">
+                                <select class="form-control selectpicker" data-live-search="true" name="d_inventario_id[]">
                                     <option value="" selected>Seleccione un Item del Inventario</option>
                                     @foreach ($accesorios as $item)
                                         <option value="{{ $item->id }}">{{ $item->codigo }}</option>
@@ -576,7 +576,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Precio Accesorio</label>
-                                <input type="number" class="form-control input-sm" name="d_precio[]" oninput="calculateTotal()">
+                                <input type="number" class="form-control input-sm" name="d_precio[]" step="0.01" oninput="calculateTotal()">
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Desc. Accesorio (%)</label>
@@ -599,6 +599,7 @@
                 newPrecioInput.addEventListener('input', calculateTotal);
                 newDescuentoInput.addEventListener('input', calculateTotal);
             }
+            $('.selectpicker').selectpicker('refresh'); // Reevaluar el nuevo select
         }
 
         function duplicateArmazon() {
@@ -607,10 +608,19 @@
 
         function duplicateLunas() {
             createNewFields('lunas');
+            calculateTotal(); // recalcular total al agregar más lunas
         }
 
         function duplicateAccesorios() {
             createNewFields('accesorios');
+            calculateTotal(); // recalcular total con el nuevo accesorio
         }
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.18/dist/css/bootstrap-select.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.18/dist/js/bootstrap-select.min.js"></script>
+    <script>
+        $(function() {
+            $('.selectpicker').selectpicker();
+        });
     </script>
 @stop

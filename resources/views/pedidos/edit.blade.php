@@ -271,7 +271,7 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="valor_compra" class="form-label">Valor de Compra</label>
-                                <input type="number" class="form-control input-sm" id="valor_compra" name="valor_compra" value="{{ $pedido->valor_compra }}">
+                                <input type="number" class="form-control input-sm" id="valor_compra" name="valor_compra" value="{{ $pedido->valor_compra }}" step="0.01">
                             </div>
                             <div class="col-md-6">
                                 <label for="motivo_compra" class="form-label">Motivo de Compra</label>
@@ -296,7 +296,7 @@
                             <div class="col-md-12">
                                 <label for="total" class="form-label" style="color: red;">Total</label>
                                 <input type="number" class="form-control input-sm" id="total" name="total"
-                                       value="{{ $pedido->total }}" readonly>
+                                       value="{{ $pedido->total }}" step="0.01" readonly>
                             </div>
                         </div>
 

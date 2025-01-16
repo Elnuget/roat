@@ -45,21 +45,26 @@ class PedidosController extends Controller
     {
         // Filtrar armazones (excluyendo accesorios)
         $armazones = Inventario::where('cantidad', '>', 0)
-            ->where('codigo', 'not like', '%ESTUCHE%')
-            ->where('codigo', 'not like', '%LIQUIDO%')
-            ->where('codigo', 'not like', '%GOTERO%')
-            ->where('codigo', 'not like', '%SPRAY%')
+            ->where('lugar', 'not like', '%ESTUCHE%')
+            ->where('lugar', 'not like', '%LIQUIDO%')
+            ->where('lugar', 'not like', '%GOTERO%')
+            ->where('lugar', 'not like', '%SPRAY%')
+            ->where('lugar', 'not like', '%VITRINA%')
+            ->where('lugar', 'not like', '%COSAS%')
             ->get();
 
         // Filtrar accesorios
         $accesorios = Inventario::where('cantidad', '>', 0)
-            ->where(function($query) {
-                $query->where('codigo', 'like', '%ESTUCHE%')
-                    ->orWhere('codigo', 'like', '%LIQUIDO%')
-                    ->orWhere('codigo', 'like', '%GOTERO%')
-                    ->orWhere('codigo', 'like', '%SPRAY%');
-            })
-            ->get();
+        ->where(function($query) {
+            $query->where('lugar', 'like', '%ESTUCHE%')
+                ->orWhere('lugar', 'like', '%LIQUIDO%')
+                ->orWhere('lugar', 'like', '%GOTERO%')
+                ->orWhere('lugar', 'like', '%SPRAY%')
+                ->orWhere('lugar', 'like', '%VITRINA%')
+                ->orWhere('lugar', 'like', '%COSAS%');
+        })
+        ->get();
+
 
         $currentDate = date('Y-m-d');
         $lastOrder = Pedido::orderBy('numero_orden', 'desc')->first();
@@ -79,13 +84,12 @@ class PedidosController extends Controller
     {
         try {
             // Filtrar los arrays vacíos antes de crear el pedido
-            $pedidoData = collect($request->all())->filter(function ($value) {
-                // Si es un array, verifica si tiene elementos no vacíos
-                if (is_array($value)) {
-                    return !empty(array_filter($value));
-                }
-                return true;
-            })->toArray();
+            $pedidoData = collect($request->all())
+                ->reject(function ($value, $key) {
+                    // Quitar campos que son arreglos, por ejemplo a_inventario_id, l_medida, etc.
+                    return is_array($value);
+                })
+                ->toArray();
 
             // Create basic pedido
             $pedido = new Pedido();
@@ -127,15 +131,49 @@ class PedidosController extends Controller
             if ($request->has('l_medida') && is_array($request->l_medida)) {
                 foreach ($request->l_medida as $key => $medida) {
                     if (!empty($medida)) {
-                        $pedido->lunas()->create([
+                        $luna = new PedidoLuna([
                             'l_medida' => $medida,
                             'l_detalle' => $request->l_detalle[$key] ?? null,
-                            'l_precio' => $request->l_precio[$key] ?? 0,
+                            'l_precio' => (float)($request->l_precio[$key] ?? 0),
                             'tipo_lente' => $request->tipo_lente[$key] ?? null,
                             'material' => $request->material[$key] ?? null,
                             'filtro' => $request->filtro[$key] ?? null,
-                            'l_precio_descuento' => $request->l_precio_descuento[$key] ?? 0
+                            'l_precio_descuento' => (float)($request->l_precio_descuento[$key] ?? 0)
                         ]);
+                        $pedido->lunas()->save($luna);
+                    }
+                }
+            }
+
+            // Handle accesorios
+            if ($request->has('d_inventario_id') && is_array($request->d_inventario_id)) {
+                foreach ($request->d_inventario_id as $index => $inventarioId) {
+                    $precio = $request->d_precio[$index] ?? 0;
+                    $descuento = $request->d_precio_descuento[$index] ?? 0;
+
+                    if (!empty($inventarioId)) {
+                        if (!is_numeric($inventarioId)) {
+                            // Crear nuevo registro en inventario
+                            $inventarioItem = new Inventario();
+                            $inventarioItem->codigo = $inventarioId;
+                            $inventarioItem->cantidad = 1;
+                            // ...asignar otras propiedades si es necesario...
+                            $inventarioItem->save();
+                            $inventarioId = $inventarioItem->id;
+                        }
+
+                        $pedido->inventarios()->attach($inventarioId, [
+                            'precio' => (float) $precio,
+                            'descuento' => (float) $descuento,
+                        ]);
+
+                        $inventarioItem = Inventario::find($inventarioId);
+                        if ($inventarioItem) {
+                            $inventarioItem->orden = $pedido->numero_orden;
+                            $inventarioItem->valor = (float) $precio;
+                            $inventarioItem->cantidad -= 1;
+                            $inventarioItem->save();
+                        }
                     }
                 }
             }
@@ -147,6 +185,7 @@ class PedidosController extends Controller
             ]);
 
         } catch (\Exception $e) {
+            \Log::error('Error en PedidosController@store: ' . $e->getMessage());
             return redirect()->back()->withErrors($e->getMessage());
         }
     }
@@ -295,4 +334,5 @@ class PedidosController extends Controller
             'tipo' => 'alert-success'
         ]);
     }
+
 }
