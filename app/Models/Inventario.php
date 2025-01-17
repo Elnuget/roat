@@ -36,4 +36,11 @@ class Inventario extends Model
     {
         return $this->hasMany(Pedido::class, 'd_inventario_id');
     }
+
+    public function pedidos()
+    {
+        return $this->belongsToMany(Pedido::class, 'pedido_inventario')
+                    ->withPivot(['precio', 'descuento'])
+                    ->withTimestamps();
+    }
 }

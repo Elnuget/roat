@@ -5,12 +5,12 @@
 <h1>Pedidos</h1>
 <p>Administracion de ventas</p>
 @if (session('error'))
-<div class="alert {{ session('tipo') }} alert-dismissible fade show" role="alert">
-    <strong>{{ session('mensaje') }}</strong>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
+    <div class="alert {{ session('tipo') }} alert-dismissible fade show" role="alert">
+        <strong>{{ session('mensaje') }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
 @endif @stop
 
 @section('content')
@@ -93,76 +93,97 @@
                         <th>Total</th>
                         <th>Saldo</th>
                         <th>Acciones</th>
+                        <th>Usuario</th> <!-- ...added Usuario column... -->
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($pedidos as $pedido)
-                    <tr>
-                        <td>{{ $pedido->fecha->format('Y-m-d') }}</td>
-                        <td>{{ $pedido->numero_orden }}</td>
-                        <td>{{ $pedido->fact }}</td>
-                        <td>{{ $pedido->cliente }}</td>
-                        <td>{{ $pedido->celular }}</td>
-                        <td>{{ $pedido->paciente }}</td>
-                        <td>{{ $pedido->total }}</td>
-                        <td>
-                            <span style="color: {{ $pedido->saldo == 0 ? 'green' : 'red' }}">
-                                {{ $pedido->saldo }}
-                            </span>
-                        </td>
-                        <td>
-                            <div class="btn-group">
-                                <a href="{{ route('pedidos.show', $pedido->id) }}"
-                                    class="btn btn-xs btn-default text-primary mx-1 shadow" title="Ver">
-                                    <i class="fa fa-lg fa-fw fa-eye"></i>
-                                </a>
-                                @can('admin')
-                                <a href="{{ route('pedidos.edit', $pedido->id) }}"
-                                    class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar">
-                                    <i class="fa fa-lg fa-fw fa-pen"></i>
-                                </a>
-                                <a class="btn btn-xs btn-default text-danger mx-1 shadow" href="#" data-toggle="modal"
-                                    data-target="#confirmarEliminarModal" data-id="{{ $pedido->id }}"
-                                    data-url="{{ route('pedidos.destroy', $pedido->id) }}">
-                                    <i class="fa fa-lg fa-fw fa-trash"></i>
-                                </a>
-                                @endcan
-                                <!-- Botón de Pago -->
-                                <a href="{{ route('pagos.create', ['pedido_id' => $pedido->id]) }}" class="btn btn-success btn-sm" title="Añadir Pago">
-                                    <i class="fas fa-money-bill-wave"></i>
-                                </a>
-                            </div>
-                            <!-- Confirmar Eliminar Modal -->
-                            <div class="modal fade" id="confirmarEliminarModal" tabindex="-1" role="dialog"
-                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Confirmar Eliminación
-                                            </h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            ¿Estás seguro de que deseas eliminar este pedido?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Cancelar</button>
-                                            <form id="eliminarForm" method="post"
-                                                action="{{ route('pedidos.destroy', $pedido->id) }}">
+                        <tr>
+                            <td>{{ $pedido->fecha ? $pedido->fecha->format('Y-m-d') : 'Sin fecha' }}</td>
+                            <td>{{ $pedido->numero_orden }}</td>
+                            <td>
+                                <span
+                                    style="color: {{ $pedido->fact == 'Pendiente' ? 'orange' : ($pedido->fact == 'Aprobado' ? 'green' : 'black') }}">
+                                    {{ $pedido->fact }}
+                                </span>
+                            </td>
+                            <td>{{ $pedido->cliente }}</td>
+                            <td>{{ $pedido->celular }}</td>
+                            <td>{{ $pedido->paciente }}</td>
+                            <td>{{ $pedido->total }}</td>
+                            <td>
+                                <span style="color: {{ $pedido->saldo == 0 ? 'green' : 'red' }}">
+                                    {{ $pedido->saldo }}
+                                </span>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="{{ route('pedidos.show', $pedido->id) }}"
+                                        class="btn btn-xs btn-default text-primary mx-1 shadow" title="Ver">
+                                        <i class="fa fa-lg fa-fw fa-eye"></i>
+                                    </a>
+                                    @can('admin')
+                                        <a href="{{ route('pedidos.edit', $pedido->id) }}"
+                                            class="btn btn-xs btn-default text-primary mx-1 shadow" title="Editar">
+                                            <i class="fa fa-lg fa-fw fa-pen"></i>
+                                        </a>
+                                        <a class="btn btn-xs btn-default text-danger mx-1 shadow" href="#" data-toggle="modal"
+                                            data-target="#confirmarEliminarModal" data-id="{{ $pedido->id }}"
+                                            data-url="{{ route('pedidos.destroy', $pedido->id) }}">
+                                            <i class="fa fa-lg fa-fw fa-trash"></i>
+                                        </a>
+                                    @endcan
+                                    <!-- Botón de Pago -->
+                                    <a href="{{ route('pagos.create', ['pedido_id' => $pedido->id]) }}"
+                                        class="btn btn-success btn-sm" title="Añadir Pago">
+                                        <i class="fas fa-money-bill-wave"></i>
+                                    </a>
+                                    <!-- Botón de Aprobar -->
+                                    @can('admin')
+                                        @if($pedido->fact == 'Pendiente' && $pedido->saldo == 0 && !empty($pedido->cliente))
+                                            <form action="{{ route('pedidos.approve', $pedido->id) }}" method="POST"
+                                                style="display:inline;">
                                                 @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                @method('PATCH')
+                                                <button type="submit" class="btn btn-warning btn-sm" title="Aprobar">
+                                                    <i class="fas fa-check"></i>
+                                                </button>
                                             </form>
+                                        @endif
+                                    @endcan
+                                </div>
+                                <!-- Confirmar Eliminar Modal -->
+                                <div class="modal fade" id="confirmarEliminarModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Confirmar Eliminación
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                ¿Estás seguro de que deseas eliminar este pedido?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Cancelar</button>
+                                                <form id="eliminarForm" method="post"
+                                                    action="{{ route('pedidos.destroy', $pedido->id) }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                            </div>
-                        </td>
-                    </tr>
+                                </div>
+                            </td>
+                            <td>{{ $pedido->usuario }}</td> <!-- ...display usuario... -->
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
@@ -188,19 +209,40 @@
             modal.find('#eliminarForm').attr('action', url); // Actualizar la acción del formulario
         });
 
-        // Inicializar DataTable
+        // Inicializar DataTable con nueva configuración
         var pedidosTable = $('#pedidosTable').DataTable({
             "scrollX": true,
-            "order": [[0, "desc"]],
-            "columnDefs": [{
-                "targets": [2],
-                "visible": true,
-                "searchable": true,
-            }],
+            "order": [[1, "desc"]],  // Índice 1 = columna "Orden"
+            "columnDefs": [
+                {
+                    "targets": [2],
+                    "visible": true,
+                    "searchable": true,
+                }
+            ],
             "dom": 'Bfrtip',
+            "paging": false,         // Deshabilitar paginación
+            "lengthChange": false,   // Deshabilitar opción de cambiar longitud
+            "info": false,           // Ocultar texto de información
+            "processing": false,     // Deshabilitar indicador de carga
+            "serverSide": false,     // No usar paginación en servidor
             "buttons": [
-                'excelHtml5',
-                'csvHtml5',
+                {
+                    "extend": 'excelHtml5',
+                    "text": 'Excel',
+                    "title": 'Pedidos_' + new Date().toISOString().split('T')[0],
+                    "exportOptions": {
+                        "columns": [0, 1, 2, 3, 4, 5, 6]
+                    }
+                },
+                {
+                    "extend": 'csvHtml5',
+                    "text": 'CSV',
+                    "title": 'Pedidos_' + new Date().toISOString().split('T')[0],
+                    "exportOptions": {
+                        "columns": [0, 1, 2, 3, 4, 5, 6]
+                    }
+                },
                 {
                     "extend": 'print',
                     "text": 'Imprimir',
@@ -219,7 +261,7 @@
                 {
                     "extend": 'pdfHtml5',
                     "text": 'PDF',
-                    "filename": 'Pedidos.pdf',
+                    "filename": 'Pedidos_' + new Date().toISOString().split('T')[0],
                     "pageSize": 'LETTER',
                     "orientation": "landscape",
                     "exportOptions": {
@@ -228,20 +270,39 @@
                 }
             ],
             "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+                "info": "",          // Quitar "Mostrando registros del X al Y de Z"
+                "infoEmpty": "",     // Quitar texto cuando no hay registros
+                "infoFiltered": "",  // Quitar texto cuando hay filtrado
+                "paginate": {
+                    "next": "",
+                    "previous": ""
+                }
+            },
+            "stateSave": true,
+            "stateDuration": 60 * 60 * 24, // 24 horas
+            "stateLoadParams": function (settings, data) {
+                data.order = [[1, "desc"]];
             }
         });
+
+
+        // Aplicar filtros existentes al cargar la página
+        var year = $('#filtroAno').val();
+        var month = $('#filtroMes').val();
+        if (year || month) {
+            pedidosTable.draw(); // Redibujar tabla con filtros aplicados
+        }
     });
 
-    document.getElementById('filtroAno').addEventListener('change', function() {
+    document.getElementById('filtroAno').addEventListener('change', function () {
         document.getElementById('filterForm').submit();
     });
-    document.getElementById('filtroMes').addEventListener('change', function() {
+    document.getElementById('filtroMes').addEventListener('change', function () {
         document.getElementById('filterForm').submit();
     });
 
     // Añadir evento al botón "Actual"
-    document.getElementById('actualButton').addEventListener('click', function() {
+    document.getElementById('actualButton').addEventListener('click', function () {
         const currentDate = new Date();
         const currentYear = currentDate.getFullYear();
         const currentMonth = currentDate.getMonth() + 1; // getMonth() es 0-indexado

@@ -45,12 +45,9 @@ return [
     |
     */
 
-    'logo' => '<b>Alpha</b>',
-    // 'logo_img' => 'img/logo-perfil.jpg',
-    'logo_img_class' => 'logo-xs',
-    'logo_img_xl' => null,
-    'logo_img_xl_class' => '',
-    'logo_img_alt' => '',
+    'logo' => '<b>Escleróptica</b>',
+    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    
 
     /*
     |--------------------------------------------------------------------------

@@ -105,9 +105,13 @@
                                 </div>
                             </div>
 
-                            {{-- Nueva fila para paciente --}}
+                            {{-- Nueva fila para cédula --}}
                             <div class="row mb-3">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <label for="cedula" class="form-label">Cédula</label>
+                                    <input type="text" class="form-control" id="cedula" name="cedula">
+                                </div>
+                                <div class="col-md-6">
                                     <label for="paciente" class="form-label">Paciente</label>
                                     <input type="text" class="form-control" id="paciente" name="paciente">
                                 </div>
@@ -118,11 +122,6 @@
                                 <div class="col-md-3">
                                     <label for="examen_visual" class="form-label">Examen Visual</label>
                                     <input type="number" class="form-control form-control-sm" id="examen_visual" name="examen_visual">
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="examen_visual_descuento" class="form-label">Descuento Examen (%)</label>
-                                    <input type="number" class="form-control form-control-sm" id="examen_visual_descuento"
-                                           name="examen_visual_descuento" min="0" max="100" value="0">
                                 </div>
                                 <div class="col-md-3">
                                     <label for="celular" class="form-label">Celular</label>
@@ -151,7 +150,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-12">
                                     <label for="a_inventario_id" class="form-label">Armazón (Inventario)</label>
-                                    <select class="form-control" id="a_inventario_id" name="a_inventario_id">
+                                    <select class="form-control selectpicker" data-live-search="true" id="a_inventario_id" name="a_inventario_id[]">
                                         <option value="">Seleccione un Item del Inventario</option>
                                         @foreach ($armazones as $item)
                                             <option value="{{ $item->id }}">{{ $item->codigo }}</option>
@@ -164,12 +163,12 @@
                             <div class="row mb-3">
                                 <div class="col-md-3">
                                     <label for="a_precio" class="form-label">Precio Armazón</label>
-                                    <input type="number" class="form-control form-control-sm" id="a_precio" name="a_precio">
+                                    <input type="number" class="form-control form-control-sm precio-armazon" id="a_precio" name="a_precio[]" step="0.01" oninput="calculateTotal()">
                                 </div>
                                 <div class="col-md-3">
                                     <label for="a_precio_descuento" class="form-label">Desc. Armazón (%)</label>
-                                    <input type="number" class="form-control form-control-sm" id="a_precio_descuento"
-                                           name="a_precio_descuento" min="0" max="100" value="0">
+                                    <input type="number" class="form-control form-control-sm descuento-armazon" id="a_precio_descuento"
+                                           name="a_precio_descuento[]" min="0" max="100" value="0" oninput="calculateTotal()">
                                 </div>
                             </div>
                         </div>
@@ -193,19 +192,18 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="l_medida" class="form-label">Lunas Medidas</label>
-                                    <input type="text" class="form-control" id="l_medida" name="l_medida">
+                                    <input type="text" class="form-control" id="l_medida" name="l_medida[]">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="l_detalle" class="form-label">Lunas Detalle</label>
-                                    <input type="text" class="form-control" id="l_detalle" name="l_detalle">
+                                    <input type="text" class="form-control" id="l_detalle" name="l_detalle[]">
                                 </div>
                             </div>
-
                             {{-- Fila nueva para tipo de lente, material y filtro --}}
                             <div class="row mb-3">
                                 <div class="col-md-4">
                                     <label for="tipo_lente" class="form-label">Tipo de Lente</label>
-                                    <input type="text" class="form-control" id="tipo_lente" name="tipo_lente" list="tipo_lente_options" placeholder="Seleccione o escriba un tipo de lente">
+                                    <input type="text" class="form-control" id="tipo_lente" name="tipo_lente[]" list="tipo_lente_options" placeholder="Seleccione o escriba un tipo de lente">
                                     <datalist id="tipo_lente_options">
                                         <option value="Monofocal">
                                         <option value="Bifocal">
@@ -216,7 +214,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label for="material" class="form-label">Material</label>
-                                    <input type="text" class="form-control" id="material" name="material" list="material_options" placeholder="Seleccione o escriba un material">
+                                    <input type="text" class="form-control" id="material" name="material[]" list="material_options" placeholder="Seleccione o escriba un material">
                                     <datalist id="material_options">
                                         <option value="Policarbonato">
                                         <option value="CR-39">
@@ -231,7 +229,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label for="filtro" class="form-label">Filtro</label>
-                                    <input type="text" class="form-control" id="filtro" name="filtro" list="filtro_options" placeholder="Seleccione o escriba un filtro">
+                                    <input type="text" class="form-control" id="filtro" name="filtro[]" list="filtro_options" placeholder="Seleccione o escriba un filtro">
                                     <datalist id="filtro_options">
                                         <option value="Antireflejo">
                                         <option value="UV">
@@ -248,17 +246,15 @@
                                     </datalist>
                                 </div>
                             </div>
-
                             {{-- Fila nueva para precio y descuento de lunas --}}
                             <div class="row mb-3">
                                 <div class="col-md-3">
-                                    <label for="l_precio" class="form-label">Precio Lunas</label>
-                                    <input type="number" class="form-control input-sm" id="l_precio" name="l_precio">
+                                    <label class="form-label">Precio Lunas</label>
+                                    <input type="number" class="form-control input-sm" name="l_precio[]" step="0.01" oninput="calculateTotal()">
                                 </div>
                                 <div class="col-md-3">
-                                    <label for="l_precio_descuento" class="form-label">Desc. Lunas (%)</label>
-                                    <input type="number" class="form-control input-sm" id="l_precio_descuento"
-                                           name="l_precio_descuento" min="0" max="100" value="0">
+                                    <label class="form-label">Desc. Lunas (%)</label>
+                                    <input type="number" class="form-control input-sm" name="l_precio_descuento[]" min="0" max="100" value="0" oninput="calculateTotal()">
                                 </div>
                             </div>
                         </div>
@@ -279,10 +275,10 @@
                         </div>
                         <div class="card-body">
                             {{-- Fila 7 --}}
-                            <div class="row mb-3">
+                            <div class="row mb-3 accesorio-item">
                                 <div class="col-md-6">
-                                    <label for="d_inventario_id" class="form-label">Accesorio (Inventario)</label>
-                                    <select class="form-control" id="d_inventario_id" name="d_inventario_id">
+                                    <label for="d_inventario_id[]" class="form-label">Accesorio (Inventario)</label>
+                                    <select class="form-control selectpicker" data-live-search="true" id="d_inventario_id[]" name="d_inventario_id[]">
                                         <option value="">Seleccione un Item del Inventario</option>
                                         @foreach ($accesorios as $item)
                                             <option value="{{ $item->id }}">{{ $item->codigo }}</option>
@@ -290,13 +286,12 @@
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <label for="d_precio" class="form-label">Precio Accesorio</label>
-                                    <input type="number" class="form-control input-sm" id="d_precio" name="d_precio">
+                                    <label for="d_precio[]" class="form-label">Precio Accesorio</label>
+                                    <input type="number" class="form-control input-sm" id="d_precio[]" name="d_precio[]" step="0.01" oninput="calculateTotal()">
                                 </div>
                                 <div class="col-md-3">
-                                    <label for="d_precio_descuento" class="form-label">Desc. Accesorio (%)</label>
-                                    <input type="number" class="form-control input-sm" id="d_precio_descuento"
-                                           name="d_precio_descuento" min="0" max="100" value="0">
+                                    <label for="d_precio_descuento[]" class="form-label">Desc. Accesorio (%)</label>
+                                    <input type="number" class="form-control input-sm" id="d_precio_descuento[]" name="d_precio_descuento[]" min="0" max="100" value="0" oninput="calculateTotal()">
                                 </div>
                             </div>
                         </div>
@@ -320,7 +315,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="valor_compra" class="form-label">Valor de Compra</label>
-                                    <input type="number" class="form-control input-sm" id="valor_compra" name="valor_compra">
+                                    <input type="number" class="form-control input-sm" id="valor_compra" name="valor_compra" step="0.01">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="motivo_compra" class="form-label">Motivo de Compra</label>
@@ -344,7 +339,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-12">
                                     <label for="total" class="form-label" style="color: red;">Total</label>
-                                    <input type="number" class="form-control input-sm" id="total" name="total" readonly>
+                                    <input type="number" class="form-control input-sm" id="total" name="total" step="0.01" readonly>
                                 </div>
                             </div>
 
@@ -352,7 +347,13 @@
                             <div class="row mb-3" style="display: none;">
                                 <div class="col-md-12">
                                     <label for="saldo" class="form-label">Saldo</label>
-                                    <input type="number" class="form-control" id="saldo" name="saldo">
+                                    <input type="number" 
+                                           class="form-control" 
+                                           id="saldo" 
+                                           name="saldo" 
+                                           value="0"
+                                           step="0.01"
+                                           required>
                                 </div>
                             </div>
 
@@ -410,8 +411,7 @@
 
             // Examen visual
             const examenVisual = parseFloat(document.getElementById('examen_visual').value) || 0;
-            const examenVisualDescuento = parseFloat(document.getElementById('examen_visual_descuento').value) || 0;
-            total += examenVisual * (1 - (examenVisualDescuento / 100));
+            total += examenVisual;
 
             // Armazones - incluir tanto el original como los campos añadidos
             const armazonPrecios = document.querySelectorAll('[name="a_precio"], [name="a_precio[]"]');
@@ -451,12 +451,18 @@
 
         // Event listeners para precios
         ['examen_visual', 'a_precio', 'l_precio', 'd_precio', 'valor_compra'].forEach(id => { // Añadir valor_compra
-            document.getElementById(id).addEventListener('input', calculateTotal);
+            const element = document.getElementById(id);
+            if(element){
+                element.addEventListener('input', calculateTotal);
+            }
         });
 
         // Event listeners para descuentos
-        ['examen_visual_descuento', 'a_precio_descuento', 'l_precio_descuento', 'd_precio_descuento'].forEach(id => {
-            document.getElementById(id).addEventListener('input', calculateTotal);
+        ['a_precio_descuento', 'l_precio_descuento', 'd_precio_descuento'].forEach(id => {
+            const element = document.getElementById(id);
+            if(element){
+                element.addEventListener('input', calculateTotal);
+            }
         });
 
         // Mostrar todas las opciones del datalist al hacer clic en el input
@@ -482,7 +488,8 @@
                         <div class="row mb-3">
                             <div class="col-md-12">
                                 <label class="form-label">Armazón (Inventario)</label>
-                                <select class="form-control" name="a_inventario_id[]">
+                                <select class="form-control selectpicker" data-live-search="true" name="a_inventario_id[]">
+                                    <option value="" selected>Seleccione un Item del Inventario</option>
                                     @foreach ($armazones as $item)
                                         <option value="{{ $item->id }}">{{ $item->codigo }}</option>
                                     @endforeach
@@ -492,11 +499,11 @@
                         <div class="row mb-3">
                             <div class="col-md-3">
                                 <label class="form-label">Precio Armazón</label>
-                                <input type="number" class="form-control form-control-sm" name="a_precio[]" onchange="calculateTotal()">
+                                <input type="number" class="form-control form-control-sm precio-armazon" name="a_precio[]" step="0.01" oninput="calculateTotal()">
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Desc. Armazón (%)</label>
-                                <input type="number" class="form-control form-control-sm" name="a_precio_descuento[]" min="0" max="100" value="0" onchange="calculateTotal()">
+                                <input type="number" class="form-control form-control-sm descuento-armazon" name="a_precio_descuento[]" min="0" max="100" value="0" oninput="calculateTotal()">
                             </div>
                         </div>
                     </div>
@@ -514,39 +521,39 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="form-label">Lunas Medidas</label>
-                                <input type="text" class="form-control" name="l_medida[]">
+                                <input type="text" class="form-control" name="l_medida[]" oninput="calculateTotal()">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Lunas Detalle</label>
-                                <input type="text" class="form-control" name="l_detalle[]">
+                                <input type="text" class="form-control" name="l_detalle[]" oninput="calculateTotal()">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-4">
                                 <label class="form-label">Tipo de Lente</label>
                                 <input type="text" class="form-control" name="tipo_lente[]" list="tipo_lente_options" 
-                                       placeholder="Seleccione o escriba un tipo de lente">
+                                       placeholder="Seleccione o escriba un tipo de lente" oninput="calculateTotal()">
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label">Material</label>
                                 <input type="text" class="form-control" name="material[]" list="material_options"
-                                       placeholder="Seleccione o escriba un material">
+                                       placeholder="Seleccione o escriba un material" oninput="calculateTotal()">
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label">Filtro</label>
                                 <input type="text" class="form-control" name="filtro[]" list="filtro_options"
-                                       placeholder="Seleccione o escriba un filtro">
+                                       placeholder="Seleccione o escriba un filtro" oninput="calculateTotal()">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-3">
                                 <label class="form-label">Precio Lunas</label>
-                                <input type="number" class="form-control input-sm" name="l_precio[]" onchange="calculateTotal()">
+                                <input type="number" class="form-control input-sm" name="l_precio[]" step="0.01" oninput="calculateTotal()">
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Desc. Lunas (%)</label>
                                 <input type="number" class="form-control input-sm" name="l_precio_descuento[]" 
-                                       min="0" max="100" value="0" onchange="calculateTotal()">
+                                       min="0" max="100" value="0" oninput="calculateTotal()">
                             </div>
                         </div>
                     </div>
@@ -564,7 +571,8 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="form-label">Accesorio (Inventario)</label>
-                                <select class="form-control" name="d_inventario_id[]">
+                                <select class="form-control selectpicker" data-live-search="true" name="d_inventario_id[]">
+                                    <option value="" selected>Seleccione un Item del Inventario</option>
                                     @foreach ($accesorios as $item)
                                         <option value="{{ $item->id }}">{{ $item->codigo }}</option>
                                     @endforeach
@@ -572,12 +580,11 @@
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Precio Accesorio</label>
-                                <input type="number" class="form-control input-sm" name="d_precio[]" onchange="calculateTotal()">
+                                <input type="number" class="form-control input-sm" name="d_precio[]" step="0.01" oninput="calculateTotal()">
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Desc. Accesorio (%)</label>
-                                <input type="number" class="form-control input-sm" name="d_precio_descuento[]" 
-                                       min="0" max="100" value="0" onchange="calculateTotal()">
+                                <input type="number" class="form-control input-sm" name="d_precio_descuento[]" min="0" max="100" value="0" oninput="calculateTotal()">
                             </div>
                         </div>
                     </div>
@@ -586,6 +593,17 @@
 
             const container = document.querySelector(`#${type}-container .card-body`);
             container.insertAdjacentHTML('beforeend', html);
+
+            // Agregar event listeners a los nuevos campos
+            if (type === 'armazon') {
+                const newSection = container.lastElementChild;
+                const newPrecioInput = newSection.querySelector('.precio-armazon');
+                const newDescuentoInput = newSection.querySelector('.descuento-armazon');
+                
+                newPrecioInput.addEventListener('input', calculateTotal);
+                newDescuentoInput.addEventListener('input', calculateTotal);
+            }
+            $('.selectpicker').selectpicker('refresh'); // Reevaluar el nuevo select
         }
 
         function duplicateArmazon() {
@@ -594,10 +612,19 @@
 
         function duplicateLunas() {
             createNewFields('lunas');
+            calculateTotal(); // recalcular total al agregar más lunas
         }
 
         function duplicateAccesorios() {
             createNewFields('accesorios');
+            calculateTotal(); // recalcular total con el nuevo accesorio
         }
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.18/dist/css/bootstrap-select.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.18/dist/js/bootstrap-select.min.js"></script>
+    <script>
+        $(function() {
+            $('.selectpicker').selectpicker();
+        });
     </script>
 @stop

@@ -54,6 +54,7 @@
             <div class="card-body">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><strong>Cliente:</strong> {{ $pedido->cliente }}</li>
+                    <li class="list-group-item"><strong>Cédula:</strong> {{ $pedido->cedula ?? 'No registrada' }}</li>
                     <li class="list-group-item"><strong>Paciente:</strong> {{ $pedido->paciente }}</li>
                     <li class="list-group-item"><strong>Celular:</strong> {{ $pedido->celular }}</li>
                     <li class="list-group-item"><strong>Correo Electrónico:</strong> {{ $pedido->correo_electronico }}</li>
@@ -62,10 +63,10 @@
             </div>
         </div>
 
-        {{-- Armazón --}}
+        {{-- Armazón y Accesorios --}}
         <div class="card collapsed-card">
             <div class="card-header">
-                <h3 class="card-title">Armazón</h3>
+                <h3 class="card-title">Armazón y Accesorios</h3>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-plus"></i>
@@ -73,80 +74,91 @@
                 </div>
             </div>
             <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><strong>Armazón:</strong> {{ $pedido->aInventario ? $pedido->aInventario->codigo : 'No asignado' }}</li>
-                    <li class="list-group-item">
-                        <strong>Precio Armazón:</strong> ${{ number_format($pedido->a_precio, 2, ',', '.') }}
-                        @php
-                            $armazonBase = round($pedido->a_precio / 1.15, 2);
-                            $armazonIva = round($pedido->a_precio - $armazonBase, 2);
-                        @endphp
-                        <span style="color: red;">
-                            (Base: ${{ number_format($armazonBase, 2, ',', '.') }})
-                            (IVA: ${{ number_format($armazonIva, 2, ',', '.') }})
-                        </span>
-                    </li>
-                </ul>
+                @if ($pedido->inventarios->count() > 0)
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Precio Base</th>
+                                    <th>Descuento</th>
+                                    <th>Precio Final</th>
+                                    <th>Base</th>
+                                    <th>IVA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($pedido->inventarios as $inventario)
+                                    @php
+                                        $precioConDescuento = $inventario->pivot->precio * (1 - ($inventario->pivot->descuento / 100));
+                                        $base = round($precioConDescuento / 1.15, 2);
+                                        $iva = round($precioConDescuento - $base, 2);
+                                    @endphp
+                                    <tr>
+                                        <td>{{ $inventario->codigo }}</td>
+                                        <td>${{ number_format($inventario->pivot->precio, 2, ',', '.') }}</td>
+                                        <td>{{ $inventario->pivot->descuento }}%</td>
+                                        <td>${{ number_format($precioConDescuento, 2, ',', '.') }}</td>
+                                        <td>${{ number_format($base, 2, ',', '.') }}</td>
+                                        <td>${{ number_format($iva, 2, ',', '.') }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @else
+                    <p class="text-muted">No hay armazones asignados</p>
+                @endif
             </div>
         </div>
 
         {{-- Lunas --}}
-        <div class="card collapsed-card">
+        <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Lunas</h3>
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
             </div>
             <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><strong>Lunas Medidas:</strong> {{ $pedido->l_medida }}</li>
-                    <li class="list-group-item"><strong>Lunas Detalle:</strong> {{ $pedido->l_detalle }}</li>
-                    <li class="list-group-item"><strong>Tipo de Lente:</strong> {{ $pedido->tipo_lente }}</li>
-                    <li class="list-group-item"><strong>Material:</strong> {{ $pedido->material }}</li>
-                    <li class="list-group-item"><strong>Filtro:</strong> {{ $pedido->filtro }}</li>
-                    <li class="list-group-item">
-                        <strong>Precio Lunas:</strong> ${{ number_format($pedido->l_precio, 2, ',', '.') }}
-                        @php
-                            $lunasBase = round($pedido->l_precio / 1.15, 2);
-                            $lunasIva = round($pedido->l_precio - $lunasBase, 2);
-                        @endphp
-                        <span style="color: red;">
-                            (Base: ${{ number_format($lunasBase, 2, ',', '.') }})
-                            (IVA: ${{ number_format($lunasIva, 2, ',', '.') }})
-                        </span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        {{-- Accesorios --}}
-        <div class="card collapsed-card">
-            <div class="card-header">
-                <h3 class="card-title">Accesorios</h3>
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><strong>Accesorio:</strong> {{ $pedido->dInventario ? $pedido->dInventario->codigo : 'No asignado' }}</li>
-                    <li class="list-group-item">
-                        <strong>Precio Accesorio:</strong> ${{ number_format($pedido->d_precio, 2, ',', '.') }}
-                        @php
-                            $accesorioBase = round($pedido->d_precio / 1.15, 2);
-                            $accesorioIva = round($pedido->d_precio - $accesorioBase, 2);
-                        @endphp
-                        <span style="color: red;">
-                            (Base: ${{ number_format($accesorioBase, 2, ',', '.') }})
-                            (IVA: ${{ number_format($accesorioIva, 2, ',', '.') }})
-                        </span>
-                    </li>
-                </ul>
+                @if ($pedido->lunas->count() > 0)
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Medida</th>
+                                    <th>Detalle</th>
+                                    <th>Tipo de Lente</th>
+                                    <th>Material</th>
+                                    <th>Filtro</th>
+                                    <th>Precio</th>
+                                    <th>Desc. (%)</th>
+                                    <th>Base</th>
+                                    <th>IVA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($pedido->lunas as $luna)
+                                    @php
+                                        $precioConDescuento = $luna->l_precio * (1 - ($luna->l_precio_descuento / 100));
+                                        $base = round($precioConDescuento / 1.15, 2);
+                                        $iva = round($precioConDescuento - $base, 2);
+                                    @endphp
+                                    <tr>
+                                        <td>{{ $luna->l_medida }}</td>
+                                        <td>{{ $luna->l_detalle }}</td>
+                                        <td>{{ $luna->tipo_lente }}</td>
+                                        <td>{{ $luna->material }}</td>
+                                        <td>{{ $luna->filtro }}</td>
+                                        <td>${{ number_format($luna->l_precio, 2, ',', '.') }}</td>
+                                        <td>{{ $luna->l_precio_descuento }}%</td>
+                                        <td>${{ number_format($base, 2, ',', '.') }}</td>
+                                        <td>${{ number_format($iva, 2, ',', '.') }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @else
+                    <p class="text-muted">No hay lunas asignadas</p>
+                @endif
             </div>
         </div>
 
