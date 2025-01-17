@@ -66,8 +66,8 @@ class CajaController extends Controller
         ]);
 
         // Send email notification
-        Mail::raw("Se ha registrado un nuevo movimiento en caja.\nMotivo: {$caja->motivo}\nValor: {$caja->valor}", function ($message) use ($request) {
-            $message->to($request->user_email)
+        Mail::raw("Se ha registrado un nuevo movimiento en caja.\nMotivo: {$caja->motivo}\nValor: {$caja->valor}", function ($message) {
+            $message->to('escleropticarg@gmail.com')
                     ->subject('Nuevo Movimiento en Caja');
         });
 
