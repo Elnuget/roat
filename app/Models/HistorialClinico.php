@@ -12,6 +12,7 @@ class HistorialClinico extends Model
     protected $table = 'historiales_clinicos';
 
     protected $fillable = [
+        // Fields from original migration
         'nombres',
         'apellidos',
         'edad',
@@ -40,10 +41,26 @@ class HistorialClinico extends Model
         'tiempo_uso',
         'refraccion_od',
         'refraccion_oi',
-        'rx_final_dp',
-        'rx_final_av_vl',
-        'rx_final_av_vp',
+        'rx_final_dp_od',
+        'rx_final_dp_oi',
+        'rx_final_av_vl_od',
+        'rx_final_av_vl_oi',
+        'rx_final_av_vp_od',
+        'rx_final_av_vp_oi',
         'diagnostico',
-        'tratamiento'
+        'tratamiento',
+        // Fields from additional migration
+        'cedula',
+        'ph_od',
+        'ph_oi',
+        'add',
+        'cotizacion',
+        'usuario_id'
     ];
+
+    // Definir la relación con el modelo User
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'usuario_id');
+    }
 }

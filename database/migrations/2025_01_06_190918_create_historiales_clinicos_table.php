@@ -43,9 +43,12 @@ class CreateHistorialesClinicosTable extends Migration
             $table->string('tiempo_uso', 50)->nullable();
             $table->string('refraccion_od', 50)->nullable();
             $table->string('refraccion_oi', 50)->nullable();
-            $table->string('rx_final_dp', 50)->nullable();
-            $table->string('rx_final_av_vl', 50)->nullable();
-            $table->string('rx_final_av_vp', 50)->nullable();
+            $table->string('rx_final_dp_od', 50)->nullable();
+            $table->string('rx_final_dp_oi', 50)->nullable();
+            $table->string('rx_final_av_vl_od', 50)->nullable();
+            $table->string('rx_final_av_vl_oi', 50)->nullable();
+            $table->string('rx_final_av_vp_od', 50)->nullable();
+            $table->string('rx_final_av_vp_oi', 50)->nullable();
             $table->text('diagnostico')->nullable();
             $table->text('tratamiento')->nullable();
             $table->timestamps();

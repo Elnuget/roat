@@ -3,477 +3,419 @@
 @section('title', 'Editar Historial Clínico')
 
 @section('content_header')
-<h1 class="mb-3">Editar Historial Clínico</h1>
+    <h1 class="mb-3">Editar Historial Clínico</h1>
 @stop
 
 @section('content')
 <div class="card">
     <div class="card-body">
-        <form method="POST" action="{{ route('historiales_clinicos.update', $historialClinico->id) }}">
+        <form action="{{ route('historiales_clinicos.update', $historialClinico->id) }}" method="POST">
             @csrf
             @method('PUT')
 
-            {{-- DATOS DEL PACIENTE --}}
-            <div class="mb-4">
-                <h5 class="text-primary">Datos del Paciente</h5>
-                <hr>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="nombres">Nombres <span class="text-danger">*</span></label>
-                        <input 
-                            type="text" 
-                            name="nombres" 
-                            id="nombres" 
-                            class="form-control" 
-                            value="{{ $historialClinico->nombres }}" 
-                            required
-                        >
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="apellidos">Apellidos <span class="text-danger">*</span></label>
-                        <input 
-                            type="text" 
-                            name="apellidos" 
-                            id="apellidos" 
-                            class="form-control" 
-                            value="{{ $historialClinico->apellidos }}" 
-                            required
-                        >
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="edad">Edad <span class="text-danger">*</span></label>
-                        <input 
-                            type="number" 
-                            name="edad" 
-                            id="edad" 
-                            class="form-control" 
-                            value="{{ $historialClinico->edad }}" 
-                            required
-                        >
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="fecha_nacimiento">Fecha de Nacimiento <span class="text-danger">*</span></label>
-                        <input 
-                            type="date" 
-                            name="fecha_nacimiento" 
-                            id="fecha_nacimiento" 
-                            class="form-control" 
-                            value="{{ $historialClinico->fecha_nacimiento }}" 
-                            required
-                        >
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="celular">Celular <span class="text-danger">*</span></label>
-                        <input 
-                            type="text" 
-                            name="celular" 
-                            id="celular" 
-                            class="form-control" 
-                            value="{{ $historialClinico->celular }}" 
-                            required
-                        >
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="ocupacion">Ocupación <span class="text-danger">*</span></label>
-                        <input 
-                            type="text" 
-                            name="ocupacion" 
-                            id="ocupacion" 
-                            class="form-control" 
-                            value="{{ $historialClinico->ocupacion }}" 
-                            required
-                        >
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="fecha">Fecha <span class="text-danger">*</span></label>
-                        <input 
-                            type="date" 
-                            name="fecha" 
-                            id="fecha" 
-                            class="form-control" 
-                            value="{{ $historialClinico->fecha }}" 
-                            required
-                        >
+            {{-- FECHA DE REGISTRO --}}
+            <div class="card mb-4">
+                <div class="card-header" data-toggle="collapse" data-target="#fechaRegistro" style="cursor: pointer">
+                    <h5 class="mb-0">
+                        <i class="fas fa-calendar-alt mr-2"></i> Fecha de Registro
+                    </h5>
+                </div>
+                <div id="fechaRegistro" class="collapse show">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="fecha">Fecha <span class="text-danger">*</span></label>
+                                <input type="date" name="fecha" id="fecha" class="form-control" 
+                                    value="{{ old('fecha', $historialClinico->fecha) }}" required>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {{-- MOTIVO DE CONSULTA / ENFERMEDAD ACTUAL --}}
-            <div class="mb-4">
-                <h5 class="text-primary">Motivo de Consulta</h5>
-                <hr>
-                <div class="form-row">
-                    <div class="form-group col-12 col-sm-6">
-                        <label for="motivo_consulta">Motivo de la Consulta <span class="text-danger">*</span></label>
-                        <input 
-                            type="text" 
-                            name="motivo_consulta" 
-                            id="motivo_consulta" 
-                            class="form-control" 
-                            value="{{ $historialClinico->motivo_consulta }}" 
-                            required
-                        >
+            {{-- DATOS DEL PACIENTE --}}
+            <div class="card mb-4">
+                <div class="card-header" data-toggle="collapse" data-target="#datosPaciente" style="cursor: pointer">
+                    <h5 class="mb-0">
+                        <i class="fas fa-user mr-2"></i> Datos del Paciente
+                    </h5>
+                </div>
+                <div id="datosPaciente" class="collapse show">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="nombres">Nombres <span class="text-danger">*</span></label>
+                                <input type="text" name="nombres" id="nombres" class="form-control" 
+                                    value="{{ old('nombres', $historialClinico->nombres) }}" required>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="apellidos">Apellidos <span class="text-danger">*</span></label>
+                                <input type="text" name="apellidos" id="apellidos" class="form-control" 
+                                    value="{{ old('apellidos', $historialClinico->apellidos) }}" required>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="cedula">Cédula</label>
+                                <input type="text" name="cedula" id="cedula" class="form-control" 
+                                    value="{{ old('cedula', $historialClinico->cedula) }}">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="edad">Edad <span class="text-danger">*</span></label>
+                                <input type="number" name="edad" id="edad" class="form-control" 
+                                    value="{{ old('edad', $historialClinico->edad) }}" required>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="fecha_nacimiento">Fecha de Nacimiento <span class="text-danger">*</span></label>
+                                <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" class="form-control" 
+                                    value="{{ old('fecha_nacimiento', $historialClinico->fecha_nacimiento) }}" required>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="celular">Celular <span class="text-danger">*</span></label>
+                                <input type="text" name="celular" id="celular" class="form-control" 
+                                    value="{{ old('celular', $historialClinico->celular) }}" required>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="ocupacion">Ocupación <span class="text-danger">*</span></label>
+                                <input type="text" name="ocupacion" id="ocupacion" class="form-control" 
+                                    value="{{ old('ocupacion', $historialClinico->ocupacion) }}" required>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group col-12 col-sm-6">
-                        <label for="enfermedad_actual">Enfermedad Actual</label>
-                        <input 
-                            type="text" 
-                            name="enfermedad_actual" 
-                            id="enfermedad_actual" 
-                            class="form-control" 
-                            value="{{ $historialClinico->enfermedad_actual }}"
-                        >
+                </div>
+            </div>
+
+            {{-- MOTIVO DE CONSULTA Y ENFERMEDAD ACTUAL --}}
+            <div class="card mb-4">
+                <div class="card-header" data-toggle="collapse" data-target="#motivoConsulta">
+                    <h5 class="mb-0">
+                        <i class="fas fa-notes-medical mr-2"></i> Motivo de Consulta y Enfermedad Actual
+                    </h5>
+                </div>
+                <div id="motivoConsulta" class="collapse show">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Motivo de Consulta <span class="text-danger">*</span></label>
+                                <input type="text" name="motivo_consulta" class="form-control" 
+                                    value="{{ old('motivo_consulta', $historialClinico->motivo_consulta) }}" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Enfermedad Actual</label>
+                                <input type="text" name="enfermedad_actual" class="form-control" 
+                                    value="{{ old('enfermedad_actual', $historialClinico->enfermedad_actual) }}">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             {{-- ANTECEDENTES --}}
-            <div class="mb-4">
-                <h5 class="text-primary">Antecedentes</h5>
-                <hr>
-                <div class="form-group">
-                    <label for="antecedentes_personales_oculares">Antecedentes Personales Oculares</label>
-                    <textarea 
-                        name="antecedentes_personales_oculares" 
-                        id="antecedentes_personales_oculares" 
-                        class="form-control" 
-                        rows="2"
-                        required
-                    >{{ $historialClinico->antecedentes_personales_oculares }}</textarea>
+            <div class="card mb-4">
+                <div class="card-header" data-toggle="collapse" data-target="#antecedentes">
+                    <h5 class="mb-0">
+                        <i class="fas fa-history mr-2"></i> Antecedentes
+                    </h5>
                 </div>
-                <div class="form-group">
-                    <label for="antecedentes_personales_generales">Antecedentes Personales Generales</label>
-                    <textarea 
-                        name="antecedentes_personales_generales" 
-                        id="antecedentes_personales_generales" 
-                        class="form-control" 
-                        rows="2"
-                        required
-                    >{{ $historialClinico->antecedentes_personales_generales }}</textarea>
-                </div>
-                <div class="form-group">
-                    <label for="antecedentes_familiares_oculares">Antecedentes Familiares Oculares</label>
-                    <textarea 
-                        name="antecedentes_familiares_oculares" 
-                        id="antecedentes_familiares_oculares" 
-                        class="form-control" 
-                        rows="2"
-                        required
-                    >{{ $historialClinico->antecedentes_familiares_oculares }}</textarea>
-                </div>
-                <div class="form-group">
-                    <label for="antecedentes_familiares_generales">Antecedentes Familiares Generales</label>
-                    <textarea 
-                        name="antecedentes_familiares_generales" 
-                        id="antecedentes_familiares_generales" 
-                        class="form-control" 
-                        rows="2"
-                        required
-                    >{{ $historialClinico->antecedentes_familiares_generales }}</textarea>
+                <div id="antecedentes" class="collapse show">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Antecedentes Personales Oculares</label>
+                                <textarea name="antecedentes_personales_oculares" class="form-control" rows="3">{{ old('antecedentes_personales_oculares', $historialClinico->antecedentes_personales_oculares) }}</textarea>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Antecedentes Personales Generales</label>
+                                <textarea name="antecedentes_personales_generales" class="form-control" rows="3">{{ old('antecedentes_personales_generales', $historialClinico->antecedentes_personales_generales) }}</textarea>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Antecedentes Familiares Oculares</label>
+                                <textarea name="antecedentes_familiares_oculares" class="form-control" rows="3">{{ old('antecedentes_familiares_oculares', $historialClinico->antecedentes_familiares_oculares) }}</textarea>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Antecedentes Familiares Generales</label>
+                                <textarea name="antecedentes_familiares_generales" class="form-control" rows="3">{{ old('antecedentes_familiares_generales', $historialClinico->antecedentes_familiares_generales) }}</textarea>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            {{-- AGUDEZA VISUAL --}}
-            <div class="mb-4">
-                <h5 class="text-primary">Agudeza Visual (sin Corrección)</h5>
-                <hr>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="agudeza_visual_vl_sin_correccion_od">VL OD</label>
-                        <input 
-                            type="text" 
-                            name="agudeza_visual_vl_sin_correccion_od" 
-                            id="agudeza_visual_vl_sin_correccion_od" 
-                            class="form-control"
-                            value="{{ $historialClinico->agudeza_visual_vl_sin_correccion_od }}"
-                        >
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="agudeza_visual_vl_sin_correccion_oi">VL OI</label>
-                        <input 
-                            type="text" 
-                            name="agudeza_visual_vl_sin_correccion_oi" 
-                            id="agudeza_visual_vl_sin_correccion_oi" 
-                            class="form-control"
-                            value="{{ $historialClinico->agudeza_visual_vl_sin_correccion_oi }}"
-                        >
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="agudeza_visual_vl_sin_correccion_ao">VL AO</label>
-                        <input 
-                            type="text" 
-                            name="agudeza_visual_vl_sin_correccion_ao" 
-                            id="agudeza_visual_vl_sin_correccion_ao" 
-                            class="form-control"
-                            value="{{ $historialClinico->agudeza_visual_vl_sin_correccion_ao }}"
-                        >
-                    </div>
+            {{-- AGUDEZA VISUAL Y PH --}}
+            <div class="card mb-4">
+                <div class="card-header" data-toggle="collapse" data-target="#agudezaVisual">
+                    <h5 class="mb-0">
+                        <i class="fas fa-eye mr-2"></i> Agudeza Visual y PH
+                    </h5>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="agudeza_visual_vp_sin_correccion_od">VP OD</label>
-                        <input 
-                            type="text" 
-                            name="agudeza_visual_vp_sin_correccion_od" 
-                            id="agudeza_visual_vp_sin_correccion_od" 
-                            class="form-control"
-                            value="{{ $historialClinico->agudeza_visual_vp_sin_correccion_od }}"
-                        >
+                <div id="agudezaVisual" class="collapse show">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Agudeza Visual VL sin Corrección</h6>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label>OD</label>
+                                        <input type="text" name="agudeza_visual_vl_sin_correccion_od" class="form-control" 
+                                            value="{{ old('agudeza_visual_vl_sin_correccion_od', $historialClinico->agudeza_visual_vl_sin_correccion_od) }}">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>OI</label>
+                                        <input type="text" name="agudeza_visual_vl_sin_correccion_oi" class="form-control" 
+                                            value="{{ old('agudeza_visual_vl_sin_correccion_oi', $historialClinico->agudeza_visual_vl_sin_correccion_oi) }}">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>AO</label>
+                                        <input type="text" name="agudeza_visual_vl_sin_correccion_ao" class="form-control" 
+                                            value="{{ old('agudeza_visual_vl_sin_correccion_ao', $historialClinico->agudeza_visual_vl_sin_correccion_ao) }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Agudeza Visual VP sin Corrección</h6>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label>OD</label>
+                                        <input type="text" name="agudeza_visual_vp_sin_correccion_od" class="form-control" 
+                                            value="{{ old('agudeza_visual_vp_sin_correccion_od', $historialClinico->agudeza_visual_vp_sin_correccion_od) }}">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>OI</label>
+                                        <input type="text" name="agudeza_visual_vp_sin_correccion_oi" class="form-control" 
+                                            value="{{ old('agudeza_visual_vp_sin_correccion_oi', $historialClinico->agudeza_visual_vp_sin_correccion_oi) }}">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>AO</label>
+                                        <input type="text" name="agudeza_visual_vp_sin_correccion_ao" class="form-control" 
+                                            value="{{ old('agudeza_visual_vp_sin_correccion_ao', $historialClinico->agudeza_visual_vp_sin_correccion_ao) }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <h6>Pin Hole (PH)</h6>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>PH OD</label>
+                                        <input type="text" name="ph_od" class="form-control" 
+                                            value="{{ old('ph_od', $historialClinico->ph_od) }}">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>PH OI</label>
+                                            <input type="text" name="ph_oi" class="form-control" 
+                                                value="{{ old('ph_oi', $historialClinico->ph_oi) }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>ADD</label>
+                                <input type="text" name="add" class="form-control" 
+                                    value="{{ old('add', $historialClinico->add) }}">
+                            </div>
+                            <div class="form-group">
+                                <label>Cotización</label>
+                                <input type="text" name="cotizacion" class="form-control" 
+                                    value="{{ old('cotizacion', $historialClinico->cotizacion) }}">
+                            </div>
+                            <input type="hidden" name="usuario_id" value="{{ old('usuario_id', $historialClinico->usuario_id) }}">
+                        <div class="form-group">
+                            <label>Optotipo</label>
+                            <textarea name="optotipo" class="form-control" rows="2">{{ old('optotipo', $historialClinico->optotipo) }}</textarea>
+                        </div>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="agudeza_visual_vp_sin_correccion_oi">VP OI</label>
-                        <input 
-                            type="text" 
-                            name="agudeza_visual_vp_sin_correccion_oi" 
-                            id="agudeza_visual_vp_sin_correccion_oi" 
-                            class="form-control"
-                            value="{{ $historialClinico->agudeza_visual_vp_sin_correccion_oi }}"
-                        >
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="agudeza_visual_vp_sin_correccion_ao">VP AO</label>
-                        <input 
-                            type="text" 
-                            name="agudeza_visual_vp_sin_correccion_ao" 
-                            id="agudeza_visual_vp_sin_correccion_ao" 
-                            class="form-control"
-                            value="{{ $historialClinico->agudeza_visual_vp_sin_correccion_ao }}"
-                        >
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="optotipo">Optotipo</label>
-                    <textarea 
-                        name="optotipo" 
-                        id="optotipo" 
-                        class="form-control" 
-                        rows="2"
-                    >{{ $historialClinico->optotipo }}</textarea>
                 </div>
             </div>
 
             {{-- LENSOMETRÍA --}}
-            <div class="mb-4">
-                <h5 class="text-primary">Lensometría</h5>
-                <hr>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="lensometria_od">Lensometría OD</label>
-                        <input 
-                            type="text" 
-                            name="lensometria_od" 
-                            id="lensometria_od" 
-                            class="form-control"
-                            value="{{ $historialClinico->lensometria_od }}"
-                        >
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="lensometria_oi">Lensometría OI</label>
-                        <input 
-                            type="text" 
-                            name="lensometria_oi" 
-                            id="lensometria_oi" 
-                            class="form-control"
-                            value="{{ $historialClinico->lensometria_oi }}"
-                        >
-                    </div>
+            <div class="card mb-4">
+                <div class="card-header" data-toggle="collapse" data-target="#lensometria">
+                    <h5 class="mb-0">
+                        <i class="fas fa-glasses mr-2"></i> Lensometría
+                    </h5>
                 </div>
-                <div la="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="tipo_lente">Tipo de Lente</label>
-                        <input 
-                            type="text" 
-                            name="tipo_lente" 
-                            id="tipo_lente" 
-                            class="form-control"
-                            value="{{ $historialClinico->tipo_lente }}"
-                        >
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="material">Material</label>
-                        <input 
-                            type="text" 
-                            name="material" 
-                            id="material" 
-                            class="form-control"
-                            value="{{ $historialClinico->material }}"
-                        >
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="filtro">Filtro</label>
-                        <input 
-                            type="text" 
-                            name="filtro" 
-                            id="filtro" 
-                            class="form-control"
-                            value="{{ $historialClinico->filtro }}"
-                        >
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="tiempo_uso">Tiempo de Uso</label>
-                    <input 
-                        type="text" 
-                        name="tiempo_uso" 
-                        id="tiempo_uso" 
-                        class="form-control"
-                        value="{{ $historialClinico->tiempo_uso }}"
-                    >
-                </div>
-            </div>
-
-            {{-- REFRACCIÓN --}}
-            <div class="mb-4">
-                <h5 class="text-primary">Refracción</h5>
-                <hr>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="refraccion_od">Refracción OD</label>
-                        <input 
-                            type="text" 
-                            name="refraccion_od" 
-                            id="refraccion_od" 
-                            class="form-control"
-                            value="{{ $historialClinico->refraccion_od }}"
-                        >
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="refraccion_oi">Refracción OI</label>
-                        <input 
-                            type="text" 
-                            name="refraccion_oi" 
-                            id="refraccion_oi" 
-                            class="form-control"
-                            value="{{ $historialClinico->refraccion_oi }}"
-                        >
+                <div id="lensometria" class="collapse show">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Lensometría</h6>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>OD</label>
+                                        <input type="text" name="lensometria_od" class="form-control" 
+                                            value="{{ old('lensometria_od', $historialClinico->lensometria_od) }}">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>OI</label>
+                                        <input type="text" name="lensometria_oi" class="form-control" 
+                                            value="{{ old('lensometria_oi', $historialClinico->lensometria_oi) }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Tipo de Lente</label>
+                                    <input type="text" name="tipo_lente" class="form-control" 
+                                        value="{{ old('tipo_lente', $historialClinico->tipo_lente) }}">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Material</label>
+                                    <input type="text" name="material" class="form-control" 
+                                        value="{{ old('material', $historialClinico->material) }}">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Filtro</label>
+                                    <input type="text" name="filtro" class="form-control" 
+                                        value="{{ old('filtro', $historialClinico->filtro) }}">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Tiempo de Uso</label>
+                                    <input type="text" name="tiempo_uso" class="form-control" 
+                                        value="{{ old('tiempo_uso', $historialClinico->tiempo_uso) }}">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             {{-- RX FINAL --}}
-            <div class="mb-4">
-                <h5 class="text-primary">Rx Final</h5>
-                <hr>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="rx_final_dp">DP</label>
-                        <input 
-                            type="text" 
-                            name="rx_final_dp" 
-                            id="rx_final_dp" 
-                            class="form-control"
-                            value="{{ $historialClinico->rx_final_dp }}"
-                        >
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="rx_final_av_vl">AV VL</label>
-                        <input 
-                            type="text" 
-                            name="rx_final_av_vl" 
-                            id="rx_final_av_vl" 
-                            class="form-control"
-                            value="{{ $historialClinico->rx_final_av_vl }}"
-                        >
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="rx_final_av_vp">AV VP</label>
-                        <input 
-                            type="text" 
-                            name="rx_final_av_vp" 
-                            id="rx_final_av_vp" 
-                            class="form-control"
-                            value="{{ $historialClinico->rx_final_av_vp }}"
-                        >
+            <div class="card mb-4">
+                <div class="card-header" data-toggle="collapse" data-target="#rxFinal">
+                    <h5 class="mb-0">
+                        <i class="fas fa-prescription mr-2"></i> Rx Final
+                    </h5>
+                </div>
+                <div id="rxFinal" class="collapse show">
+                    <div class="card-body">
+                        <div class="form-row mb-3">
+                            <div class="form-group col-md-6">
+                                <label>Refracción OD</label>
+                                <input type="text" name="refraccion_od" class="form-control" 
+                                    value="{{ old('refraccion_od', $historialClinico->refraccion_od) }}">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Refracción OI</label>
+                                <input type="text" name="refraccion_oi" class="form-control" 
+                                    value="{{ old('refraccion_oi', $historialClinico->refraccion_oi) }}">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label>DP OD</label>
+                                <input type="text" name="rx_final_dp_od" class="form-control" 
+                                    value="{{ old('rx_final_dp_od', $historialClinico->rx_final_dp_od) }}">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>DP OI</label>
+                                <input type="text" name="rx_final_dp_oi" class="form-control" 
+                                    value="{{ old('rx_final_dp_oi', $historialClinico->rx_final_dp_oi) }}">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>AV VL OD</label>
+                                <input type="text" name="rx_final_av_vl_od" class="form-control" 
+                                    value="{{ old('rx_final_av_vl_od', $historialClinico->rx_final_av_vl_od) }}">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>AV VL OI</label>
+                                <input type="text" name="rx_final_av_vl_oi" class="form-control" 
+                                    value="{{ old('rx_final_av_vl_oi', $historialClinico->rx_final_av_vl_oi) }}">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label>AV VP OD</label>
+                                <input type="text" name="rx_final_av_vp_od" class="form-control" 
+                                    value="{{ old('rx_final_av_vp_od', $historialClinico->rx_final_av_vp_od) }}">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>AV VP OI</label>
+                                <input type="text" name="rx_final_av_vp_oi" class="form-control" 
+                                    value="{{ old('rx_final_av_vp_oi', $historialClinico->rx_final_av_vp_oi) }}">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {{-- DIAGNÓSTICO Y TRATAMIENTO --}}
-            <div class="mb-4">
-                <h5 class="text-primary">Diagnóstico y Tratamiento</h5>
-                <hr>
-                <div class="form-group">
-                    <label for="diagnostico">Diagnóstico</label>
-                    <textarea 
-                        name="diagnostico" 
-                        id="diagnostico" 
-                        class="form-control" 
-                        rows="2"
-                    >{{ $historialClinico->diagnostico }}</textarea>
+            {{-- DIAGNÓSTICO, TRATAMIENTO Y COTIZACIÓN --}}
+            <div class="card mb-4">
+                <div class="card-header" data-toggle="collapse" data-target="#diagnostico">
+                    <h5 class="mb-0">
+                        <i class="fas fa-file-medical mr-2"></i> Diagnóstico y Cotización
+                    </h5>
                 </div>
-                <div class="form-group">
-                    <label for="tratamiento">Tratamiento</label>
-                    <textarea 
-                        name="tratamiento" 
-                        id="tratamiento" 
-                        class="form-control" 
-                        rows="2"
-                    >{{ $historialClinico->tratamiento }}</textarea>
+                <div id="diagnostico" class="collapse show">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label>Diagnóstico</label>
+                                <textarea name="diagnostico" class="form-control" rows="3">{{ old('diagnostico', $historialClinico->diagnostico) }}</textarea>
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Tratamiento</label>
+                                <textarea name="tratamiento" class="form-control" rows="3">{{ old('tratamiento', $historialClinico->tratamiento) }}</textarea>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Cotización</label>
+                                <input type="text" name="cotizacion" class="form-control" 
+                                    value="{{ old('cotizacion', $historialClinico->cotizacion) }}">
+                            </div>
+                            <input type="hidden" name="usuario_id" value="{{ old('usuario_id', $historialClinico->usuario_id) }}">
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            {{-- BOTÓN DE GUARDAR CON MODAL DE CONFIRMACIÓN --}}
+            {{-- BOTONES DE ACCIÓN --}}
             <div class="d-flex justify-content-end">
                 <a href="{{ route('historiales_clinicos.index') }}" class="btn btn-secondary mr-2">
                     Cancelar
                 </a>
-                <button 
-                    type="button" 
-                    class="btn btn-primary" 
-                    data-toggle="modal" 
-                    data-target="#modal"
-                >
-                    Guardar
+                <button type="submit" class="btn btn-primary">
+                    Actualizar
                 </button>
-            </div>
-
-            {{-- MODAL DE CONFIRMACIÓN --}}
-            <div class="modal fade" id="modal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Confirmar Edición</h4>
-                            <button 
-                                type="button" 
-                                class="close" 
-                                data-dismiss="modal" 
-                                aria-label="Close"
-                            >
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>¿Está seguro que desea guardar los cambios?</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button 
-                                type="button" 
-                                class="btn btn-secondary" 
-                                data-dismiss="modal"
-                            >
-                                Cancelar
-                            </button>
-                            <button 
-                                type="submit" 
-                                class="btn btn-primary"
-                            >
-                                Guardar
-                            </button>
-                        </div>
-                    </div>
-                </div>
             </div>
         </form>
     </div>
 </div>
 @stop
 
+@section('css')
+<style>
+    .card-header {
+        background-color: #f8f9fa;
+        transition: background-color 0.3s ease;
+    }
+    .card-header:hover {
+        background-color: #e9ecef;
+    }
+    .form-group label {
+        font-weight: 600;
+    }
+    .text-danger {
+        font-weight: bold;
+    }
+</style>
+@stop
+
 @section('js')
 <script>
-document.addEventListener('keydown', function(event) {
-    if (event.key === "Home") {
-        window.location.href = '/dashboard';
-    }
-});
+    $(document).ready(function() {
+        // Inicializar todos los collapse
+        $('.collapse').collapse('show');
+        
+        // Toggle de iconos en los headers
+        $('.card-header').click(function() {
+            $(this).find('i').toggleClass('fa-minus fa-plus');
+        });
+    });
 </script>
 @stop
