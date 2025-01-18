@@ -45,46 +45,8 @@
                 </div>
             </div>
 
-            <div class="table-responsive">
-                <table id="cajaTable" class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Fecha</th>
-                            <th>Motivo</th>
-                            <th>Usuario</th>
-                            <th>Valor</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($movimientos as $movimiento)
-                            <tr>
-                                <td>{{ $movimiento->id }}</td>
-                                <td>{{ $movimiento->created_at->format('Y-m-d H:i') }}</td>
-                                <td>{{ $movimiento->motivo }}</td>
-                                <td>{{ $movimiento->user->name }}</td>
-                                <td>${{ number_format($movimiento->valor, 2, ',', '.') }}</td>
-                                <td>
-                                    @can('admin')
-                                    <form action="{{ route('caja.destroy', $movimiento->id) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-xs btn-danger" 
-                                                onclick="return confirm('¿Está seguro de eliminar este movimiento?')">
-                                            <i class="fa fa-lg fa-fw fa-trash"></i>
-                                        </button>
-                                    </form>
-                                    @endcan
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-
             <!-- Formulario para nuevo movimiento -->
-            <div class="mt-4">
+            <div class="mb-4">
                 <h4>Retiro</h4>
                 <form action="{{ route('caja.store') }}" method="POST" class="row">
                     @csrf
@@ -108,6 +70,44 @@
                     </div>
                     <input type="hidden" name="user_email" value="{{ Auth::user()->email }}">
                 </form>
+            </div>
+
+            <div class="table-responsive">
+                <table id="cajaTable" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Fecha</th>
+                            <th>Motivo</th>
+                            <th>Usuario</th>
+                            <th>Valor</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($movimientos as $movimiento)
+                            <tr @if($movimiento->valor < 0) style="background-color: #ffebee;" @endif>
+                                <td>{{ $movimiento->id }}</td>
+                                <td>{{ $movimiento->created_at->format('Y-m-d H:i') }}</td>
+                                <td>{{ $movimiento->motivo }}</td>
+                                <td>{{ $movimiento->user->name }}</td>
+                                <td>${{ number_format($movimiento->valor, 2, ',', '.') }}</td>
+                                <td>
+                                    @can('admin')
+                                    <form action="{{ route('caja.destroy', $movimiento->id) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-xs btn-danger" 
+                                                onclick="return confirm('¿Está seguro de eliminar este movimiento?')">
+                                            <i class="fa fa-lg fa-fw fa-trash"></i>
+                                        </button>
+                                    </form>
+                                    @endcan
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

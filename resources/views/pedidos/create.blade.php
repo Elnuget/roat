@@ -82,12 +82,12 @@
                     </div>
 
                     {{-- Datos Personales --}}
-                    <div class="card collapsed-card">
+                    <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Datos Personales</h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                    <i class="fas fa-plus"></i>
+                                    <i class="fas fa-minus"></i>
                                 </button>
                             </div>
                         </div>
@@ -101,7 +101,7 @@
                                 </div>
                                 <div la="col-md-6">
                                     <label for="cliente" class="form-label">Cliente</label>
-                                    <input type="text" class="form-control" id="cliente" name="cliente">
+                                    <input type="text" class="form-control" id="cliente" name="cliente" required>
                                 </div>
                             </div>
 

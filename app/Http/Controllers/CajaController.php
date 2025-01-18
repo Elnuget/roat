@@ -38,31 +38,14 @@ class CajaController extends Controller
             'user_email' => 'required|email'
         ]);
 
+        // Ensure value is negative by taking the absolute value and making it negative
+        $valor = -abs($request->valor);
+
         // Create Caja entry
         $caja = Caja::create([
-            'valor' => $request->valor,
+            'valor' => $valor,
             'motivo' => $request->motivo,
             'user_id' => Auth::id()
-        ]);
-
-        // Create related Pedido
-        $lastOrder = Pedido::orderBy('numero_orden', 'desc')->first();
-        $nextOrderNumber = $lastOrder ? $lastOrder->numero_orden + 1 : 1;
-
-        $pedido = Pedido::create([
-            'fecha' => now(),
-            'numero_orden' => $nextOrderNumber,
-            'cliente' => 'Anónimo',
-            'valor_compra' => $request->valor,
-            'motivo_compra' => $request->motivo,
-            'total' => $request->valor
-        ]);
-
-        // Create related Pago
-        Pago::create([
-            'pedido_id' => $pedido->id,
-            'mediodepago_id' => 1, // Asume que 1 es el ID del método de pago por defecto
-            'pago' => $request->valor
         ]);
 
         // Send email notification
