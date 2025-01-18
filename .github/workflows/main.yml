@@ -7,16 +7,32 @@ name: 🚀 Deploy website on push
 
 jobs:
   web-deploy:
-    name: 🎉 Deploy
     runs-on: ubuntu-latest
-    
     steps:
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v2
-    
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      with:
-        server: www.escleroptica.com
-        username: carlos@sistema.escleroptica.com
-        password: carlosangulo1234
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2
+
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          # 1) Excluye todo
+          # 2) "Re-incluye" las carpetas que sí quieres subir
+          exclude: |
+            **                # Excluye todo
+            !app/**           # Vuelve a incluir todo el contenido de app
+            !routes/**        # Vuelve a incluir todo el contenido de routes
+            !resources/**     # Vuelve a incluir todo el contenido de resources
+            !config/**        # Vuelve a incluir todo el contenido de config
+            !database/**      # Vuelve a incluir todo el contenido de database
+            # Si usas .github, .gitignore, etc. y no quieres subirlos:
+            .git*
+            .github/*
+            # Otros archivos que quieras excluir de forma explícita:
+            .env
+            .env.*
+            storage/*
+            vendor/*
+            node_modules/*
