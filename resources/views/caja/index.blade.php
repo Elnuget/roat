@@ -85,7 +85,7 @@
 
             <!-- Formulario para nuevo movimiento -->
             <div class="mt-4">
-                <h4>Nuevo Movimiento</h4>
+                <h4>Retiro</h4>
                 <form action="{{ route('caja.store') }}" method="POST" class="row">
                     @csrf
                     <div class="col-md-4">
