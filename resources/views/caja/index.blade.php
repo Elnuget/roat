@@ -118,13 +118,16 @@
         $(document).ready(function() {
             $('#cajaTable').DataTable({
                 "order": [[0, "desc"]],
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-                },
-                "dom": 'Bfrtip',
+                "paging": false,     // Disable pagination
+                "info": false,       // Remove "Showing X of Y entries" text
+                "searching": false,  // Remove search box
+                "dom": 'Bfrt',      // Modified to remove pagination and info elements
                 "buttons": [
                     'excel', 'pdf', 'print'
-                ]
+                ],
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+                }
             });
         });
     </script>

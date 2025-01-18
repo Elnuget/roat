@@ -179,15 +179,16 @@
 
             // Inicializar DataTable
             var pagosTable = $('#pagosTable').DataTable({
-                "order": [ // Corrección aquí: Cambiar "order: a "order":
-                    [0, "asc"]
-                ],
-                "columnDefs": [{ // Añadir comillas a "columnDefs"
+                "order": [[0, "desc"]],
+                "paging": false,     // Disable pagination
+                "info": false,       // Remove "Showing X of Y entries" text
+                "searching": false,  // Remove search box
+                "columnDefs": [{
                     "targets": [2],
                     "visible": true,
                     "searchable": true,
                 }],
-                "dom": 'Bfrtip',
+                "dom": 'Bfrt',      // Modified to remove pagination and info elements
                 "buttons": [
                     'excelHtml5',
                     'csvHtml5',
