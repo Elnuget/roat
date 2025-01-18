@@ -19,6 +19,11 @@
 
 <div class="card">
     <div class="card-body">
+        {{-- Botón Añadir Historial Clínico --}}
+        <div class="btn-group mb-3">
+            <a type="button" class="btn btn-success" href="{{ route('historiales_clinicos.create') }}">Añadir Historial Clínico</a>
+        </div>
+
         <div class="table-responsive">
             <table id="historialesTable" class="table table-striped table-bordered">
                 <thead>
@@ -83,9 +88,6 @@
                 </tbody>
             </table>
             <br>
-        </div>
-        <div class="btn-group">
-            <a type="button" class="btn btn-success" href="{{ route('historiales_clinicos.create') }}">Añadir Historial Clínico</a>
         </div>
     </div>
 </div>

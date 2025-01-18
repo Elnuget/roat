@@ -68,6 +68,11 @@
                 </div>
             </form>
 
+            {{-- Botón Añadir Pago --}}
+            <div class="btn-group mb-3">
+                <a type="button" class="btn btn-success" href="{{ route('pagos.create') }}">Añadir Pago</a>
+            </div>
+
             <div class="table-responsive">
                 <table id="pagosTable" class="table table-striped table-bordered">
                     <thead>
@@ -154,9 +159,6 @@
                 </table>
                 <br>
 
-            </div>
-            <div class="btn-group">
-                <a type="button" class="btn btn-success" href="{{ route('pagos.create') }}">Añadir Pago</a>
             </div>
         </div>
     </div>
