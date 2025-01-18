@@ -18,5 +18,5 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: www.escleroptica.com
-        username: carlos
+        username: carlos@sistema.escleroptica.com
         password: carlosangulo1234
