@@ -71,8 +71,11 @@ class PagoController extends Controller
         $validatedData = $request->validate([
             'pedido_id' => 'nullable|exists:pedidos,id',
             'mediodepago_id' => 'nullable|exists:mediosdepagos,id',
-            'pago' => 'nullable|numeric',
+            'pago' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
         ]);
+
+        // Format pago to ensure exact decimal
+        $validatedData['pago'] = number_format((float)$validatedData['pago'], 2, '.', '');
 
         try {
             // Create a new pago using the 'pagos' table
@@ -162,8 +165,11 @@ class PagoController extends Controller
         $validatedData = $request->validate([
             'pedido_id' => 'nullable|exists:pedidos,id',
             'mediodepago_id' => 'nullable|exists:mediosdepagos,id',
-            'pago' => 'nullable|numeric',
+            'pago' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
         ]);
+
+        // Format pago to ensure exact decimal
+        $validatedData['pago'] = number_format((float)$validatedData['pago'], 2, '.', '');
 
         try {
             $pago = Pago::findOrFail($id);

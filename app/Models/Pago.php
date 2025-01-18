@@ -17,6 +17,15 @@ class Pago extends Model
         'pago'
     ];
 
+    protected $casts = [
+        'pago' => 'decimal:2'
+    ];
+
+    public function setPagoAttribute($value)
+    {
+        $this->attributes['pago'] = number_format((float)$value, 2, '.', '');
+    }
+
     public function mediodepago()
     {
         return $this->belongsTo(mediosdepago::class);

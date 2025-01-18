@@ -62,7 +62,13 @@
         
         <div class="form-group">
             <label>Pago</label>
-            <input name="pago" required type="text" class="form-control">
+            <input name="pago" 
+                   required 
+                   type="text" 
+                   pattern="^\d*\.?\d{0,2}$"
+                   class="form-control" 
+                   placeholder="0.00"
+                   onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46">
         </div>
            
 

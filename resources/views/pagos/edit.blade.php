@@ -53,7 +53,12 @@
                 
                 <div class="form-group">
                     <label>Pago</label>
-                    <input name="pago" type="text" class="form-control" value="{{ $pago->pago }}">
+                    <input name="pago" 
+                           type="text" 
+                           pattern="^\d*\.?\d{0,2}$"
+                           class="form-control" 
+                           value="{{ number_format($pago->pago, 2, '.', '') }}"
+                           onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46">
                 </div>
 
                 @if ($errors->any())
