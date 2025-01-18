@@ -20,7 +20,7 @@ class CreatePagosTable extends Migration
             $table->foreign('mediodepago_id')->references('id')->on('mediosdepagos');
             $table->unsignedBigInteger('pedido_id'); // Changed from 'pedidos_id' to 'pedido_id'
             $table->foreign('pedido_id')->references('id')->on('pedidos'); // Changed from 'pedidos_id' to 'pedido_id'
-            $table->integer('pago');
+            $table->decimal('pago', 10, 2);  // Changed from integer to decimal(10,2)
             $table->timestamps();
         });
     }
