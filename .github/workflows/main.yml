@@ -18,21 +18,29 @@ jobs:
           server: www.escleroptica.com
           username: carlos@sistema.escleroptica.com
           password: carlosangulo1234
-          # 1) Excluye todo
-          # 2) "Re-incluye" las carpetas que sí quieres subir
           exclude: |
-            **                # Excluye todo
-            !app/**           # Vuelve a incluir todo el contenido de app
-            !routes/**        # Vuelve a incluir todo el contenido de routes
-            !resources/**     # Vuelve a incluir todo el contenido de resources
-            !config/**        # Vuelve a incluir todo el contenido de config
-            !database/**      # Vuelve a incluir todo el contenido de database
-            # Si usas .github, .gitignore, etc. y no quieres subirlos:
-            .git*
-            .github/*
-            # Otros archivos que quieras excluir de forma explícita:
+            # Carpetas que NO quieres subir
+            storage/**
+            vendor/**
+            node_modules/**
+            # Archivos ocultos y .git
+            **/.git*
+            **/.git*/**
+            # Archivos que no quieres sobrescribir
             .env
-            .env.*
-            storage/*
-            vendor/*
-            node_modules/*
+            .env.example
+            .editorconfig
+            .gitattributes
+            .gitignore
+            .styleci.yml
+            artisan
+            composer.json
+            composer.lock
+            package-lock.json
+            package.json
+            phpunit.xml
+            README.md
+            server.php
+            tailwind.config.js
+            webpack.mix.js
+          method: ftp
