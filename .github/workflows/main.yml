@@ -15,9 +15,9 @@ jobs:
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
+          server: www.escleroptica.com
+          username: carlos@sistema.escleroptica.com
+          password: carlosangulo1234
           # 1) Excluye todo
           # 2) "Re-incluye" las carpetas que sí quieres subir
           exclude: |
