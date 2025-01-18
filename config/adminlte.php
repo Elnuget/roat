@@ -271,6 +271,12 @@ return [
         ],
 
         [
+            'text' => 'Historial de Caja',
+            'icon' => 'fas fa-history',
+            'route' => 'cash-histories.index',
+        ],
+
+        [
             'text' => 'Historiales Clínicos',
             'icon' => 'fas fa-notes-medical', // Puedes cambiar el ícono según prefieras
             'route' => 'historiales_clinicos.index',

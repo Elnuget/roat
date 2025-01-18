@@ -54,4 +54,9 @@ class User extends Authenticatable
     protected $appends = [
         
     ];
+
+    public function cashHistories()
+    {
+        return $this->hasMany(CashHistory::class);
+    }
 }

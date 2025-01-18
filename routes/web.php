@@ -8,6 +8,7 @@ use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\PagonuevosController; 
 use App\Http\Controllers\HistorialClinicoController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CashHistoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -103,6 +104,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::delete('Pagos/{id}', [PagoController::class, 'destroy'])->name('pagos.destroy');
 
     Route::resource('caja', 'App\Http\Controllers\CajaController');
+
+    Route::resource('cash-histories', CashHistoryController::class);
 
     Route::get('/generar-qr', function () {
         return view('inventario.generarQR');
