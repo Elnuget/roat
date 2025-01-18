@@ -500,5 +500,65 @@
         newItem.querySelector('select').selectedIndex = 0;
         container.appendChild(newItem);
     }
+
+    function duplicateLunas() {
+        const container = document.querySelector('#lunas-container .card-body');
+        const template = `
+            <div class="luna-section mt-4">
+                <hr>
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-danger btn-sm remove-luna" onclick="this.closest('.luna-section').remove(); calculateTotal();">
+                        <i class="fas fa-times"></i> Eliminar
+                    </button>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Lunas Medidas</label>
+                        <input type="text" class="form-control" name="l_medida[]" value="">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Lunas Detalle</label>
+                        <input type="text" class="form-control" name="l_detalle[]" value="">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Tipo de Lente</label>
+                        <input type="text" class="form-control" name="tipo_lente[]" 
+                               list="tipo_lente_options" value=""
+                               placeholder="Seleccione o escriba un tipo de lente">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Material</label>
+                        <input type="text" class="form-control" name="material[]" 
+                               list="material_options" value=""
+                               placeholder="Seleccione o escriba un material">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Filtro</label>
+                        <input type="text" class="form-control" name="filtro[]" 
+                               list="filtro_options" value=""
+                               placeholder="Seleccione o escriba un filtro">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <label class="form-label">Precio Lunas</label>
+                        <input type="number" class="form-control input-sm" name="l_precio[]"
+                               value="0" step="0.01" oninput="calculateTotal()">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Desc. Lunas (%)</label>
+                        <input type="number" class="form-control input-sm" name="l_precio_descuento[]"
+                               value="0" min="0" max="100" oninput="calculateTotal()">
+                    </div>
+                </div>
+            </div>
+        `;
+        container.insertAdjacentHTML('beforeend', template);
+    }
 </script>
 @stop
