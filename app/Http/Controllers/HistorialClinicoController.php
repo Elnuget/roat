@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\HistorialClinico;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class HistorialClinicoController extends Controller
 {
@@ -24,31 +25,33 @@ class HistorialClinicoController extends Controller
         return [
             'nombres' => 'required|string|max:255',
             'apellidos' => 'required|string|max:255',
-            'edad' => 'required|integer',
-            'fecha_nacimiento' => 'nullable|date',  // Cambiado a nullable
-            'cedula' => 'nullable|string|max:50',   // Cambiado a nullable
+            'edad' => 'required|numeric|min:0|max:150',
+            'fecha_nacimiento' => 'nullable|date',
+            'cedula' => 'nullable|string|max:50',
             'celular' => 'required|string|max:20',
             'ocupacion' => 'required|string|max:100',
             'fecha' => 'required|date',
-            'motivo_consulta' => 'required|string|max:255',
-            'enfermedad_actual' => 'required|string|max:255',
-            'antecedentes_personales_oculares' => 'required|string',
-            'antecedentes_personales_generales' => 'required|string',
-            'antecedentes_familiares_oculares' => 'required|string',
-            'antecedentes_familiares_generales' => 'required|string',
+            'motivo_consulta' => 'required|string|max:1000',
+            'enfermedad_actual' => 'required|string|max:1000',
+            'antecedentes_personales_oculares' => 'required|string|max:1000',
+            'antecedentes_personales_generales' => 'required|string|max:1000',
+            'antecedentes_familiares_oculares' => 'required|string|max:1000',
+            'antecedentes_familiares_generales' => 'required|string|max:1000',
             'agudeza_visual_vl_sin_correccion_od' => 'required|string|max:50',
             'agudeza_visual_vl_sin_correccion_oi' => 'required|string|max:50',
             'agudeza_visual_vl_sin_correccion_ao' => 'required|string|max:50',
             'agudeza_visual_vp_sin_correccion_od' => 'required|string|max:50',
             'agudeza_visual_vp_sin_correccion_oi' => 'required|string|max:50',
             'agudeza_visual_vp_sin_correccion_ao' => 'required|string|max:50',
-            'optotipo' => 'nullable|string',        // Cambiado a nullable
-            'lensometria_od' => 'nullable|string|max:50',     // Cambiado a nullable
-            'lensometria_oi' => 'nullable|string|max:50',     // Cambiado a nullable
-            'tipo_lente' => 'nullable|string|max:50',         // Cambiado a nullable
-            'material' => 'nullable|string|max:50',           // Cambiado a nullable
-            'filtro' => 'nullable|string|max:50',             // Cambiado a nullable
-            'tiempo_uso' => 'nullable|string|max:50',         // Cambiado a nullable
+            'ph_od' => 'required|string|max:50',
+            'ph_oi' => 'required|string|max:50',
+            'optotipo' => 'nullable|string|max:1000',
+            'lensometria_od' => 'nullable|string|max:50',
+            'lensometria_oi' => 'nullable|string|max:50',
+            'tipo_lente' => 'nullable|string|max:50',
+            'material' => 'nullable|string|max:50',
+            'filtro' => 'nullable|string|max:50',
+            'tiempo_uso' => 'nullable|string|max:50',
             'refraccion_od' => 'required|string|max:50',
             'refraccion_oi' => 'required|string|max:50',
             'rx_final_dp_od' => 'required|string|max:50',
@@ -57,13 +60,10 @@ class HistorialClinicoController extends Controller
             'rx_final_av_vl_oi' => 'required|string|max:50',
             'rx_final_av_vp_od' => 'required|string|max:50',
             'rx_final_av_vp_oi' => 'required|string|max:50',
-            'ph_od' => 'required|string|max:50',
-            'ph_oi' => 'required|string|max:50',
-            'add' => 'nullable|string|max:50',      // Cambiado a nullable
-            'cotizacion' => 'nullable|string',      // Cambiado a nullable
-            'usuario_id' => 'required|exists:users,id',
-            'diagnostico' => 'required|string',
-            'tratamiento' => 'required|string'
+            'add' => 'nullable|string|max:50',
+            'diagnostico' => 'required|string|max:1000',
+            'tratamiento' => 'required|string|max:1000',
+            'cotizacion' => 'nullable|string|max:1000',
         ];
     }
 
@@ -95,20 +95,42 @@ class HistorialClinicoController extends Controller
     {
         try {
             $historialClinico = HistorialClinico::findOrFail($id);
-            $data = $request->validate($this->validationRules());
             
-            // Asegurar que el usuario_id permanezca
-            if (!isset($data['usuario_id'])) {
-                $data['usuario_id'] = $historialClinico->usuario_id;
-            }
+            // Log de datos recibidos para debug
+            Log::info('Datos recibidos en update:', $request->all());
+
+            // Validar los datos
+            $rules = $this->validationRules();
             
+            // Asegurar que usuario_id sea el correcto
+            $rules['usuario_id'] = 'required|exists:users,id';
+            
+            // Realizar la validación
+            $data = $request->validate($rules);
+            
+            // Asegurar que el usuario_id se mantiene
+            $data['usuario_id'] = $historialClinico->usuario_id;
+            
+            // Log de datos validados para debug
+            Log::info('Datos validados:', $data);
+            
+            // Actualizar el registro
             $historialClinico->update($data);
             
             return redirect()
                 ->route('historiales_clinicos.index')
                 ->with('success', 'Historial clínico actualizado exitosamente');
                 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            Log::error('Error de validación: ' . json_encode($e->errors()));
+            return redirect()
+                ->back()
+                ->withErrors($e->errors())
+                ->withInput()
+                ->with('error', 'Error de validación en el formulario');
+                
         } catch (\Exception $e) {
+            Log::error('Error al actualizar: ' . $e->getMessage());
             return redirect()
                 ->back()
                 ->withInput()
