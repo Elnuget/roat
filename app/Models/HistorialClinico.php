@@ -12,14 +12,14 @@ class HistorialClinico extends Model
     protected $table = 'historiales_clinicos';
 
     protected $fillable = [
-        // Fields from original migration
+        'fecha',
         'nombres',
         'apellidos',
+        'cedula',
         'edad',
         'fecha_nacimiento',
         'celular',
         'ocupacion',
-        'fecha',
         'motivo_consulta',
         'enfermedad_actual',
         'antecedentes_personales_oculares',
@@ -32,6 +32,9 @@ class HistorialClinico extends Model
         'agudeza_visual_vp_sin_correccion_od',
         'agudeza_visual_vp_sin_correccion_oi',
         'agudeza_visual_vp_sin_correccion_ao',
+        'ph_od',
+        'ph_oi',
+        'add',
         'optotipo',
         'lensometria_od',
         'lensometria_oi',
@@ -49,11 +52,6 @@ class HistorialClinico extends Model
         'rx_final_av_vp_oi',
         'diagnostico',
         'tratamiento',
-        // Fields from additional migration
-        'cedula',
-        'ph_od',
-        'ph_oi',
-        'add',
         'cotizacion',
         'usuario_id'
     ];

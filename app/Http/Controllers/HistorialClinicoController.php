@@ -93,10 +93,27 @@ class HistorialClinicoController extends Controller
 
     public function update(Request $request, $id)
     {
-        $historialClinico = HistorialClinico::findOrFail($id);
-        $data = $request->validate($this->validationRules());
-        $historialClinico->update($data);
-        return redirect()->route('historiales_clinicos.index');
+        try {
+            $historialClinico = HistorialClinico::findOrFail($id);
+            $data = $request->validate($this->validationRules());
+            
+            // Asegurar que el usuario_id permanezca
+            if (!isset($data['usuario_id'])) {
+                $data['usuario_id'] = $historialClinico->usuario_id;
+            }
+            
+            $historialClinico->update($data);
+            
+            return redirect()
+                ->route('historiales_clinicos.index')
+                ->with('success', 'Historial clínico actualizado exitosamente');
+                
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Error al actualizar el historial clínico: ' . $e->getMessage());
+        }
     }
 
     public function destroy(HistorialClinico $historialClinico)
