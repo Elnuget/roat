@@ -18,36 +18,13 @@ class CashHistoryController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'monto' => 'required|numeric',
-            'estado' => 'required|string'
-        ]);
-
-        $cashHistory = new CashHistory([
-            'monto' => $request->monto,
-            'estado' => $request->estado,
-            'user_id' => auth()->id()
-        ]);
-
+        $cashHistory = new \App\Models\CashHistory();
+        $cashHistory->monto = $request->monto;
+        $cashHistory->estado = $request->estado;
+        $cashHistory->user_id = auth()->id();
         $cashHistory->save();
-        $cashHistory->load('user'); // Carga la relación con el usuario
 
-        Mail::raw(
-            "Nuevo registro en CashHistory:\n\n".
-            "Monto: {$cashHistory->monto}\n".
-            "Estado: {$cashHistory->estado}\n".
-            "Usuario: {$cashHistory->user->name}",
-            function ($message) {
-                $message->to('escleropticarg@gmail.com')
-                        ->subject('Nuevo Registro en CashHistory');
-            }
-        );
-
-        return redirect()->back()->with([
-            'error' => 'Exito',
-            'mensaje' => 'Registro de caja creado exitosamente',
-            'tipo' => 'alert-success'
-        ]);
+        return redirect()->back()->with('success', 'Caja ' . $request->estado . ' exitosamente');
     }
 
     public function update(Request $request, CashHistory $cashHistory)

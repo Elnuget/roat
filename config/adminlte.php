@@ -65,8 +65,13 @@ return [
     'usermenu_header' => false,
     'usermenu_header_class' => 'bg-primary',
     'usermenu_image' => false,
-    'usermenu_desc' => false,
+    'usermenu_desc' => true, // Cambiar a true
     'usermenu_profile_url' => false,
+    
+    // Agregar esta nueva configuración
+    'usermenu_custom_fields' => [
+        'right' => 'partials.user-menu-status'
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -83,9 +88,18 @@ return [
     'layout_topnav' => null,
     'layout_boxed' => null,
     'layout_fixed_sidebar' => null,
-    'layout_fixed_navbar' => null,
+    'layout_fixed_navbar' => true, // Asegúrate de que esto esté en true
     'layout_fixed_footer' => true,
     'layout_dark_mode' => null,
+
+    // Agregar esta nueva sección o modificar si ya existe
+    'navbar_items' => [
+        'right' => [
+            'cash_status' => [
+                'view' => 'partials.cash-status'
+            ]
+        ]
+    ],
 
     /*
     |--------------------------------------------------------------------------
