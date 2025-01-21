@@ -19,6 +19,11 @@
 
 <div class="card">
     <div class="card-body">
+        {{-- Botón Añadir Historial Clínico --}}
+        <div class="btn-group mb-3">
+            <a type="button" class="btn btn-success" href="{{ route('historiales_clinicos.create') }}">Añadir Historial Clínico</a>
+        </div>
+
         <div class="table-responsive">
             <table id="historialesTable" class="table table-striped table-bordered">
                 <thead>
@@ -28,6 +33,7 @@
                         <td>Apellidos</td>
                         <td>Fecha</td>
                         <td>Motivo Consulta</td>
+                        <td>Usuario</td> <!-- Nueva columna Usuario -->
                         <td>Acciones</td>
                     </tr>
                 </thead>
@@ -39,6 +45,7 @@
                         <td>{{ $historial->apellidos }}</td>
                         <td>{{ $historial->fecha }}</td>
                         <td>{{ $historial->motivo_consulta }}</td>
+                        <td>{{ $historial->usuario->name ?? 'N/A' }}</td> <!-- Manejar caso null -->
                         <td>
                             <a href="{{ route('historiales_clinicos.edit', $historial->id) }}"
                                 class="btn btn-xs btn-default text-warning mx-1 shadow" title="Editar">
@@ -81,9 +88,6 @@
                 </tbody>
             </table>
             <br>
-        </div>
-        <div class="btn-group">
-            <a type="button" class="btn btn-success" href="{{ route('historiales_clinicos.create') }}">Añadir Historial Clínico</a>
         </div>
     </div>
 </div>

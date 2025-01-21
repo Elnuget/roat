@@ -77,6 +77,11 @@
             </div>
         </form>
 
+        {{-- Botón Añadir pedido --}}
+        <div class="btn-group mb-3">
+            <a type="button" class="btn btn-success" href="{{ route('pedidos.create') }}">Añadir pedido</a>
+        </div>
+
         {{-- Filtro por mes (removed) --}}
         <!-- Previously here, now removed -->
 
@@ -189,9 +194,6 @@
             </table>
         </div>
         <br />
-        <div class="btn-group">
-            <a type="button" class="btn btn-success" href="{{ route('pedidos.create') }}">Añadir pedido</a>
-        </div>
     </div>
 </div>
 
