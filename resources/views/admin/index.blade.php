@@ -33,9 +33,62 @@
         }
     </style>
     <div class="row related-cards">
-       
+        <!-- Espacio para tarjetas relacionadas -->
     </div>
-    <div class="card">
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h3 class="card-title">Total de Ventas por Año</h3>
+                </div>
+                <div class="card-body">
+                    <canvas id="salesChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h3 class="card-title">Total de Ventas por Mes en {{ $selectedYear }}</h3>
+                </div>
+                <div class="card-body">
+                    <canvas id="monthlySalesChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Combobox para seleccionar el año -->
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3 class="card-title">Seleccionar Año</h3>
+        </div>
+        <div class="card-body">
+            <form method="GET" action="{{ route('admin.index') }}">
+                <div class="form-group">
+                    <label for="year">Año:</label>
+                    <select name="year" id="year" class="form-control" onchange="this.form.submit()">
+                        @foreach ($salesData['years'] as $year)
+                            <option value="{{ $year }}" {{ $year == $selectedYear ? 'selected' : '' }}>{{ $year }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Gráfico de ventas por usuario -->
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3 class="card-title">Total de Ventas por Usuario</h3>
+        </div>
+        <div class="card-body">
+            <canvas id="userSalesChart"></canvas>
+        </div>
+    </div>
+
+    <div class="card mt-4">
         <div class="card-header">
             <h3 class="card-title">Pedidos Recientes</h3>
         </div>
@@ -60,44 +113,6 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-    </div>
-
-    <div class="card mt-4">
-        <div class="card-header">
-            <h3 class="card-title">Total de Ventas por Año</h3>
-        </div>
-        <div class="card-body">
-            <canvas id="salesChart"></canvas>
-        </div>
-    </div>
-
-    <!-- Combobox para seleccionar el año -->
-    <div class="card mt-4">
-        <div class="card-header">
-            <h3 class="card-title">Seleccionar Año</h3>
-        </div>
-        <div class="card-body">
-            <form method="GET" action="{{ route('admin.index') }}">
-                <div class="form-group">
-                    <label for="year">Año:</label>
-                    <select name="year" id="year" class="form-control" onchange="this.form.submit()">
-                        @foreach ($salesData['years'] as $year)
-                            <option value="{{ $year }}" {{ $year == $selectedYear ? 'selected' : '' }}>{{ $year }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Gráfico de ventas por mes -->
-    <div class="card mt-4">
-        <div class="card-header">
-            <h3 class="card-title">Total de Ventas por Mes en {{ $selectedYear }}</h3>
-        </div>
-        <div class="card-body">
-            <canvas id="monthlySalesChart"></canvas>
         </div>
     </div>
 @stop
@@ -152,6 +167,31 @@
                         data: monthlySalesData.totals,
                         backgroundColor: 'rgba(255, 99, 132, 0.2)',
                         borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Datos para el gráfico de ventas por usuario
+            var userSalesData = @json($userSalesData);
+
+            var ctxUser = document.getElementById('userSalesChart').getContext('2d');
+            var userSalesChart = new Chart(ctxUser, {
+                type: 'bar',
+                data: {
+                    labels: userSalesData.users,
+                    datasets: [{
+                        label: 'Total de Ventas',
+                        data: userSalesData.totals,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
                         borderWidth: 1
                     }]
                 },

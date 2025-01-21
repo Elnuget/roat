@@ -62,7 +62,23 @@ class AdminController extends Controller
             'totals' => array_values($salesDataMonthly)
         ];
 
-        return view('admin.index', compact('pedidos', 'salesData', 'salesDataMonthly', 'selectedYear'));
+        // Obtener datos de ventas por usuario
+        $userSalesData = Pedido::select(
+            'usuario',
+            DB::raw('SUM(total) as total')
+        )
+        ->groupBy('usuario')
+        ->orderBy('total', 'desc')
+        ->get()
+        ->pluck('total', 'usuario')
+        ->toArray();
+
+        $userSalesData = [
+            'users' => array_keys($userSalesData),
+            'totals' => array_values($userSalesData)
+        ];
+
+        return view('admin.index', compact('pedidos', 'salesData', 'salesDataMonthly', 'selectedYear', 'userSalesData'));
     }
 
     /**

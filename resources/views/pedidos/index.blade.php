@@ -113,7 +113,12 @@
                                 </span>
                             </td>
                             <td>{{ $pedido->cliente }}</td>
-                            <td>{{ $pedido->celular }}</td>
+                            <td>
+                                {{ $pedido->celular }}
+                                <a href="https://wa.me/593{{ ltrim($pedido->celular, '0') }}?text=Estimado(a) {{ $pedido->paciente }}, le informamos que sus lentes recetados ya están listos para ser recogidos en ESCLERÓPTICA. Puede pasar a retirarlos cuando le sea más conveniente. ¡Lo esperamos pronto! Muchas gracias por confiar en nosotros.&send=true" target="_blank">
+                                    <i class="fab fa-whatsapp" style="color: green;"></i>
+                                </a>
+                            </td>
                             <td>{{ $pedido->paciente }}</td>
                             <td>{{ $pedido->total }}</td>
                             <td>
