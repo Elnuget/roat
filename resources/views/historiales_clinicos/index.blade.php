@@ -109,7 +109,7 @@
         // Inicializar DataTable
         $('#historialesTable').DataTable({
             "order": [
-                [0, "asc"]
+                [0, "desc"]
             ],
             "columnDefs": [{
                 "targets": [2],
@@ -117,6 +117,11 @@
                 "searchable": true,
             }],
             "dom": 'Bfrtip',
+            "paging": false,
+            "lengthChange": false,
+            "info": false,
+            "processing": false,
+            "serverSide": false,
             "buttons": [
                 'excelHtml5',
                 'csvHtml5',
