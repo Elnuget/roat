@@ -12,13 +12,28 @@
 
         {{-- Custom left links --}}
         @yield('content_top_nav_left')
+        
+        {{-- User must close cash register message --}}
+        @php
+            $lastCashHistory = \App\Models\CashHistory::latest()->first();
+            $lastUser = $lastCashHistory ? $lastCashHistory->user->name : 'Usuario';
+        @endphp
+        
+        @if($lastCashHistory && $lastCashHistory->estado === 'Apertura')
+        <li class="nav-item">
+            <span class="nav-link text-danger d-flex align-items-center">
+                <i class="fas fa-exclamation-triangle mr-1"></i>
+                <span class="d-none d-sm-inline">{{ $lastUser }} debe cerrar caja antes de cerrar sesión</span>
+                <span class="d-inline d-sm-none">{{ $lastUser }} debe cerrar caja</span>
+            </span>
+        </li>
+        @endif
     </ul>
 
     {{-- Navbar right links --}}
     <ul class="navbar-nav ml-auto">
         {{-- AQUÍ AGREGAMOS EL ESTADO DE LA CAJA --}}
         @php
-            $lastCashHistory = \App\Models\CashHistory::latest()->first();
             $statusColor = $lastCashHistory && $lastCashHistory->estado === 'Apertura' ? 'success' : 'danger';
             $statusText = $lastCashHistory ? $lastCashHistory->estado : 'Sin registro';
         @endphp
