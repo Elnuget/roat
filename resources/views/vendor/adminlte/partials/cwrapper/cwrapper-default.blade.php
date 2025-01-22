@@ -2,8 +2,8 @@
     $lastCashHistory = \App\Models\CashHistory::latest()->first();
     $isClosed = !$lastCashHistory || $lastCashHistory->estado !== 'Apertura';
     
-    // Calcular el monto como en el controlador de historial de caja
-    $sumCaja = \App\Models\CashHistory::sum('monto');
+    // Updated: Get sum from Caja model
+    $sumCaja = \App\Models\Caja::sum('valor');
 @endphp
 
 @if($isClosed)
