@@ -314,6 +314,9 @@
                             </div>
                         </div>
 
+                        {{-- Agregar después del input total --}}
+                        <input type="hidden" id="total_pagado" value="{{ $totalPagado }}">
+
                         {{-- Fila oculta (Saldo) --}}
                         <div class="row mb-3" style="display: none;">
                             <div class="col-md-12">
@@ -416,47 +419,54 @@
 
     // Función para calcular el total
     function calculateTotal() {
-        let total = 0;
+        // 1. Obtener el total pagado desde la base de datos
+        const totalPagado = parseFloat(document.getElementById('total_pagado').value) || 0;
+
+        // 2. Calcular nuevo total
+        let newTotal = 0;
 
         // Sumar examen visual
         const examenVisual = parseFloat(document.getElementById('examen_visual').value) || 0;
         const examenVisualDescuento = parseFloat(document.getElementById('examen_visual_descuento').value) || 0;
-        total += examenVisual * (1 - (examenVisualDescuento / 100));
+        newTotal += examenVisual * (1 - (examenVisualDescuento / 100));
 
-        // Sumar todos los armazones
-        document.querySelectorAll('[name="a_precio[]"]').forEach((precioInput, index) => {
-            const precio = parseFloat(precioInput.value) || 0;
-            const descuento = parseFloat(document.querySelectorAll('[name="a_precio_descuento[]"]')[index]?.value) || 0;
-            total += precio * (1 - (descuento / 100));
+        // Sumar armazones
+        document.querySelectorAll('.armazon-section').forEach(section => {
+            const precio = parseFloat(section.querySelector('[name="a_precio[]"]').value) || 0;
+            const descuento = parseFloat(section.querySelector('[name="a_precio_descuento[]"]').value) || 0;
+            newTotal += precio * (1 - (descuento / 100));
         });
 
         // Sumar lunas
-        const lPrecio = parseFloat(document.getElementById('l_precio').value) || 0;
-        const lPrecioDescuento = parseFloat(document.getElementById('l_precio_descuento').value) || 0;
-        total += lPrecio * (1 - (lPrecioDescuento / 100));
-
-        // Sumar accesorios
-        document.querySelectorAll('[name="d_precio[]"]').forEach((precioInput, index) => {
-            const precio = parseFloat(precioInput.value) || 0;
-            const descuento = parseFloat(document.querySelectorAll('[name="d_precio_descuento[]"]')[index]?.value) || 0;
-            total += precio * (1 - (descuento / 100));
+        document.querySelectorAll('.luna-section').forEach(section => {
+            const precio = parseFloat(section.querySelector('[name="l_precio[]"]').value) || 0;
+            const descuento = parseFloat(section.querySelector('[name="l_precio_descuento[]"]').value) || 0;
+            newTotal += precio * (1 - (descuento / 100));
         });
 
-        // Sumar valor de compra rápida
+        // Sumar compra rápida
         const valorCompra = parseFloat(document.getElementById('valor_compra').value) || 0;
-        total += valorCompra;
+        newTotal += valorCompra;
 
-        // Actualizar campos total y saldo
-        document.getElementById('total').value = total.toFixed(2);
-        document.getElementById('saldo').value = total.toFixed(2);
+        // 3. Calcular nuevo saldo (nuevo total menos pagos realizados)
+        const newSaldo = Math.max(0, newTotal - totalPagado);
+
+        // 4. Actualizar los campos
+        document.getElementById('total').value = newTotal.toFixed(2);
+        document.getElementById('saldo').value = newSaldo.toFixed(2);
+
+        // Debug (opcional - puedes quitar estos console.log)
+        console.log('Total Pagado:', totalPagado);
+        console.log('Nuevo Total:', newTotal);
+        console.log('Nuevo Saldo:', newSaldo);
     }
 
     // Agregar event listeners para todos los campos que afectan al total
     document.addEventListener('DOMContentLoaded', function() {
-        // Event listeners para campos existentes
+        // Event listeners para campos que afectan al total
         const fields = [
-            'examen_visual', 'examen_visual_descuento',
-            'l_precio', 'l_precio_descuento',
+            'examen_visual',
+            'examen_visual_descuento',
             'valor_compra'
         ];
         
@@ -467,16 +477,16 @@
             }
         });
 
-        // Event listener para nuevos campos de armazones
+        // Event delegation para armazones
         document.getElementById('armazones-container').addEventListener('input', function(e) {
             if (e.target.matches('[name="a_precio[]"], [name="a_precio_descuento[]"]')) {
                 calculateTotal();
             }
         });
 
-        // Event listener para nuevos campos de accesorios
-        document.getElementById('accesorios-container').addEventListener('input', function(e) {
-            if (e.target.matches('[name="d_precio[]"], [name="d_precio_descuento[]"]')) {
+        // Event delegation para lunas
+        document.getElementById('lunas-container').addEventListener('input', function(e) {
+            if (e.target.matches('[name="l_precio[]"], [name="l_precio_descuento[]"]')) {
                 calculateTotal();
             }
         });

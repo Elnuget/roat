@@ -73,4 +73,9 @@ class Pedido extends Model
     {
         return $this->hasMany(PedidoLuna::class);
     }
+
+    public function pagos()
+    {
+        return $this->hasMany(Pago::class);
+    }
 }

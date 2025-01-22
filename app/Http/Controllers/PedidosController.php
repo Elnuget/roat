@@ -216,10 +216,11 @@ class PedidosController extends Controller
      */
     public function edit($id)
     {
-        $pedido = Pedido::with(['inventarios', 'lunas'])->findOrFail($id);
-        $inventarioItems = Inventario::all(); // Obtener todos los items del inventario
+        $pedido = Pedido::with(['inventarios', 'lunas', 'pagos'])->findOrFail($id);
+        $inventarioItems = Inventario::all();
+        $totalPagado = $pedido->pagos->sum('pago'); // Suma todos los pagos realizados
 
-        return view('pedidos.edit', compact('pedido', 'inventarioItems'));
+        return view('pedidos.edit', compact('pedido', 'inventarioItems', 'totalPagado'));
     }
 
     /**
