@@ -18,7 +18,7 @@ class CreateHistorialesClinicosTable extends Migration
             $table->string('nombres', 255);
             $table->string('apellidos', 255);
             $table->integer('edad');
-            $table->date('fecha_nacimiento');
+            $table->date('fecha_nacimiento')->nullable();
             $table->string('celular', 20);
             $table->string('ocupacion', 100);
             $table->date('fecha');

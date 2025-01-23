@@ -58,7 +58,7 @@
                                 <input type="number" name="edad" id="edad" class="form-control" required>
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="fecha_nacimiento">Fecha de Nacimiento</label> <!-- Removido text-danger -->
+                                <label for="fecha_nacimiento">Fecha de Nacimiento</label>
                                 <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" class="form-control">
                             </div>
                             <div class="form-group col-md-4">
