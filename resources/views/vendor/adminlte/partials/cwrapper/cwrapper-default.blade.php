@@ -28,9 +28,17 @@
                         <label for="estado" class="text-dark">Estado</label>
                         <input type="text" class="form-control" name="estado" id="estado" value="Apertura" readonly>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-lg btn-block">
-                        <i class="fas fa-door-open mr-2"></i>Abrir Caja
-                    </button>
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary btn-lg flex-grow-1 mr-2">
+                            <i class="fas fa-door-open mr-2"></i>Abrir Caja
+                        </button>
+                        <a href="{{ route('logout') }}" class="btn btn-danger btn-lg" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="fas fa-sign-out-alt mr-2"></i>Cerrar Sesión
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </div>
                 </form>
             </div>
         </div>
