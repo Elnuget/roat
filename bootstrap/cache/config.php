@@ -114,16 +114,6 @@
             ),
             'can' => 'admin',
           ),
-          1 => 
-          array (
-            'text' => 'Medios de pago',
-            'icon' => 'fas fa-cog',
-            'route' => 'configuracion.mediosdepago.index',
-            'active' => 
-            array (
-              0 => 'Configuración/MediosDePago/*',
-            ),
-          ),
         ),
       ),
     ),
