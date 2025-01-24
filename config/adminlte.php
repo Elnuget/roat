@@ -16,7 +16,7 @@ return [
 
     'title' => 'Login',
     'title_prefix' => '',
-    'title_postfix' => '| ESCLEROPTICA',
+    'title_postfix' => '| T&T Road Trips',
 
     /*
     |--------------------------------------------------------------------------
@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'logo' => '<b>Escleróptica</b>',
+    'logo' => '<b>T&T Road Trips</b>',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     
 
@@ -237,64 +237,19 @@ return [
   
 
     'menu' => [
-
-
-
         [
-            'text' => 'Dashboard', // Título del enlace en el menú
-            'icon' => 'fas fa-tachometer-alt', // Icono para el Dashboard. Cambia según tus preferencias
-            'route' => 'dashboard', // La ruta debe coincidir con una ruta nombrada en tus rutas de Laravel
-            'active' => ['dashboard', 'dashboard/*'], // Patrón para definir cuándo este ítem estará activo
+            'text' => 'Dashboard',
+            'icon' => 'fas fa-tachometer-alt',
+            'route' => 'dashboard',
+            'active' => ['dashboard', 'dashboard/*'],
         ],
 
         [
-            'text' => 'Admin', // Título del enlace en el menú
-            'icon' => 'fas fa-user-cog', // Icono para la sección de administración. Cambia según tus preferencias
-            'route' => 'admin.index', // La ruta debe coincidir con una ruta nombrada en tus rutas de Laravel
-            'active' => ['admin', 'admin/*'], // Patrón para definir cuándo este ítem estará activo
-            'can' => 'admin'  // Add this line to check admin permission
-        ],
-
-        [
-            'text' => 'Pedidos',
-            'icon' => 'fas fa-shopping-cart', // Puedes cambiar el icono según tus preferencias
-            'route' => 'pedidos.index',
-            'active' => ['Pedidos/*']
-        ],
-
-
-
-      
-        [
-            'text' => 'Inventario',
-            'icon' => 'fas fa-file-invoice',
-            'route' => 'inventario.index',
-            'active' => ['Inventario/*']
-        ],
-
-        [
-            'text' => 'Pagos',
-            'icon' => 'fas fa-fw fa-money-bill',
-            'route' => 'pagos.index', // Changed from 'pagonuevos.index' to 'pagos.index'
-        ],
-
-        [
-            'text' => 'Caja',
-            'icon' => 'fas fa-cash-register',
-            'route' => 'caja.index',
-        ],
-
-        [
-            'text' => 'Historial de Caja',
-            'icon' => 'fas fa-history',
-            'route' => 'cash-histories.index',
-        ],
-
-        [
-            'text' => 'Historiales Clínicos',
-            'icon' => 'fas fa-notes-medical', // Puedes cambiar el ícono según prefieras
-            'route' => 'historiales_clinicos.index',
-            'active' => ['historiales_clinicos/*'], // Asegúrate de que esto coincida con tus rutas nombradas en Laravel
+            'text' => 'Admin',
+            'icon' => 'fas fa-user-cog',
+            'route' => 'admin.index',
+            'active' => ['admin', 'admin/*'],
+            'can' => 'admin'
         ],
 
         [
@@ -307,7 +262,7 @@ return [
                     'icon' => 'fas fa-cog',
                     'route' => 'configuracion.usuarios.index',
                     'active' => ['Configuracion/Usuarios/*'],
-                    'can' => 'admin'  // Add this line to check admin permission
+                    'can' => 'admin'
                 ],
                 [
                     'text' => 'Medios de pago',
@@ -317,8 +272,8 @@ return [
                 ],
             ],
         ],
-
     ],
+
     /*
     |--------------------------------------------------------------------------
     | Menu Filters
