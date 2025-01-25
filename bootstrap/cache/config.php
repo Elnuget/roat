@@ -95,6 +95,17 @@
       ),
       2 => 
       array (
+        'text' => 'Hoja de Ruta',
+        'icon' => 'fas fa-map',
+        'route' => 'hoja_ruta.index',
+        'active' => 
+        array (
+          0 => 'hoja_ruta',
+          1 => 'hoja_ruta/*',
+        ),
+      ),
+      3 => 
+      array (
         'text' => 'Configuracion',
         'icon' => 'fas fa-cog',
         'active' => 

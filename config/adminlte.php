@@ -253,6 +253,13 @@ return [
         ],
 
         [
+            'text' => 'Hoja de Ruta',
+            'icon' => 'fas fa-map',
+            'route' => 'hoja_ruta.index',
+            'active' => ['hoja_ruta', 'hoja_ruta/*']
+        ],
+
+        [
             'text' => 'Configuracion',
             'icon' => 'fas fa-cog',
             'active' => ['Configuracion/*'],
@@ -263,12 +270,6 @@ return [
                     'route' => 'configuracion.usuarios.index',
                     'active' => ['Configuracion/Usuarios/*'],
                     'can' => 'admin'
-                ],
-                [
-                    'text' => 'Medios de pago',
-                    'icon' => 'fas fa-cog',
-                    'route' => 'configuracion.mediosdepago.index',
-                    'active' => ['Configuración/MediosDePago/*']
                 ],
             ],
         ],

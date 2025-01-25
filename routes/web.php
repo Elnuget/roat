@@ -1,14 +1,8 @@
 <?php
-use App\Http\Controllers\PedidosController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\InventarioController;
-use App\Http\Controllers\mediosdepagoController;
-use App\Http\Controllers\PagoController;
 use App\Http\Controllers\UsuariosController;
-use App\Http\Controllers\PagonuevosController; 
-use App\Http\Controllers\HistorialClinicoController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CashHistoryController;
+use App\Http\Controllers\HojaRutaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,5 +36,7 @@ Route::middleware(['auth:sanctum', 'verified', 'admin'])->group(function () {
     // Admin dashboard
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     
-    
+    // HojaRuta routes
+    Route::resource('hoja_ruta', HojaRutaController::class);
+    Route::get('hoja_ruta/{id}/print', [HojaRutaController::class, 'print'])->name('hoja_ruta.print');
 });

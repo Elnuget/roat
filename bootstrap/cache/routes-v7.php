@@ -60,7 +60,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::kvli5yKwqaal1UjY',
+            '_route' => 'generated::7CYtpsU0jRREzLDc',
           ),
           1 => NULL,
           2 => 
@@ -170,7 +170,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::spuBPxu5NGONqee8',
+            '_route' => 'generated::Wp5MMCbJ69WUM9xn',
           ),
           1 => NULL,
           2 => 
@@ -227,7 +227,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::b921B4erzqhl7QBI',
+            '_route' => 'generated::Z0iE8oC9wsowmLVi',
           ),
           1 => NULL,
           2 => 
@@ -300,7 +300,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::VF2IPMeSnB2p1O80',
+            '_route' => 'generated::ZUA5cfQQks25MGeZ',
           ),
           1 => NULL,
           2 => 
@@ -430,7 +430,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::SEFiQjwWwEJqJZZN',
+            '_route' => 'generated::iknrwanLnEK78Scc',
           ),
           1 => NULL,
           2 => 
@@ -469,7 +469,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::DYlSIUOG4fithSfe',
+            '_route' => 'generated::QUYRdE8qx0R5dBeo',
           ),
           1 => NULL,
           2 => 
@@ -508,7 +508,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::t5iXpFbPaoVC1YVh',
+            '_route' => 'generated::Fiz8JeZr2fB6mni1',
           ),
           1 => NULL,
           2 => 
@@ -528,7 +528,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::FNSrErKDzWXu7YE2',
+            '_route' => 'generated::3sevZuzkczF9ut4X',
           ),
           1 => NULL,
           2 => 
@@ -548,7 +548,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::A57ER9lsQxbgpbpV',
+            '_route' => 'generated::OS3XOCuFIQvpQsn5',
           ),
           1 => NULL,
           2 => 
@@ -658,10 +658,66 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
+      '/hoja_ruta' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'hoja_ruta.index',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'hoja_ruta.store',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/hoja_ruta/create' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'hoja_ruta.create',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
     ),
     2 => 
     array (
-      0 => '{^(?|/reset\\-password/([^/]++)(*:32)|/livewire/message/([^/]++)(*:65)|/([^/]++)/livewire/message/([^/]++)(*:107)|/livewire/preview\\-file/([^/]++)(*:147)|/Configuracion/Usuarios/([^/]++)(?|(*:190)|(*:198)|/toggle\\-admin(*:220)))/?$}sDu',
+      0 => '{^(?|/reset\\-password/([^/]++)(*:32)|/livewire/message/([^/]++)(*:65)|/([^/]++)/livewire/message/([^/]++)(*:107)|/livewire/preview\\-file/([^/]++)(*:147)|/Configuracion/Usuarios/([^/]++)(?|(*:190)|(*:198)|/toggle\\-admin(*:220))|/hoja_ruta/([^/]++)(?|(*:251)|/(?|edit(*:267)|print(*:280))|(*:289)))/?$}sDu',
     ),
     3 => 
     array (
@@ -822,7 +878,118 @@ app('router')->setCompiledRoutes(
           5 => false,
           6 => NULL,
         ),
+      ),
+      251 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'hoja_ruta.show',
+          ),
+          1 => 
+          array (
+            0 => 'hoja_rutum',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      267 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'hoja_ruta.edit',
+          ),
+          1 => 
+          array (
+            0 => 'hoja_rutum',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      280 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'hoja_ruta.print',
+          ),
+          1 => 
+          array (
+            0 => 'id',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      289 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'hoja_ruta.update',
+          ),
+          1 => 
+          array (
+            0 => 'hoja_rutum',
+          ),
+          2 => 
+          array (
+            'PUT' => 0,
+            'PATCH' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
         1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'hoja_ruta.destroy',
+          ),
+          1 => 
+          array (
+            0 => 'hoja_rutum',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+        2 => 
         array (
           0 => NULL,
           1 => NULL,
@@ -913,7 +1080,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::kvli5yKwqaal1UjY' => 
+    'generated::7CYtpsU0jRREzLDc' => 
     array (
       'methods' => 
       array (
@@ -936,7 +1103,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::kvli5yKwqaal1UjY',
+        'as' => 'generated::7CYtpsU0jRREzLDc',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1182,7 +1349,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::spuBPxu5NGONqee8' => 
+    'generated::Wp5MMCbJ69WUM9xn' => 
     array (
       'methods' => 
       array (
@@ -1204,7 +1371,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::spuBPxu5NGONqee8',
+        'as' => 'generated::Wp5MMCbJ69WUM9xn',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1296,7 +1463,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::b921B4erzqhl7QBI' => 
+    'generated::Z0iE8oC9wsowmLVi' => 
     array (
       'methods' => 
       array (
@@ -1319,7 +1486,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::b921B4erzqhl7QBI',
+        'as' => 'generated::Z0iE8oC9wsowmLVi',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1451,7 +1618,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::VF2IPMeSnB2p1O80' => 
+    'generated::ZUA5cfQQks25MGeZ' => 
     array (
       'methods' => 
       array (
@@ -1474,7 +1641,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::VF2IPMeSnB2p1O80',
+        'as' => 'generated::ZUA5cfQQks25MGeZ',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1727,7 +1894,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::SEFiQjwWwEJqJZZN' => 
+    'generated::iknrwanLnEK78Scc' => 
     array (
       'methods' => 
       array (
@@ -1750,7 +1917,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::SEFiQjwWwEJqJZZN',
+        'as' => 'generated::iknrwanLnEK78Scc',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1805,7 +1972,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::DYlSIUOG4fithSfe' => 
+    'generated::QUYRdE8qx0R5dBeo' => 
     array (
       'methods' => 
       array (
@@ -1826,7 +1993,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
         ),
-        'as' => 'generated::DYlSIUOG4fithSfe',
+        'as' => 'generated::QUYRdE8qx0R5dBeo',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1967,7 +2134,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::t5iXpFbPaoVC1YVh' => 
+    'generated::Fiz8JeZr2fB6mni1' => 
     array (
       'methods' => 
       array (
@@ -1979,7 +2146,7 @@ app('router')->setCompiledRoutes(
       array (
         'uses' => 'Livewire\\Controllers\\LivewireJavaScriptAssets@source',
         'controller' => 'Livewire\\Controllers\\LivewireJavaScriptAssets@source',
-        'as' => 'generated::t5iXpFbPaoVC1YVh',
+        'as' => 'generated::Fiz8JeZr2fB6mni1',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1995,7 +2162,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::FNSrErKDzWXu7YE2' => 
+    'generated::3sevZuzkczF9ut4X' => 
     array (
       'methods' => 
       array (
@@ -2007,7 +2174,7 @@ app('router')->setCompiledRoutes(
       array (
         'uses' => 'Livewire\\Controllers\\LivewireJavaScriptAssets@maps',
         'controller' => 'Livewire\\Controllers\\LivewireJavaScriptAssets@maps',
-        'as' => 'generated::FNSrErKDzWXu7YE2',
+        'as' => 'generated::3sevZuzkczF9ut4X',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2023,7 +2190,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::A57ER9lsQxbgpbpV' => 
+    'generated::OS3XOCuFIQvpQsn5' => 
     array (
       'methods' => 
       array (
@@ -2040,13 +2207,13 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:47:"Laravel\\SerializableClosure\\SerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Signed":2:{s:12:"serializable";s:264:"O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:46:"function () {
     return \\view(\'welcome\');
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000006870000000000000000";}";s:4:"hash";s:44:"5RlCvGgPdaGzp3ipjYDT+wPj0K562sk5z7YELwyXad0=";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"0000000000000a4e0000000000000000";}";s:4:"hash";s:44:"rE+OLYQIwySdRmDwgn04qK3UHrWOghA85vVHVkO5qcg=";}}',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
         array (
         ),
-        'as' => 'generated::A57ER9lsQxbgpbpV',
+        'as' => 'generated::OS3XOCuFIQvpQsn5',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2081,7 +2248,7 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:47:"Laravel\\SerializableClosure\\SerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Signed":2:{s:12:"serializable";s:264:"O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:46:"function () {
     return \\view(\'welcome\');
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000068a0000000000000000";}";s:4:"hash";s:44:"iPfIRhW516QDTwL7ybMUhgXgF0Nll0sA721HeQorYeI=";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"0000000000000a510000000000000000";}";s:4:"hash";s:44:"jaz8sz4vq5MKDJrpjtGvZNPOpNvpCrvpfIKk1tnieAg=";}}',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
@@ -2372,6 +2539,332 @@ app('router')->setCompiledRoutes(
         array (
         ),
         'as' => 'admin.index',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'hoja_ruta.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'hoja_ruta',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'auth:sanctum',
+          3 => 'verified',
+          4 => 'admin',
+        ),
+        'as' => 'hoja_ruta.index',
+        'uses' => 'App\\Http\\Controllers\\HojaRutaController@index',
+        'controller' => 'App\\Http\\Controllers\\HojaRutaController@index',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'hoja_ruta.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'hoja_ruta/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'auth:sanctum',
+          3 => 'verified',
+          4 => 'admin',
+        ),
+        'as' => 'hoja_ruta.create',
+        'uses' => 'App\\Http\\Controllers\\HojaRutaController@create',
+        'controller' => 'App\\Http\\Controllers\\HojaRutaController@create',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'hoja_ruta.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'hoja_ruta',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'auth:sanctum',
+          3 => 'verified',
+          4 => 'admin',
+        ),
+        'as' => 'hoja_ruta.store',
+        'uses' => 'App\\Http\\Controllers\\HojaRutaController@store',
+        'controller' => 'App\\Http\\Controllers\\HojaRutaController@store',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'hoja_ruta.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'hoja_ruta/{hoja_rutum}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'auth:sanctum',
+          3 => 'verified',
+          4 => 'admin',
+        ),
+        'as' => 'hoja_ruta.show',
+        'uses' => 'App\\Http\\Controllers\\HojaRutaController@show',
+        'controller' => 'App\\Http\\Controllers\\HojaRutaController@show',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'hoja_ruta.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'hoja_ruta/{hoja_rutum}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'auth:sanctum',
+          3 => 'verified',
+          4 => 'admin',
+        ),
+        'as' => 'hoja_ruta.edit',
+        'uses' => 'App\\Http\\Controllers\\HojaRutaController@edit',
+        'controller' => 'App\\Http\\Controllers\\HojaRutaController@edit',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'hoja_ruta.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'hoja_ruta/{hoja_rutum}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'auth:sanctum',
+          3 => 'verified',
+          4 => 'admin',
+        ),
+        'as' => 'hoja_ruta.update',
+        'uses' => 'App\\Http\\Controllers\\HojaRutaController@update',
+        'controller' => 'App\\Http\\Controllers\\HojaRutaController@update',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'hoja_ruta.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'hoja_ruta/{hoja_rutum}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'auth:sanctum',
+          3 => 'verified',
+          4 => 'admin',
+        ),
+        'as' => 'hoja_ruta.destroy',
+        'uses' => 'App\\Http\\Controllers\\HojaRutaController@destroy',
+        'controller' => 'App\\Http\\Controllers\\HojaRutaController@destroy',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'hoja_ruta.print' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'hoja_ruta/{id}/print',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'auth:sanctum',
+          3 => 'verified',
+          4 => 'admin',
+        ),
+        'uses' => 'App\\Http\\Controllers\\HojaRutaController@print',
+        'controller' => 'App\\Http\\Controllers\\HojaRutaController@print',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'hoja_ruta.print',
       ),
       'fallback' => false,
       'defaults' => 
